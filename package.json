@@ -1,6 +1,6 @@
 {
   "name": "solarsystem",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "dependencies": {
     "grunt-bump": "^0.3.1",
     "grunt-contrib-clean": "^0.6.0",

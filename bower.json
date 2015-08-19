@@ -1,0 +1,9 @@
+{
+  "name": "temp",
+  "version": "0.0.10",
+  "dependencies": {
+    "threejs": "",
+    "requirejs": "~2.1.9",
+    "requirejs-plugins": "~1.0.3"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "libs": {
+    "options": {
+      "destPrefix": "app/lib",
+      "clean": true
+    },
+    "files": {
+      "three.js": "threejs/build/three.js",
+      "require.js": "requirejs/require.js",
+      "json.js": "requirejs-plugins/src/json.js",
+      "text.js": "requirejs-plugins/lib/text.js"
+    }
+  }
+}

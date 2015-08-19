@@ -1,6 +1,6 @@
 {
   "name": "solarsystem",
-  "version": "0.0.5",
+  "version": "0.0.2",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -16,19 +16,22 @@
   "scripts": {
     "install": "grunt bowercopy"
   },
-  "description": "Sun System with Threejs",
+  "description": "Solar System with Threejs",
   "main": "Gruntfile.js",
-  "repository": "https://github.com/KenEDR/three-sun-system.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KenEDR/three-solar-system.git"
+  },
   "keywords": [
     "Threejs",
-    "sun",
+    "solar",
     "system",
     "three.js"
   ],
   "author": "Enrique Daimiel Ruiz <k.daimiel@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KenEDR/three-sun-system/issues"
+    "url": "https://github.com/KenEDR/three-solar-system/issues"
   },
-  "homepage": "https://github.com/KenEDR/three-sun-system#readme"
+  "homepage": "https://github.com/KenEDR/three-solar-system#readme"
 }

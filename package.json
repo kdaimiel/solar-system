@@ -1,6 +1,6 @@
 {
   "name": "solarsystem",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -18,10 +18,7 @@
   },
   "description": "Solar System with Threejs",
   "main": "Gruntfile.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/KenEDR/three-solar-system.git"
-  },
+  "repository": "git+https://github.com/KenEDR/three-solar-system.git",
   "keywords": [
     "Threejs",
     "solar",

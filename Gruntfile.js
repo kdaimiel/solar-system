@@ -4,7 +4,6 @@
  * Copyright (c) 2012 quickcue
  */
 
-
 module.exports = function(grunt) {
   // Load dev dependencies
   require('load-grunt-tasks')(grunt);
@@ -12,12 +11,12 @@ module.exports = function(grunt) {
   // Time how long tasks take for build time optimizations
   require('time-grunt')(grunt);
 
-  // Configure the app path
-  var base = 'app';
+  // Configure the src path
+  var base = 'src';
+  var demo = 'demo';
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    bowercopy: grunt.file.readJSON('bowercopy.json'),
     meta: {
       banner: '/*\n' +
         ' * <%= pkg.name %>\n' +
@@ -51,8 +50,7 @@ module.exports = function(grunt) {
       },
       livereload: {
         options: {
-          open: true,
-          base: [ base ]
+          open: true
         }
       }
     },
@@ -60,22 +58,28 @@ module.exports = function(grunt) {
       options: {
         jshintrc: '.jshintrc'
       },
-      all: [ base + '/js/*.js' ]
+      all: [
+        base + '/js/*.js',
+        '*.js'
+      ]
     },
     jsonlint: {
       pkg: [ 'package.json' ],
-      bower: [ '{bower,bowercopy}.json' ]
+      bower: [ '{bower}.json' ],
+      files: [ base + '/data/*.json']
     },
     watch: {
       // Watch javascript files for linting
       js: {
         files: [
-          '<%= jshint.all %>'
+          '<%= jshint.all %>',
+          demo + '/*'
         ],
         tasks: ['jshint']
       },
       json: {
         files: [
+          base + '/data/*.json',
           '{package,bower}.json'
         ],
         tasks: ['jsonlint']

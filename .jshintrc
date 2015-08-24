@@ -1,5 +1,6 @@
 {
   "browser": true,
+  "indent": 2,
   "esnext": true,
   "jquery": true,
   "node": true,

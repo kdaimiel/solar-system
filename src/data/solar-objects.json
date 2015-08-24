@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Sun",
+    "radius": 300,
+    "textureUrl": "img/sunmap.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Earth",
+    "radius": 100,
+    "distance": 1000,
+    "textureUrl": "img/earthmap1k.jpg",
+    "tilt": 43,
+    "orbit": 1
+  }
+]

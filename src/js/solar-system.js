@@ -18,7 +18,9 @@ require([
     scene = new THREE.Scene();
 
     SolarService.getCamera(loadCamera);
-    SolarService.getObjects(loadObjects);
+
+
+        SolarService.getObjects(loadObjects);
 
   }
 

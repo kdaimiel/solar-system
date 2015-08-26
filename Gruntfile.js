@@ -72,6 +72,8 @@ module.exports = function(grunt) {
       // Watch javascript files for linting
       js: {
         files: [
+          base + '/js/*.js',
+          base + '/*.js',
           '<%= jshint.all %>',
           demo + '/*'
         ],

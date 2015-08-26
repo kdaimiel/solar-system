@@ -2,15 +2,97 @@
   {
     "id": 1,
     "name": "Sun",
-    "radius": 300,
+    "category": "Star",
+    "radius": 1500,
     "textureUrl": "img/sunmap.jpg"
   },
   {
     "id": 2,
     "name": "Earth",
+    "category": "Planet",
     "radius": 100,
-    "distance": 1000,
+    "distance": 3000,
     "textureUrl": "img/earthmap1k.jpg",
+    "tilt": 43,
+    "orbit": 1
+  },
+  {
+    "id": 3,
+    "name": "Mercury",
+    "category": "Planet",
+    "radius": 30,
+    "distance": 1800,
+    "textureUrl": "img/mercurymap.jpg",
+    "tilt": 43,
+    "orbit": 1
+  },
+  {
+    "id": 4,
+    "name": "Venus",
+    "category": "Planet",
+    "radius": 85,
+    "distance": 250000,
+    "textureUrl": "img/venusmap.jpg",
+    "tilt": 43,
+    "orbit": 1
+  },
+  {
+    "id": 5,
+    "name": "Mars",
+    "category": "Planet",
+    "radius": 60,
+    "distance": 3800,
+    "textureUrl": "img/mars_1k_color.jpg",
+    "tilt": 43,
+    "orbit": 1
+  },
+  {
+    "id": 6,
+    "name": "Jupiter",
+    "category": "Planet",
+    "radius": 400,
+    "distance": 5200,
+    "textureUrl": "img/jupitermap.jpg",
+    "tilt": 43,
+    "orbit": 1
+  },
+  {
+    "id": 7,
+    "name": "Saturn",
+    "category": "Planet",
+    "radius": 300,
+    "distance": 7200,
+    "textureUrl": "img/saturnmap.jpg",
+    "tilt": 43,
+    "orbit": 1
+  },
+  {
+    "id": 8,
+    "name": "Uranus",
+    "category": "Planet",
+    "radius": 250,
+    "distance": 8200,
+    "textureUrl": "img/uranusmap.jpg",
+    "tilt": 43,
+    "orbit": 1
+  },
+  {
+    "id": 9,
+    "name": "Neptune",
+    "category": "Planet",
+    "radius": 280,
+    "distance": 9200,
+    "textureUrl": "img/neptunemap.jpg",
+    "tilt": 43,
+    "orbit": 1
+  },
+  {
+    "id": 10,
+    "name": "Pluto",
+    "category": "Dwarf Planet",
+    "radius": 15,
+    "distance": 11200,
+    "textureUrl": "img/plutomap1k.jpg",
     "tilt": 43,
     "orbit": 1
   }

@@ -12,6 +12,8 @@ define('scene-factory', function() {
 
   function createCamera(cameraProps) {
     var camera = new THREE.PerspectiveCamera(cameraProps.fov, window.innerWidth / window.innerHeight, cameraProps.near, cameraProps.far);
+    camera.position.x = cameraProps.position.x;
+    camera.position.y = cameraProps.position.y;
     camera.position.z = cameraProps.position.z;
     return camera;
   }

@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.15 - 2015-08-24
+ * @version v0.0.16 - 2015-08-26
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -20,6 +20,8 @@ define('scene-factory', function() {
 
   function createCamera(cameraProps) {
     var camera = new THREE.PerspectiveCamera(cameraProps.fov, window.innerWidth / window.innerHeight, cameraProps.near, cameraProps.far);
+    camera.position.x = cameraProps.position.x;
+    camera.position.y = cameraProps.position.y;
     camera.position.z = cameraProps.position.z;
     return camera;
   }
@@ -88,7 +90,9 @@ require([
     scene = new THREE.Scene();
 
     SolarService.getCamera(loadCamera);
-    SolarService.getObjects(loadObjects);
+
+
+        SolarService.getObjects(loadObjects);
 
   }
 

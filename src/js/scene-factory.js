@@ -31,11 +31,13 @@ define('scene-factory', function() {
     var texture = THREE.ImageUtils.loadTexture(solarObject.textureUrl);
     var material = new THREE.MeshBasicMaterial({ map: texture });
     var mesh = new THREE.Mesh(geometry, material);
+    mesh.name = solarObject.name;
     mesh.position.z = solarObject.distance || 0;
+    console.log(solarObject.tilt);
+    mesh.phiStart = solarObject.tilt;
     scene.add(mesh);
     mesh.Yrotation = solarObject.rotation;
     meshs.push(mesh);
-    console.log(mesh);
   }
 
   function render() {

@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.16 - 2015-08-26
+ * @version v0.0.17 - 2015-08-26
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -11,19 +11,27 @@ define('scene-factory', function() {
 
   'use strict';
 
+  var scene = new THREE.Scene();
+  var camera, renderer, controls;
+  var meshs = [];
+
   var factory = {
     createCamera: createCamera,
-    createMesh: createMesh
+    createMesh: createMesh,
+    init: init
   };
 
   return factory;
 
   function createCamera(cameraProps) {
-    var camera = new THREE.PerspectiveCamera(cameraProps.fov, window.innerWidth / window.innerHeight, cameraProps.near, cameraProps.far);
+    camera = new THREE.PerspectiveCamera(cameraProps.fov, window.innerWidth / window.innerHeight, cameraProps.near, cameraProps.far);
     camera.position.x = cameraProps.position.x;
     camera.position.y = cameraProps.position.y;
     camera.position.z = cameraProps.position.z;
-    return camera;
+
+    controls = new THREE.TrackballControls(camera);
+    controls.addEventListener('change', render);
+
   }
 
   function createMesh(solarObject){
@@ -32,7 +40,41 @@ define('scene-factory', function() {
     var material = new THREE.MeshBasicMaterial({ map: texture });
     var mesh = new THREE.Mesh(geometry, material);
     mesh.position.z = solarObject.distance || 0;
-    return mesh;
+    scene.add(mesh);
+    mesh.Yrotation = solarObject.rotation;
+    meshs.push(mesh);
+    console.log(mesh);
+  }
+
+  function render() {
+    renderer.render(scene, camera);
+  }
+
+
+  function init() {
+
+
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+    document.body.appendChild( renderer.domElement );
+
+    animate();
+  }
+
+  function animate() {
+
+    requestAnimationFrame( animate );
+
+    if(controls) {
+      controls.update();
+    }
+
+    for(var i in meshs) {
+      meshs[i].rotation.y += meshs[i].Yrotation;
+    }
+
+    render();
   }
 
 });
@@ -76,58 +118,17 @@ require([
   'solar-service'
 ], function three(SceneFactory, SolarService) {
 
-  var scene, camera, renderer, controls;
-
-  init();
-
-  function render() {
-    renderer.render(scene, camera);
-  }
-
-
-  function init() {
-
-    scene = new THREE.Scene();
-
-    SolarService.getCamera(loadCamera);
-
-
-        SolarService.getObjects(loadObjects);
-
-  }
-
-  function animate() {
-
-    requestAnimationFrame( animate );
-
-    controls.update();
-
-    render();
-
-  }
+  SolarService.getCamera(loadCamera);
+  SolarService.getObjects(loadObjects);
 
   function loadCamera(cameraProps) {
-    camera = SceneFactory.createCamera(cameraProps);
-
-    controls = new THREE.TrackballControls(camera);
-    controls.addEventListener('change', render);
-
-    renderer = new THREE.WebGLRenderer();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-
-    document.body.appendChild( renderer.domElement );
-
-    animate();
-
-
+    SceneFactory.createCamera(cameraProps);
+    SceneFactory.init();
   }
 
   function loadObjects(objects) {
     objects.forEach(function(element) {
-      scene.add(SceneFactory.createMesh(element));
+      SceneFactory.createMesh(element);
     });
-
-
   }
-
 });

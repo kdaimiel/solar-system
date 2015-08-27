@@ -5,11 +5,11 @@ require([
 ], function three(SceneFactory, SolarService) {
 
   SolarService.getCamera(loadCamera);
-  SolarService.getObjects(loadObjects);
 
-  function loadCamera(cameraProps) {
-    SceneFactory.createCamera(cameraProps);
+  function loadCamera(cameraProperties) {
+    SceneFactory.createCamera(cameraProperties);
     SceneFactory.init();
+    SolarService.getObjects(loadObjects);
   }
 
   function loadObjects(objects) {

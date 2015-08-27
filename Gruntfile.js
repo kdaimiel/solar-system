@@ -59,7 +59,7 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc'
       },
       all: [
-        base + '/js/*.js',
+        base + '/**/*.js',
         '*.js'
       ]
     },
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
       // Watch javascript files for linting
       js: {
         files: [
-          base + '/js/*.js',
+          base + '/**/*.js',
           base + '/*.js',
           '<%= jshint.all %>',
           demo + '/*'
@@ -94,7 +94,7 @@ module.exports = function(grunt) {
         files: [
           '<%= watch.js.files %>',
           '<%= watch.json.files %>',
-          base + '/css/**/*.css',
+          '**/*.css',
           '**/*.html'
         ]
       }

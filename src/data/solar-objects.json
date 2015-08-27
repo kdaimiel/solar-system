@@ -1,109 +1,119 @@
 [
   {
-    "id": 1,
     "name": "Sun",
     "category": "Star",
     "radius": 1500,
-    "rotation": 0.1,
-    "textureUrl": "img/sunmap.jpg"
+    "vRotation": 0.1,
+    "URLTexture": "img/sunmap.jpg"
   },
   {
-    "id": 2,
     "name": "Earth",
     "category": "Planet",
     "radius": 100,
-    "rotation": 0.1,
-    "distance": 3000,
-    "textureUrl": "img/earthmap1k.jpg",
+    "vRotation": 0.1,
+    "vTranslation": 0.1,
     "tilt": 43,
-    "orbit": 1
+    "orbit": "Sun",
+    "orbitDistance": 3000,
+    "URLTexture": "img/earthmap1k.jpg"
   },
   {
-    "id": 3,
+    "name": "Moon",
+    "category": "Moon",
+    "radius": 40,
+    "vRotation": 0.1,
+    "vTranslation": 0.1,
+    "tilt": 43,
+    "orbit": "Earth",
+    "orbitDistance": 180,
+    "URLTexture": "img/moonmap4k.jpg"
+  },
+  {
     "name": "Mercury",
     "category": "Planet",
     "radius": 30,
-    "rotation": 0.1,
-    "distance": 1800,
-    "textureUrl": "img/mercurymap.jpg",
+    "vRotation": 0.1,
+    "vTranslation": 0.1,
     "tilt": 43,
-    "orbit": 1
+    "orbit": "Sun",
+    "orbitDistance": 1800,
+    "URLTexture": "img/mercurymap.jpg"
   },
   {
-    "id": 4,
     "name": "Venus",
     "category": "Planet",
     "radius": 85,
-    "rotation": 0.1,
-    "distance": 250000,
-    "textureUrl": "img/venusmap.jpg",
+    "vRotation": 0.1,
+    "vTranslation": 0.1,
     "tilt": 43,
-    "orbit": 1
+    "orbit": "Sun",
+    "orbitDistance": 2500,
+    "URLTexture": "img/venusmap.jpg"
   },
   {
-    "id": 5,
     "name": "Mars",
     "category": "Planet",
     "radius": 60,
-    "rotation": 0.1,
-    "distance": 3800,
-    "textureUrl": "img/mars_1k_color.jpg",
+    "vRotation": 0.1,
+    "vTranslation": 0.1,
     "tilt": 43,
-    "orbit": 1
+    "orbit": "Sun",
+    "orbitDistance": 3800,
+    "URLTexture": "img/mars_1k_color.jpg"
   },
   {
-    "id": 6,
     "name": "Jupiter",
     "category": "Planet",
     "radius": 400,
-    "rotation": 0.1,
-    "distance": 5200,
-    "textureUrl": "img/jupitermap.jpg",
+    "vRotation": 0.1,
+    "vTranslation": 0.1,
     "tilt": 43,
-    "orbit": 1
+    "orbit": "Sun",
+    "orbitDistance": 5200,
+    "URLTexture": "img/jupitermap.jpg"
   },
   {
-    "id": 7,
     "name": "Saturn",
     "category": "Planet",
     "radius": 300,
-    "rotation": 0.1,
-    "distance": 7200,
-    "textureUrl": "img/saturnmap.jpg",
+    "vRotation": 0.1,
+    "vTranslation": 0.1,
     "tilt": 43,
-    "orbit": 1
+    "orbit": "Sun",
+    "orbitDistance": 7200,
+    "URLTexture": "img/saturnmap.jpg"
   },
   {
-    "id": 8,
     "name": "Uranus",
     "category": "Planet",
     "radius": 250,
-    "rotation": 0.1,
-    "distance": 8200,
-    "textureUrl": "img/uranusmap.jpg",
+    "vRotation": 0.1,
+    "vTranslation": 0.1,
     "tilt": 43,
-    "orbit": 1
+    "orbit": "Sun",
+    "orbitDistance": 8200,
+    "URLTexture": "img/uranusmap.jpg"
   },
   {
-    "id": 9,
     "name": "Neptune",
     "category": "Planet",
     "radius": 280,
-    "rotation": 0.1,
-    "distance": 9200,
-    "textureUrl": "img/neptunemap.jpg",
+    "vRotation": 0.1,
+    "vTranslation": 0.1,
     "tilt": 43,
-    "orbit": 1
+    "orbit": "Sun",
+    "orbitDistance": 9200,
+    "URLTexture": "img/neptunemap.jpg"
   },
   {
-    "id": 10,
     "name": "Pluto",
     "category": "Dwarf Planet",
     "radius": 15,
-    "rotation": 0.1,
-    "distance": 11200,
-    "textureUrl": "img/plutomap1k.jpg",
+    "vRotation": 0.1,
+    "vTranslation": 0.1,
     "tilt": 43,
-    "orbit": 1
+    "orbit": "Sun",
+    "orbitDistance": 11200,
+    "URLTexture": "img/plutomap1k.jpg"
   }
 ]

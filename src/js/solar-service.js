@@ -24,7 +24,7 @@ define('solar-service', function() {
         return callback(data);
       },
       error: function(err) {
-        console.err('Load JSON error:' + err);
+        console.error('Load JSON error:' + err);
       }
     });
   }

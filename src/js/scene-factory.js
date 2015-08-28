@@ -24,6 +24,17 @@ define('scene-factory', function() {
   function createMesh(objectProperties){
     var solarObject = new THREE.SolarObject(objectProperties);
     solarObjects.push(solarObject);
+    if(objectProperties.orbit) {
+      for(var i in solarObjects) {
+        if(solarObjects[i].name === objectProperties.orbit) {
+          solarObject.createOrbit(solarObjects[i].position);
+          solarObjects[i].addSatellite(solarObject);
+        }
+      }
+      scene.add(solarObject.parent);
+      return;
+    }
+
     scene.add(solarObject);
   }
 
@@ -54,5 +65,4 @@ define('scene-factory', function() {
 
     render();
   }
-
 });

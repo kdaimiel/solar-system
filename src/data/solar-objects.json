@@ -22,7 +22,7 @@
     "category": "Moon",
     "radius": 40,
     "vRotation": 0.1,
-    "vTranslation": 0.1,
+    "vTranslation": 1,
     "tilt": 43,
     "orbit": "Earth",
     "orbitDistance": 180,

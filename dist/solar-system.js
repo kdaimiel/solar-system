@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.20 - 2015-08-28
+ * @version v0.0.21 - 2015-08-28
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -32,31 +32,34 @@ THREE.SolarCamera.prototype.constructor = THREE.PerspectiveCamera;
 
 
 
-THREE.SolarObject = function(objectProperties) {
+THREE.SolarObject = function(systemProperties) {
 
   THREE.Object3D.call( this );
 
   this.satellites = [];
 
-  this.name = objectProperties.name;
+  this.name = systemProperties.name;
   this.type = 'SolarObject';
-  this.category = objectProperties.category;
-  this.radius = objectProperties.radius || 50;
-  this.vRotation = objectProperties.vRotation || 0;
-  this.vTranslation = objectProperties.vTranslation || 0;
-  this.tilt = objectProperties.tilt;
-  this.orbit = objectProperties.orbit;
-  this.orbitDistance = objectProperties.orbitDistance;
-  this.URLTexture = objectProperties.URLTexture;
+  this.category = systemProperties.category;
+  this.radius = systemProperties.radius || 50;
+  this.vRotation = systemProperties.vRotation || 0;
+  this.vTranslation = systemProperties.vTranslation || 0;
+  this.tilt = systemProperties.tilt;
+  this.distance = systemProperties.distance;
+  this.URLTexture = systemProperties.URLTexture;
 
   this.geometry = new THREE.SphereGeometry(this.radius, 50, 50);
   var texture = THREE.ImageUtils.loadTexture(this.URLTexture);
   this.material = new THREE.MeshBasicMaterial({ map: texture });
 
+  this.position.z = systemProperties.distance || 0;
   this.rotation.x = this.tilt || 0;
 
-  this.updateMorphTargets();
+  for(var i in systemProperties.satellites) {
+    this.add(new THREE.SolarObject(systemProperties.satellites[i]));
+  }
 
+  this.updateMorphTargets();
 };
 
 THREE.SolarObject.prototype = Object.create( THREE.Mesh.prototype );
@@ -176,11 +179,11 @@ define('solar-service', function() {
   return service;
 
   function getCamera(callback){
-    getJSON('../src/data/solar-camera.json', callback);
+    getJSON('../src/data/camera.properties.json', callback);
   }
 
   function getObjects(callback){
-    getJSON('../src/data/solar-objects.json', callback);
+    getJSON('../src/data/system.properties.json', callback);
   }
 
   function getJSON(src, callback) {
@@ -210,8 +213,8 @@ require([
     SolarService.getObjects(loadObjects);
   }
 
-  function loadObjects(objects) {
-    objects.forEach(function(element) {
+  function loadObjects(systemPropertes) {
+    systemPropertes.forEach(function(element) {
       SceneFactory.createMesh(element);
     });
   }

@@ -12,8 +12,8 @@ require([
     SolarService.getObjects(loadObjects);
   }
 
-  function loadObjects(objects) {
-    objects.forEach(function(element) {
+  function loadObjects(systemPropertes) {
+    systemPropertes.forEach(function(element) {
       SceneFactory.createMesh(element);
     });
   }

@@ -11,11 +11,11 @@ define('solar-service', function() {
   return service;
 
   function getCamera(callback){
-    getJSON('../src/data/solar-camera.json', callback);
+    getJSON('../src/data/camera.properties.json', callback);
   }
 
   function getObjects(callback){
-    getJSON('../src/data/solar-objects.json', callback);
+    getJSON('../src/data/system.properties.json', callback);
   }
 
   function getJSON(src, callback) {

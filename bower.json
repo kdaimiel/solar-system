@@ -1,6 +1,6 @@
 {
   "name": "temp",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "dependencies": {
     "threejs": "",
     "requirejs": "~2.1.9"

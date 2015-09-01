@@ -5,6 +5,7 @@ define('scene-factory', function() {
 
   var scene, camera, renderer, controls;
   var solarObjects = [];
+  var solarOrbits = [];
 
   var factory = {
     createCamera: createCamera,
@@ -24,18 +25,37 @@ define('scene-factory', function() {
   function createMesh(objectProperties){
     var solarObject = new THREE.SolarObject(objectProperties);
     solarObjects.push(solarObject);
-    if(objectProperties.orbit) {
-      for(var i in solarObjects) {
-        if(solarObjects[i].name === objectProperties.orbit) {
-          solarObject.createOrbit(solarObjects[i].position);
-          solarObjects[i].addSatellite(solarObject);
+    if(objectProperties.orbitRound) {
+
+      var orbitProperties = {
+        name: objectProperties.name,
+        radius: objectProperties.orbitRadius,
+        speed: objectProperties.orbitSpeed,
+        tilt: objectProperties.orbitTilt
+      };
+      var solarOrbit = new THREE.SolarOrbit(orbitProperties);
+
+      var solarParentOrbit;
+      for(var i in solarOrbits) {
+        if(objectProperties.orbitRound === solarOrbits[i].name) {
+          solarParentOrbit = solarOrbits[i];
         }
       }
-      scene.add(solarObject.parent);
-      return;
-    }
 
-    scene.add(solarObject);
+      if(solarParentOrbit) {
+        solarOrbit.position.z = solarParentOrbit.position.z + solarParentOrbit.radius || 0;
+        solarParentOrbit.add(solarOrbit);
+      } else {
+        scene.add(solarOrbit);
+      }
+
+      solarOrbits.push(solarOrbit);
+
+      solarObject.position.z = solarOrbit.radius || 0;
+      solarOrbit.add(solarObject);
+    } else {
+      scene.add(solarObject);
+    }
   }
 
   function render() {
@@ -45,7 +65,7 @@ define('scene-factory', function() {
   function init() {
     scene = new THREE.Scene();
 
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     document.body.appendChild( renderer.domElement );
@@ -59,6 +79,10 @@ define('scene-factory', function() {
 
     for(var i in solarObjects) {
       solarObjects[i].update();
+    }
+
+    for(var j in solarOrbits) {
+      solarOrbits[j].update();
     }
 
     controls.update();

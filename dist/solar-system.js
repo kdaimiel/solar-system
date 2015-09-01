@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.26 - 2015-08-31
+ * @version v0.0.27 - 2015-09-01
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -32,32 +32,22 @@ THREE.SolarCamera.prototype.constructor = THREE.PerspectiveCamera;
 
 
 
-THREE.SolarObject = function(systemProperties) {
+THREE.SolarObject = function(objectProperties) {
 
   THREE.Object3D.call( this );
 
-  this.satellites = [];
-
-  this.name = systemProperties.name;
+  this.name = objectProperties.name;
   this.type = 'SolarObject';
-  this.category = systemProperties.category;
-  this.radius = systemProperties.radius || 50;
-  this.vRotation = systemProperties.vRotation || 0;
-  this.vTranslation = systemProperties.vTranslation || 0;
-  this.tilt = systemProperties.tilt;
-  this.distance = systemProperties.distance;
-  this.URLTexture = systemProperties.URLTexture;
+  this.category = objectProperties.category;
+  this.radius = objectProperties.radius || 50;
+  this.vRotation = objectProperties.vRotation || 0;
+  this.URLTexture = objectProperties.URLTexture;
 
   this.geometry = new THREE.SphereGeometry(this.radius, 50, 50);
   var texture = THREE.ImageUtils.loadTexture(this.URLTexture);
   this.material = new THREE.MeshBasicMaterial({ map: texture });
 
-  this.position.z = systemProperties.distance || 0;
   this.rotation.x = this.tilt || 0;
-
-  for(var i in systemProperties.satellites) {
-    this.add(new THREE.SolarObject(systemProperties.satellites[i]));
-  }
 
   this.updateMorphTargets();
 };
@@ -65,36 +55,31 @@ THREE.SolarObject = function(systemProperties) {
 THREE.SolarObject.prototype = Object.create( THREE.Mesh.prototype );
 THREE.SolarObject.prototype.constructor = THREE.SolarObject;
 
-THREE.SolarObject.prototype.addSatellite = function(satellite) {
-  this.satellites.push(satellite);
-};
-
-THREE.SolarObject.prototype.createOrbit = function(position){
-  this.parent = new THREE.Object3D();
-  this.parent.position = position;
-  this.parent.add(this);
-  this.position.z = position.z + this.orbitDistance;
-};
-
 THREE.SolarObject.prototype.update = function() {
-  this.rotation.y += this.vRotation * Math.PI / 180 ;     // Rotates  45 degrees per frame;
-
-  // Update the new position of the orbit of the satellites.
-  for(var i in this.satellites){
-    this.satellites[i].updateOrbit(this.position);
-  }
+  this.rotation.y -= this.vRotation * Math.PI / 180 ;     // Rotates  45 degrees per frame;
 };
 
-THREE.SolarObject.prototype.updateOrbit = function(position){
-  this.parent.position = position;
-  this.parent.position.y = this.parent.rotation.y;
-  this.parent.rotation.y += this.vTranslation * Math.PI / 180  || 0;
 
-  if(this.orbit === 'Earth') {
-    console.log(position);
-    console.log(this.parent.rotation.y);
-    console.log(this.position.z + ' - ' + this.parent.position.z + ' - ' + position.z );
-  }
+
+
+THREE.SolarOrbit = function(orbitProperties) {
+
+  THREE.Object3D.call( this );
+
+  this.name = orbitProperties.name;
+  this.type = 'SolarOrbit';
+  this.radius = orbitProperties.radius || 50;
+  this.speed = orbitProperties.speed || 0;
+  this.tilt = orbitProperties.tilt || 0;
+
+  //this.updateMorphTargets();
+};
+
+THREE.SolarOrbit.prototype = Object.create( THREE.Object3D.prototype );
+THREE.SolarOrbit.prototype.constructor = THREE.SolarOrbit;
+
+THREE.SolarOrbit.prototype.update = function() {
+  this.rotation.y -= this.speed * Math.PI / 180 ;     // Rotates  45 degrees per frame;
 };
 
 
@@ -104,6 +89,7 @@ define('scene-factory', function() {
 
   var scene, camera, renderer, controls;
   var solarObjects = [];
+  var solarOrbits = [];
 
   var factory = {
     createCamera: createCamera,
@@ -123,18 +109,37 @@ define('scene-factory', function() {
   function createMesh(objectProperties){
     var solarObject = new THREE.SolarObject(objectProperties);
     solarObjects.push(solarObject);
-    if(objectProperties.orbit) {
-      for(var i in solarObjects) {
-        if(solarObjects[i].name === objectProperties.orbit) {
-          solarObject.createOrbit(solarObjects[i].position);
-          solarObjects[i].addSatellite(solarObject);
+    if(objectProperties.orbitRound) {
+
+      var orbitProperties = {
+        name: objectProperties.name,
+        radius: objectProperties.orbitRadius,
+        speed: objectProperties.orbitSpeed,
+        tilt: objectProperties.orbitTilt
+      };
+      var solarOrbit = new THREE.SolarOrbit(orbitProperties);
+
+      var solarParentOrbit;
+      for(var i in solarOrbits) {
+        if(objectProperties.orbitRound === solarOrbits[i].name) {
+          solarParentOrbit = solarOrbits[i];
         }
       }
-      scene.add(solarObject.parent);
-      return;
-    }
 
-    scene.add(solarObject);
+      if(solarParentOrbit) {
+        solarOrbit.position.z = solarParentOrbit.position.z + solarParentOrbit.radius || 0;
+        solarParentOrbit.add(solarOrbit);
+      } else {
+        scene.add(solarOrbit);
+      }
+
+      solarOrbits.push(solarOrbit);
+
+      solarObject.position.z = solarOrbit.radius || 0;
+      solarOrbit.add(solarObject);
+    } else {
+      scene.add(solarObject);
+    }
   }
 
   function render() {
@@ -144,7 +149,7 @@ define('scene-factory', function() {
   function init() {
     scene = new THREE.Scene();
 
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     document.body.appendChild( renderer.domElement );
@@ -158,6 +163,10 @@ define('scene-factory', function() {
 
     for(var i in solarObjects) {
       solarObjects[i].update();
+    }
+
+    for(var j in solarOrbits) {
+      solarOrbits[j].update();
     }
 
     controls.update();

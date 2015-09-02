@@ -4,12 +4,12 @@ define('scene-factory', function() {
   'use strict';
 
   var scene, camera, renderer, controls;
-  var solarObjects = [];
+  var solarBodies = [];
   var solarOrbits = [];
 
   var factory = {
     createCamera: createCamera,
-    createMesh: createMesh,
+    createBody: createBody,
     init: init
   };
 
@@ -22,22 +22,22 @@ define('scene-factory', function() {
     controls.addEventListener('change', render);
   }
 
-  function createMesh(objectProperties){
-    var solarObject = new THREE.SolarObject(objectProperties);
-    solarObjects.push(solarObject);
-    if(objectProperties.orbitRound) {
+  function createBody(bodyProperties){
+    var solarBody = new THREE.SolarBody(bodyProperties);
+    solarBodies.push(solarBody);
+    if(bodyProperties.orbitRound) {
 
       var orbitProperties = {
-        name: objectProperties.name,
-        radius: objectProperties.orbitRadius,
-        speed: objectProperties.orbitSpeed,
-        tilt: objectProperties.orbitTilt
+        name: bodyProperties.name,
+        radius: bodyProperties.orbitRadius,
+        speed: bodyProperties.orbitSpeed,
+        tilt: bodyProperties.orbitTilt
       };
       var solarOrbit = new THREE.SolarOrbit(orbitProperties);
 
       var solarParentOrbit;
       for(var i in solarOrbits) {
-        if(objectProperties.orbitRound === solarOrbits[i].name) {
+        if(bodyProperties.orbitRound === solarOrbits[i].name) {
           solarParentOrbit = solarOrbits[i];
         }
       }
@@ -51,10 +51,10 @@ define('scene-factory', function() {
 
       solarOrbits.push(solarOrbit);
 
-      solarObject.position.z = solarOrbit.radius || 0;
-      solarOrbit.add(solarObject);
+      solarBody.position.z = solarOrbit.radius || 0;
+      solarOrbit.add(solarBody);
     } else {
-      scene.add(solarObject);
+      scene.add(solarBody);
     }
   }
 
@@ -77,8 +77,8 @@ define('scene-factory', function() {
 
     requestAnimationFrame( animate );
 
-    for(var i in solarObjects) {
-      solarObjects[i].update();
+    for(var i in solarBodies) {
+      solarBodies[i].update();
     }
 
     for(var j in solarOrbits) {

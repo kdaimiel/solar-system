@@ -1,11 +1,51 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.29 - 2015-09-01
+ * @version v0.0.30 - 2015-09-02
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
+
+THREE.SolarBody = function(bodyProperties) {
+
+  THREE.Object3D.call( this );
+
+  this.name = bodyProperties.name;
+  this.type = 'SolarBody';
+  this.category = bodyProperties.category;
+  this.radius = bodyProperties.radius || 50;
+  this.vRotation = bodyProperties.vRotation || 0;
+  this.URLTexture = bodyProperties.URLTexture;
+  this.tilt = bodyProperties.tilt || 0;
+
+  this.geometry = new THREE.SphereGeometry(this.radius, 50, 50);
+  var texture = THREE.ImageUtils.loadTexture(this.URLTexture);
+  this.material = new THREE.MeshBasicMaterial({ map: texture });
+
+  this.rotation.x = this.tilt;
+
+  if(bodyProperties.ringsProperties) {
+    this.createRings(bodyProperties.ringsProperties);
+  }
+
+  this.updateMorphTargets();
+};
+
+THREE.SolarBody.prototype = Object.create( THREE.Mesh.prototype );
+
+THREE.SolarBody.prototype.constructor = THREE.SolarBody;
+
+THREE.SolarBody.prototype.createRings = function(ringsProperties) {
+  var solarRings = new THREE.SolarRings(ringsProperties);
+  this.add(solarRings);
+};
+
+
+THREE.SolarBody.prototype.update = function() {
+  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
+};
+
 
 THREE.SolarCamera = function(cameraProperties) {
 
@@ -32,36 +72,6 @@ THREE.SolarCamera.prototype.constructor = THREE.PerspectiveCamera;
 
 
 
-THREE.SolarObject = function(objectProperties) {
-
-  THREE.Object3D.call( this );
-
-  this.name = objectProperties.name;
-  this.type = 'SolarObject';
-  this.category = objectProperties.category;
-  this.radius = objectProperties.radius || 50;
-  this.vRotation = objectProperties.vRotation || 0;
-  this.URLTexture = objectProperties.URLTexture;
-
-  this.geometry = new THREE.SphereGeometry(this.radius, 50, 50);
-  var texture = THREE.ImageUtils.loadTexture(this.URLTexture);
-  this.material = new THREE.MeshBasicMaterial({ map: texture });
-
-  this.rotation.x = this.tilt || 0;
-
-  this.updateMorphTargets();
-};
-
-THREE.SolarObject.prototype = Object.create( THREE.Mesh.prototype );
-THREE.SolarObject.prototype.constructor = THREE.SolarObject;
-
-THREE.SolarObject.prototype.update = function() {
-  this.rotation.y -= this.vRotation * Math.PI / 180 ;     // Rotates  45 degrees per frame;
-};
-
-
-
-
 THREE.SolarOrbit = function(orbitProperties) {
 
   THREE.Object3D.call( this );
@@ -71,16 +81,112 @@ THREE.SolarOrbit = function(orbitProperties) {
   this.radius = orbitProperties.radius || 50;
   this.speed = orbitProperties.speed || 0;
   this.tilt = orbitProperties.tilt || 0;
-
-  //this.updateMorphTargets();
 };
 
 THREE.SolarOrbit.prototype = Object.create( THREE.Object3D.prototype );
 THREE.SolarOrbit.prototype.constructor = THREE.SolarOrbit;
 
 THREE.SolarOrbit.prototype.update = function() {
-  this.rotation.y -= this.speed * Math.PI / 180 ;     // Rotates  45 degrees per frame;
+  this.rotation.y -= this.speed * Math.PI / 180 ;     // Rotates  N degrees per frame;
 };
+
+
+THREE.SolarRings = function(ringsProperties) {
+
+  THREE.Object3D.call( this );
+
+  this.type = 'SolarRings';
+  this.URLTexture = ringsProperties.URLTexture;
+  this.vRotation = ringsProperties.vRotation || 0;
+  this.tilt = ringsProperties.tilt || 0;
+
+  this.geometry = new THREE.SolarRingsGeometry(ringsProperties);
+  var texture = THREE.ImageUtils.loadTexture(ringsProperties.URLTexture);
+  this.material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+
+  this.rotation.x = (90 - this.tilt) * Math.PI / 180;
+
+  this.updateMorphTargets();
+};
+
+THREE.SolarRings.prototype = Object.create( THREE.Mesh.prototype );
+THREE.SolarRings.prototype.constructor = THREE.SolarRings;
+
+
+THREE.SolarRings.prototype.update = function() {
+  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates N degrees per frame;
+};
+
+
+THREE.SolarRingsGeometry = function ( ringsProperties ) {
+
+  THREE.Geometry.call( this );
+
+  this.type = 'SolarRingsGeometry';
+
+  this.innerRadius = ringsProperties.innerRadius || 0;
+  this.outerRadius = ringsProperties.outerRadius || 50;
+
+  this.thetaStart = ringsProperties.thetaStart !== undefined ? ringsProperties.thetaStart : 0;
+  this.thetaLength = ringsProperties.thetaLength !== undefined ? ringsProperties.thetaLength : Math.PI * 2;
+
+  this.thetaSegments = ringsProperties.thetaSegments !== undefined ? Math.max( 3, ringsProperties.thetaSegments ) : 50;
+  this.phiSegments = ringsProperties.phiSegments !== undefined ? Math.max( 1, ringsProperties.phiSegments ) : 50;
+
+  var i, o, uvs = [], radius = this.innerRadius, radiusStep = ( ( ringsProperties.outerRadius - ringsProperties.innerRadius ) / this.phiSegments ), segment;
+
+  for ( i = 0; i < this.phiSegments + 1; i ++ ) { // concentric circles inside ring
+
+    for ( o = 0; o < this.thetaSegments + 1; o ++ ) { // number of segments per circle
+
+      var vertex = new THREE.Vector3();
+      segment = this.thetaStart + o / this.thetaSegments * this.thetaLength;
+      vertex.x = radius * Math.cos( segment );
+      vertex.y = radius * Math.sin( segment );
+
+      this.vertices.push( vertex );
+      uvs.push( new THREE.Vector2( i/(this.thetaSegments-1), o/ (this.phiSegments-1) ) );
+    }
+
+    radius += radiusStep;
+
+  }
+
+  var n = new THREE.Vector3( 0, 0, 1 );
+
+  for ( i = 0; i < this.phiSegments; i ++ ) { // concentric circles inside ring
+
+    var thetaSegment = i * (this.thetaSegments + 1);
+
+    for ( o = 0; o < this.thetaSegments ; o ++ ) { // number of segments per circle
+
+      segment = o + thetaSegment;
+
+      var v1 = segment;
+      var v2 = segment + this.thetaSegments + 1;
+      var v3 = segment + this.thetaSegments + 2;
+
+      this.faces.push( new THREE.Face3( v1, v2, v3, [ n.clone(), n.clone(), n.clone() ] ) );
+      this.faceVertexUvs[ 0 ].push( [ uvs[ v1 ].clone(), uvs[ v2 ].clone(), uvs[ v3 ].clone() ]);
+
+      v1 = segment;
+      v2 = segment + this.thetaSegments + 2;
+      v3 = segment + 1;
+
+      this.faces.push( new THREE.Face3( v1, v2, v3, [ n.clone(), n.clone(), n.clone() ] ) );
+      this.faceVertexUvs[ 0 ].push( [ uvs[ v1 ].clone(), uvs[ v2 ].clone(), uvs[ v3 ].clone() ]);
+
+    }
+  }
+
+  this.computeFaceNormals();
+
+  this.boundingSphere = new THREE.Sphere( new THREE.Vector3(), radius );
+
+};
+
+THREE.SolarRingsGeometry.prototype = Object.create( THREE.RingGeometry.prototype );
+THREE.SolarRingsGeometry.prototype.constructor = THREE.SolarRingsGeometry;
 
 
 define('scene-factory', function() {
@@ -88,12 +194,12 @@ define('scene-factory', function() {
   'use strict';
 
   var scene, camera, renderer, controls;
-  var solarObjects = [];
+  var solarBodies = [];
   var solarOrbits = [];
 
   var factory = {
     createCamera: createCamera,
-    createMesh: createMesh,
+    createBody: createBody,
     init: init
   };
 
@@ -106,22 +212,22 @@ define('scene-factory', function() {
     controls.addEventListener('change', render);
   }
 
-  function createMesh(objectProperties){
-    var solarObject = new THREE.SolarObject(objectProperties);
-    solarObjects.push(solarObject);
-    if(objectProperties.orbitRound) {
+  function createBody(bodyProperties){
+    var solarBody = new THREE.SolarBody(bodyProperties);
+    solarBodies.push(solarBody);
+    if(bodyProperties.orbitRound) {
 
       var orbitProperties = {
-        name: objectProperties.name,
-        radius: objectProperties.orbitRadius,
-        speed: objectProperties.orbitSpeed,
-        tilt: objectProperties.orbitTilt
+        name: bodyProperties.name,
+        radius: bodyProperties.orbitRadius,
+        speed: bodyProperties.orbitSpeed,
+        tilt: bodyProperties.orbitTilt
       };
       var solarOrbit = new THREE.SolarOrbit(orbitProperties);
 
       var solarParentOrbit;
       for(var i in solarOrbits) {
-        if(objectProperties.orbitRound === solarOrbits[i].name) {
+        if(bodyProperties.orbitRound === solarOrbits[i].name) {
           solarParentOrbit = solarOrbits[i];
         }
       }
@@ -135,10 +241,10 @@ define('scene-factory', function() {
 
       solarOrbits.push(solarOrbit);
 
-      solarObject.position.z = solarOrbit.radius || 0;
-      solarOrbit.add(solarObject);
+      solarBody.position.z = solarOrbit.radius || 0;
+      solarOrbit.add(solarBody);
     } else {
-      scene.add(solarObject);
+      scene.add(solarBody);
     }
   }
 
@@ -161,8 +267,8 @@ define('scene-factory', function() {
 
     requestAnimationFrame( animate );
 
-    for(var i in solarObjects) {
-      solarObjects[i].update();
+    for(var i in solarBodies) {
+      solarBodies[i].update();
     }
 
     for(var j in solarOrbits) {
@@ -182,7 +288,7 @@ define('solar-service', function() {
 
   var service = {
     getCamera: getCamera,
-    getObjects: getObjects
+    getBodies: getBodies
   };
 
   return service;
@@ -191,8 +297,8 @@ define('solar-service', function() {
     getJSON('../src/data/camera.properties.json', callback);
   }
 
-  function getObjects(callback){
-    getJSON('../src/data/system.properties.json', callback);
+  function getBodies(callback){
+    getJSON('../src/data/bodies.properties.json', callback);
   }
 
   function getJSON(src, callback) {
@@ -219,12 +325,12 @@ require([
   function loadCamera(cameraProperties) {
     SceneFactory.createCamera(cameraProperties);
     SceneFactory.init();
-    SolarService.getObjects(loadObjects);
+    SolarService.getBodies(loadBodies);
   }
 
-  function loadObjects(systemPropertes) {
-    systemPropertes.forEach(function(element) {
-      SceneFactory.createMesh(element);
+  function loadBodies(bodiesProperties) {
+    bodiesProperties.forEach(function(element) {
+      SceneFactory.createBody(element);
     });
   }
 });

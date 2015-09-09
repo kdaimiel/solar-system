@@ -50,7 +50,10 @@ module.exports = function(grunt) {
       },
       livereload: {
         options: {
-          open: true
+          open : {
+            target: 'http://localhost:9000/demo/', // target url to open
+            callback: function() {} // called when the app has opened
+          }
         }
       }
     },

@@ -9,12 +9,12 @@ require([
   function loadCamera(cameraProperties) {
     SceneFactory.createCamera(cameraProperties);
     SceneFactory.init();
-    SolarService.getObjects(loadObjects);
+    SolarService.getBodies(loadBodies);
   }
 
-  function loadObjects(systemPropertes) {
-    systemPropertes.forEach(function(element) {
-      SceneFactory.createMesh(element);
+  function loadBodies(bodiesProperties) {
+    bodiesProperties.forEach(function(element) {
+      SceneFactory.createBody(element);
     });
   }
 });

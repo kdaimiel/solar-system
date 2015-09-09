@@ -4,11 +4,12 @@ define('scene-factory', function() {
   'use strict';
 
   var scene, camera, renderer, controls;
-  var solarObjects = [];
+  var solarBodies = [];
+  var solarOrbits = [];
 
   var factory = {
     createCamera: createCamera,
-    createMesh: createMesh,
+    createBody: createBody,
     init: init
   };
 
@@ -21,21 +22,37 @@ define('scene-factory', function() {
     controls.addEventListener('change', render);
   }
 
-  function createMesh(objectProperties){
-    var solarObject = new THREE.SolarObject(objectProperties);
-    solarObjects.push(solarObject);
-    if(objectProperties.orbit) {
-      for(var i in solarObjects) {
-        if(solarObjects[i].name === objectProperties.orbit) {
-          solarObject.createOrbit(solarObjects[i].position);
-          solarObjects[i].addSatellite(solarObject);
+  function createBody(bodyProperties){
+    var solarBody = new THREE.SolarBody(bodyProperties);
+    solarBodies.push(solarBody);
+    if(bodyProperties.orbitProperties) {
+
+      var orbitProperties = bodyProperties.orbitProperties;
+      orbitProperties.name = bodyProperties.name;
+
+      var solarOrbit = new THREE.SolarOrbit(orbitProperties);
+
+      var solarParentOrbit;
+      for(var i in solarOrbits) {
+        if(orbitProperties.round === solarOrbits[i].name) {
+          solarParentOrbit = solarOrbits[i];
         }
       }
-      scene.add(solarObject.parent);
-      return;
-    }
 
-    scene.add(solarObject);
+      if(solarParentOrbit) {
+        solarOrbit.position.z = solarParentOrbit.position.z + solarParentOrbit.radius || 0;
+        solarParentOrbit.add(solarOrbit);
+      } else {
+        scene.add(solarOrbit);
+      }
+
+      solarOrbits.push(solarOrbit);
+
+      solarBody.position.z = solarOrbit.radius || 0;
+      solarOrbit.add(solarBody);
+    } else {
+      scene.add(solarBody);
+    }
   }
 
   function render() {
@@ -45,10 +62,15 @@ define('scene-factory', function() {
   function init() {
     scene = new THREE.Scene();
 
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     document.body.appendChild( renderer.domElement );
+
+    //var light = new THREE.AmbientLight( 0x888888 );
+    var light = new THREE.AmbientLight( 0xFFFFFF);
+
+    scene.add( light );
 
     animate();
   }
@@ -57,8 +79,12 @@ define('scene-factory', function() {
 
     requestAnimationFrame( animate );
 
-    for(var i in solarObjects) {
-      solarObjects[i].update();
+    for(var i in solarBodies) {
+      solarBodies[i].update();
+    }
+
+    for(var j in solarOrbits) {
+      solarOrbits[j].update();
     }
 
     controls.update();

@@ -4,17 +4,17 @@ THREE.SolarRings = function(ringsProperties) {
   THREE.Object3D.call( this );
 
   this.type = 'SolarRings';
-  this.URLTexture = ringsProperties.URLTexture;
+  this.map = ringsProperties.map;
   this.vRotation = ringsProperties.vRotation || 0;
   this.tilt = ringsProperties.tilt || 0;
 
   this.geometry = new THREE.SolarRingsGeometry(ringsProperties);
-  var texture = THREE.ImageUtils.loadTexture(ringsProperties.URLTexture);
+  var texture = THREE.ImageUtils.loadTexture(this.map);
   this.material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
 
   this.rotation.x = (90 - this.tilt) * Math.PI / 180;
 
-  this.updateMorphTargets();
+  //this.updateMorphTargets();
 };
 
 THREE.SolarRings.prototype = Object.create( THREE.Mesh.prototype );

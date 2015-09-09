@@ -25,19 +25,16 @@ define('scene-factory', function() {
   function createBody(bodyProperties){
     var solarBody = new THREE.SolarBody(bodyProperties);
     solarBodies.push(solarBody);
-    if(bodyProperties.orbitRound) {
+    if(bodyProperties.orbitProperties) {
 
-      var orbitProperties = {
-        name: bodyProperties.name,
-        radius: bodyProperties.orbitRadius,
-        speed: bodyProperties.orbitSpeed,
-        tilt: bodyProperties.orbitTilt
-      };
+      var orbitProperties = bodyProperties.orbitProperties;
+      orbitProperties.name = bodyProperties.name;
+
       var solarOrbit = new THREE.SolarOrbit(orbitProperties);
 
       var solarParentOrbit;
       for(var i in solarOrbits) {
-        if(bodyProperties.orbitRound === solarOrbits[i].name) {
+        if(orbitProperties.round === solarOrbits[i].name) {
           solarParentOrbit = solarOrbits[i];
         }
       }
@@ -69,6 +66,11 @@ define('scene-factory', function() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     document.body.appendChild( renderer.domElement );
+
+    //var light = new THREE.AmbientLight( 0x888888 );
+    var light = new THREE.AmbientLight( 0xFFFFFF);
+
+    scene.add( light );
 
     animate();
   }

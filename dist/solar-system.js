@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.30 - 2015-09-02
+ * @version v0.0.31 - 2015-09-09
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -20,21 +20,56 @@ THREE.SolarBody = function(bodyProperties) {
   this.tilt = bodyProperties.tilt || 0;
 
   this.geometry = new THREE.SphereGeometry(this.radius, 50, 50);
-  var texture = THREE.ImageUtils.loadTexture(this.URLTexture);
-  this.material = new THREE.MeshBasicMaterial({ map: texture });
+  bodyProperties.textureProperties.name = this.name; // TEMPORAL
+
+  this.material = createMaterial(bodyProperties.textureProperties);
 
   this.rotation.x = this.tilt;
+
+  if(bodyProperties.cloudsProperties) {
+    console.log('AAAAAAAAAAAAA');
+    this.createClouds(bodyProperties.cloudsProperties);
+  }
 
   if(bodyProperties.ringsProperties) {
     this.createRings(bodyProperties.ringsProperties);
   }
 
   this.updateMorphTargets();
+
+  function createMaterial(textureProperties) {
+
+    var material  = new THREE.MeshPhongMaterial();
+
+    material.map    = THREE.ImageUtils.loadTexture(textureProperties.map);
+
+    material.bumpMap = textureProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(textureProperties.bumpMap) : undefined;
+    //material.bumpScale = 0.05;
+    material.specularMap    = textureProperties.specularMap !== undefined ? THREE.ImageUtils.loadTexture(textureProperties.specularMap) : undefined;
+    //material.specular  = new THREE.Color('grey');
+
+    return material;
+  }
+
 };
 
 THREE.SolarBody.prototype = Object.create( THREE.Mesh.prototype );
-
 THREE.SolarBody.prototype.constructor = THREE.SolarBody;
+
+THREE.SolarBody.prototype.createClouds = function(cloudsProperties) {
+  var geometry   = new THREE.SphereGeometry(cloudsProperties.radius, 50, 50);
+  var texture = THREE.ImageUtils.loadTexture(cloudsProperties.map);
+  var material  = new THREE.MeshPhongMaterial({
+    map: texture,
+    side: THREE.DoubleSide,
+    opacity: cloudsProperties.opacity,
+    transparent: cloudsProperties.transparent,
+    depthWrite : cloudsProperties.depthWrite,
+  });
+
+  var cloudMesh = new THREE.Mesh(geometry, material);
+  this.add(cloudMesh);
+};
 
 THREE.SolarBody.prototype.createRings = function(ringsProperties) {
   var solarRings = new THREE.SolarRings(ringsProperties);
@@ -96,17 +131,17 @@ THREE.SolarRings = function(ringsProperties) {
   THREE.Object3D.call( this );
 
   this.type = 'SolarRings';
-  this.URLTexture = ringsProperties.URLTexture;
+  this.map = ringsProperties.map;
   this.vRotation = ringsProperties.vRotation || 0;
   this.tilt = ringsProperties.tilt || 0;
 
   this.geometry = new THREE.SolarRingsGeometry(ringsProperties);
-  var texture = THREE.ImageUtils.loadTexture(ringsProperties.URLTexture);
+  var texture = THREE.ImageUtils.loadTexture(this.map);
   this.material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
 
   this.rotation.x = (90 - this.tilt) * Math.PI / 180;
 
-  this.updateMorphTargets();
+  //this.updateMorphTargets();
 };
 
 THREE.SolarRings.prototype = Object.create( THREE.Mesh.prototype );
@@ -215,19 +250,16 @@ define('scene-factory', function() {
   function createBody(bodyProperties){
     var solarBody = new THREE.SolarBody(bodyProperties);
     solarBodies.push(solarBody);
-    if(bodyProperties.orbitRound) {
+    if(bodyProperties.orbitProperties) {
 
-      var orbitProperties = {
-        name: bodyProperties.name,
-        radius: bodyProperties.orbitRadius,
-        speed: bodyProperties.orbitSpeed,
-        tilt: bodyProperties.orbitTilt
-      };
+      var orbitProperties = bodyProperties.orbitProperties;
+      orbitProperties.name = bodyProperties.name;
+
       var solarOrbit = new THREE.SolarOrbit(orbitProperties);
 
       var solarParentOrbit;
       for(var i in solarOrbits) {
-        if(bodyProperties.orbitRound === solarOrbits[i].name) {
+        if(orbitProperties.round === solarOrbits[i].name) {
           solarParentOrbit = solarOrbits[i];
         }
       }
@@ -259,6 +291,11 @@ define('scene-factory', function() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     document.body.appendChild( renderer.domElement );
+
+    //var light = new THREE.AmbientLight( 0x888888 );
+    var light = new THREE.AmbientLight( 0xFFFFFF);
+
+    scene.add( light );
 
     animate();
   }
@@ -334,3 +371,66 @@ require([
     });
   }
 });
+
+
+// Init scene which content rendered objects.
+var scene = new THREE.Scene();
+
+// Init a perspective camera tho watch objects.
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+// Create a renderer object and include this in html code.
+// aLpha:true sets background to be transparent
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.getElementById('picture').appendChild( renderer.domElement );
+
+// Create a cube object with a specific geometry and material.
+
+var geometry   = new THREE.SphereGeometry(1, 32, 32);
+var material  = new THREE.MeshPhongMaterial();
+var earthMesh = new THREE.Mesh(geometry, material);
+
+material.map  = THREE.ImageUtils.loadTexture('img/earth/earthmap1k.jpg');
+
+material.bumpMap    = THREE.ImageUtils.loadTexture('img/earth/earthbump1k.jpg');
+material.bumpScale = 0.05;
+
+material.specularMap    = THREE.ImageUtils.loadTexture('img/earth/earthspec1k.jpg');
+material.specular  = new THREE.Color('grey');
+
+scene.add(earthMesh);
+
+var light = new THREE.PointLight( 0xff0000, 1, 100 );
+light.position.set( 0, 0, 0 );
+scene.add( light );
+
+var light = new THREE.AmbientLight( 0x888888 );
+scene.add( light );
+// var light  = new THREE.DirectionalLight( 'white', 1)
+// light.position.set(5,5,5)
+// light.target.position.set( 0, 0, 0 )
+// scene.add( light )
+
+/*var light = new THREE.DirectionalLight( 0xcccccc, 1 );
+light.position.set(5,3,5);
+scene.add( light );*/
+
+
+
+// Set the camera position in z axis.
+camera.position.z = 5;
+
+// render function to start renderization.
+function render() {
+
+  // Set animation Frame
+  requestAnimationFrame( render );
+
+  // Set render update properties to objects
+
+  renderer.render( scene, camera );
+}
+
+// Start render
+render();

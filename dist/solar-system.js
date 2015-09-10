@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.31 - 2015-09-09
+ * @version v0.0.36 - 2015-09-10
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -27,7 +27,6 @@ THREE.SolarBody = function(bodyProperties) {
   this.rotation.x = this.tilt;
 
   if(bodyProperties.cloudsProperties) {
-    console.log('AAAAAAAAAAAAA');
     this.createClouds(bodyProperties.cloudsProperties);
   }
 
@@ -44,10 +43,9 @@ THREE.SolarBody = function(bodyProperties) {
     material.map    = THREE.ImageUtils.loadTexture(textureProperties.map);
 
     material.bumpMap = textureProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(textureProperties.bumpMap) : undefined;
-    //material.bumpScale = 0.05;
+    material.bumpScale = 0.05;
     material.specularMap    = textureProperties.specularMap !== undefined ? THREE.ImageUtils.loadTexture(textureProperties.specularMap) : undefined;
-    //material.specular  = new THREE.Color('grey');
-
+    material.specular  = new THREE.Color('grey');
     return material;
   }
 
@@ -57,6 +55,9 @@ THREE.SolarBody.prototype = Object.create( THREE.Mesh.prototype );
 THREE.SolarBody.prototype.constructor = THREE.SolarBody;
 
 THREE.SolarBody.prototype.createClouds = function(cloudsProperties) {
+
+  cloudsProperties.radius = cloudsProperties.radius || this.radius + 10;
+
   var geometry   = new THREE.SphereGeometry(cloudsProperties.radius, 50, 50);
   var texture = THREE.ImageUtils.loadTexture(cloudsProperties.map);
   var material  = new THREE.MeshPhongMaterial({
@@ -68,6 +69,12 @@ THREE.SolarBody.prototype.createClouds = function(cloudsProperties) {
   });
 
   var cloudMesh = new THREE.Mesh(geometry, material);
+  cloudMesh.rotation.x = this.tilt;
+  cloudMesh.update = function () {
+    this.rotation.x -= cloudsProperties.speed * Math.PI / 180;     // Rotates  N degrees per frame;
+    this.rotation.y -= cloudsProperties.speed * Math.PI / 180;     // Rotates  N degrees per frame;
+    this.rotation.z -= cloudsProperties.speed * Math.PI / 180;     // Rotates  N degrees per frame;
+  };
   this.add(cloudMesh);
 };
 
@@ -76,9 +83,11 @@ THREE.SolarBody.prototype.createRings = function(ringsProperties) {
   this.add(solarRings);
 };
 
-
 THREE.SolarBody.prototype.update = function() {
   this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
+  for(var i in this.children) {
+    this.children[i].update();
+  }
 };
 
 
@@ -123,6 +132,9 @@ THREE.SolarOrbit.prototype.constructor = THREE.SolarOrbit;
 
 THREE.SolarOrbit.prototype.update = function() {
   this.rotation.y -= this.speed * Math.PI / 180 ;     // Rotates  N degrees per frame;
+  for(var i in this.children) {
+    this.children[i].update();
+  }
 };
 
 
@@ -141,7 +153,6 @@ THREE.SolarRings = function(ringsProperties) {
 
   this.rotation.x = (90 - this.tilt) * Math.PI / 180;
 
-  //this.updateMorphTargets();
 };
 
 THREE.SolarRings.prototype = Object.create( THREE.Mesh.prototype );
@@ -304,12 +315,10 @@ define('scene-factory', function() {
 
     requestAnimationFrame( animate );
 
-    for(var i in solarBodies) {
-      solarBodies[i].update();
-    }
-
-    for(var j in solarOrbits) {
-      solarOrbits[j].update();
+    for(var i in scene.children) {
+      if(scene.children[i].update) {
+        scene.children[i].update();
+      }
     }
 
     controls.update();
@@ -371,66 +380,3 @@ require([
     });
   }
 });
-
-
-// Init scene which content rendered objects.
-var scene = new THREE.Scene();
-
-// Init a perspective camera tho watch objects.
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
-// Create a renderer object and include this in html code.
-// aLpha:true sets background to be transparent
-var renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.getElementById('picture').appendChild( renderer.domElement );
-
-// Create a cube object with a specific geometry and material.
-
-var geometry   = new THREE.SphereGeometry(1, 32, 32);
-var material  = new THREE.MeshPhongMaterial();
-var earthMesh = new THREE.Mesh(geometry, material);
-
-material.map  = THREE.ImageUtils.loadTexture('img/earth/earthmap1k.jpg');
-
-material.bumpMap    = THREE.ImageUtils.loadTexture('img/earth/earthbump1k.jpg');
-material.bumpScale = 0.05;
-
-material.specularMap    = THREE.ImageUtils.loadTexture('img/earth/earthspec1k.jpg');
-material.specular  = new THREE.Color('grey');
-
-scene.add(earthMesh);
-
-var light = new THREE.PointLight( 0xff0000, 1, 100 );
-light.position.set( 0, 0, 0 );
-scene.add( light );
-
-var light = new THREE.AmbientLight( 0x888888 );
-scene.add( light );
-// var light  = new THREE.DirectionalLight( 'white', 1)
-// light.position.set(5,5,5)
-// light.target.position.set( 0, 0, 0 )
-// scene.add( light )
-
-/*var light = new THREE.DirectionalLight( 0xcccccc, 1 );
-light.position.set(5,3,5);
-scene.add( light );*/
-
-
-
-// Set the camera position in z axis.
-camera.position.z = 5;
-
-// render function to start renderization.
-function render() {
-
-  // Set animation Frame
-  requestAnimationFrame( render );
-
-  // Set render update properties to objects
-
-  renderer.render( scene, camera );
-}
-
-// Start render
-render();

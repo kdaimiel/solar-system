@@ -79,12 +79,10 @@ define('scene-factory', function() {
 
     requestAnimationFrame( animate );
 
-    for(var i in solarBodies) {
-      solarBodies[i].update();
-    }
-
-    for(var j in solarOrbits) {
-      solarOrbits[j].update();
+    for(var i in scene.children) {
+      if(scene.children[i].update) {
+        scene.children[i].update();
+      }
     }
 
     controls.update();

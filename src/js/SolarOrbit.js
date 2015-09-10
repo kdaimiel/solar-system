@@ -16,4 +16,7 @@ THREE.SolarOrbit.prototype.constructor = THREE.SolarOrbit;
 
 THREE.SolarOrbit.prototype.update = function() {
   this.rotation.y -= this.speed * Math.PI / 180 ;     // Rotates  N degrees per frame;
+  for(var i in this.children) {
+    this.children[i].update();
+  }
 };

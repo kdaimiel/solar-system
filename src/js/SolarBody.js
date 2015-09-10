@@ -19,7 +19,6 @@ THREE.SolarBody = function(bodyProperties) {
   this.rotation.x = this.tilt;
 
   if(bodyProperties.cloudsProperties) {
-    console.log('AAAAAAAAAAAAA');
     this.createClouds(bodyProperties.cloudsProperties);
   }
 
@@ -36,10 +35,9 @@ THREE.SolarBody = function(bodyProperties) {
     material.map    = THREE.ImageUtils.loadTexture(textureProperties.map);
 
     material.bumpMap = textureProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(textureProperties.bumpMap) : undefined;
-    //material.bumpScale = 0.05;
+    material.bumpScale = 0.05;
     material.specularMap    = textureProperties.specularMap !== undefined ? THREE.ImageUtils.loadTexture(textureProperties.specularMap) : undefined;
-    //material.specular  = new THREE.Color('grey');
-
+    material.specular  = new THREE.Color('grey');
     return material;
   }
 
@@ -49,6 +47,9 @@ THREE.SolarBody.prototype = Object.create( THREE.Mesh.prototype );
 THREE.SolarBody.prototype.constructor = THREE.SolarBody;
 
 THREE.SolarBody.prototype.createClouds = function(cloudsProperties) {
+
+  cloudsProperties.radius = cloudsProperties.radius || this.radius + 10;
+
   var geometry   = new THREE.SphereGeometry(cloudsProperties.radius, 50, 50);
   var texture = THREE.ImageUtils.loadTexture(cloudsProperties.map);
   var material  = new THREE.MeshPhongMaterial({
@@ -60,6 +61,12 @@ THREE.SolarBody.prototype.createClouds = function(cloudsProperties) {
   });
 
   var cloudMesh = new THREE.Mesh(geometry, material);
+  cloudMesh.rotation.x = this.tilt;
+  cloudMesh.update = function () {
+    this.rotation.x -= cloudsProperties.speed * Math.PI / 180;     // Rotates  N degrees per frame;
+    this.rotation.y -= cloudsProperties.speed * Math.PI / 180;     // Rotates  N degrees per frame;
+    this.rotation.z -= cloudsProperties.speed * Math.PI / 180;     // Rotates  N degrees per frame;
+  };
   this.add(cloudMesh);
 };
 
@@ -68,7 +75,9 @@ THREE.SolarBody.prototype.createRings = function(ringsProperties) {
   this.add(solarRings);
 };
 
-
 THREE.SolarBody.prototype.update = function() {
   this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
+  for(var i in this.children) {
+    this.children[i].update();
+  }
 };

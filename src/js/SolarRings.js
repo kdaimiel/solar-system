@@ -14,7 +14,6 @@ THREE.SolarRings = function(ringsProperties) {
 
   this.rotation.x = (90 - this.tilt) * Math.PI / 180;
 
-  //this.updateMorphTargets();
 };
 
 THREE.SolarRings.prototype = Object.create( THREE.Mesh.prototype );

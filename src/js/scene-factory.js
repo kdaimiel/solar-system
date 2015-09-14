@@ -4,55 +4,23 @@ define('scene-factory', function() {
   'use strict';
 
   var scene, camera, renderer, controls;
-  var solarBodies = [];
-  var solarOrbits = [];
 
   var factory = {
+    addObject: addObject,
     createCamera: createCamera,
-    createBody: createBody,
     init: init
   };
 
   return factory;
 
-  function createCamera(cameraProperties) {
-    camera = new THREE.SolarCamera(cameraProperties);
-
-    controls = new THREE.TrackballControls(camera);
-    controls.addEventListener('change', render);
+  function addObject(object) {
+    scene.add(object);
   }
 
-  function createBody(bodyProperties){
-    var solarBody = new THREE.SolarBody(bodyProperties);
-    solarBodies.push(solarBody);
-    if(bodyProperties.orbitProperties) {
-
-      var orbitProperties = bodyProperties.orbitProperties;
-      orbitProperties.name = bodyProperties.name;
-
-      var solarOrbit = new THREE.SolarOrbit(orbitProperties);
-
-      var solarParentOrbit;
-      for(var i in solarOrbits) {
-        if(orbitProperties.round === solarOrbits[i].name) {
-          solarParentOrbit = solarOrbits[i];
-        }
-      }
-
-      if(solarParentOrbit) {
-        solarOrbit.position.z = solarParentOrbit.position.z + solarParentOrbit.radius || 0;
-        solarParentOrbit.add(solarOrbit);
-      } else {
-        scene.add(solarOrbit);
-      }
-
-      solarOrbits.push(solarOrbit);
-
-      solarBody.position.z = solarOrbit.radius || 0;
-      solarOrbit.add(solarBody);
-    } else {
-      scene.add(solarBody);
-    }
+  function createCamera(cameraProperties) {
+    camera = new THREE.SolarCamera(cameraProperties);
+    controls = new THREE.TrackballControls(camera);
+    controls.addEventListener('change', render);
   }
 
   function render() {

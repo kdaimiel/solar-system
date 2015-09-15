@@ -5,7 +5,7 @@ define('solar-service', function() {
 
   var service = {
     getCamera: getCamera,
-    getPlanets: getPlanets
+    getBodies: getBodies
   };
 
   return service;
@@ -14,8 +14,8 @@ define('solar-service', function() {
     getJSON('../src/data/camera.properties.json', callback);
   }
 
-  function getPlanets(callback){
-    getJSON('../src/data/planets.properties.json', callback);
+  function getBodies(callback){
+    getJSON('../src/data/bodies.properties.json', callback);
   }
 
   function getJSON(src, callback) {
@@ -24,7 +24,7 @@ define('solar-service', function() {
         return callback(data);
       },
       error: function(err) {
-        console.error('Load JSON error:' + err);
+        console.error('Load ' + src + ' error :' + err);
       }
     });
   }

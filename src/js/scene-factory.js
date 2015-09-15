@@ -7,7 +7,9 @@ define('scene-factory', function() {
 
   var factory = {
     addObject: addObject,
+    animate : animate,
     createCamera: createCamera,
+    createControls: createControls,
     init: init
   };
 
@@ -17,8 +19,11 @@ define('scene-factory', function() {
     scene.add(object);
   }
 
-  function createCamera(cameraProperties) {
-    camera = new THREE.SolarCamera(cameraProperties);
+  function createCamera(cam) {
+    camera = cam;
+  }
+
+  function createControls(){
     controls = new THREE.TrackballControls(camera);
     controls.addEventListener('change', render);
   }
@@ -34,13 +39,6 @@ define('scene-factory', function() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     document.body.appendChild( renderer.domElement );
-
-    //var light = new THREE.AmbientLight( 0x888888 );
-    var light = new THREE.AmbientLight( 0xFFFFFF);
-
-    scene.add( light );
-
-    animate();
   }
 
   function animate() {
@@ -53,7 +51,9 @@ define('scene-factory', function() {
       }
     }
 
-    controls.update();
+    if(controls) {
+      controls.update();
+    }
 
     render();
   }

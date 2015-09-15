@@ -4,41 +4,48 @@ require([
   'solar-service'
 ], function three(SceneFactory, SolarService) {
 
-  var planets = {};
+  var bodies = {};
   var orbits = {};
 
-  SolarService.getCamera(loadCamera);
+  init();
 
-  function loadCamera(cameraProperties) {
-    SceneFactory.createCamera(cameraProperties);
+  function init() {
     SceneFactory.init();
-    SolarService.getPlanets(loadPlanets);
+    SolarService.getCamera(loadCamera);
+    SolarService.getBodies(loadBodies);
+    createLights();
   }
 
-  function loadPlanets(planetsProperties) {
-    planetsProperties.forEach(function(planetProperties) {
-      createPlanet(planetProperties);
+  function loadCamera(cameraProperties) {
+    var camera = new THREE.SolarCamera(cameraProperties);
+    SceneFactory.createCamera(camera);
+    SceneFactory.animate();
+    SceneFactory.createControls();
+  }
+
+  function loadBodies(bodiesProperties) {
+    bodiesProperties.forEach(function(bodyProperties) {
+      createBody(bodyProperties);
     });
   }
 
-  function createPlanet(planetProperties){
-    var planet = new THREE.Planet(planetProperties);
-    planets[planet.name] = planet;
-    if(planetProperties.orbitProperties) {
-      createOrbit(planet, planetProperties.orbitProperties);
-    } else {
-      SceneFactory.addObject(planet);
-    }
-  }
+  function createBody(bodyProperties){
+    var body = new THREE.SolarBody(bodyProperties);
+    bodies[body.name] = body;
 
-  function createOrbit(planet, orbitProperties) {
-    orbitProperties.name = planet.name;
-    var orbit = new THREE.Orbit(orbitProperties);
+    if(!bodyProperties.orbitProperties) {
+      SceneFactory.addObject(body);
+      return;
+    }
+
+    var orbitProperties = bodyProperties.orbitProperties;
+    orbitProperties.name = body.name;
+    var orbit = new THREE.SolarOrbit(orbitProperties);
 
     var parentOrbit = orbits[orbitProperties.round] ? orbits[orbitProperties.round] : undefined;
 
     if(parentOrbit) {
-      orbit.position.z = parentOrbit.position.z + parentOrbit.radius || 0;
+      orbit.position.z = bodies[parentOrbit.name].position.z || 0;
       parentOrbit.add(orbit);
     } else {
       SceneFactory.addObject(orbit);
@@ -46,8 +53,12 @@ require([
 
     orbits[orbitProperties.name] = orbit;
 
-    planet.position.z = orbit.radius || 0;
-    orbit.add(planet);
+    body.position.z = bodies[orbitProperties.round].radius + orbit.distance + body.radius || 0;
+    orbit.add(body);
   }
 
+  function createLights() {
+    var light = new THREE.AmbientLight( 0xFFFFFF);
+    SceneFactory.addObject(light);
+  }
 });

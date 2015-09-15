@@ -1,67 +1,42 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.38 - 2015-09-15
+ * @version v0.0.39 - 2015-09-15
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-
-THREE.Orbit = function(orbitProperties) {
-
-  THREE.Object3D.call( this );
-
-  this.name = orbitProperties.name;
-  this.type = 'Orbit';
-  this.radius = orbitProperties.radius || 50;
-  this.speed = orbitProperties.speed || 0;
-  this.tilt = orbitProperties.tilt || 0;
-};
-
-THREE.Orbit.prototype = Object.create( THREE.Object3D.prototype );
-THREE.Orbit.prototype.constructor = THREE.Orbit;
-
-THREE.Orbit.prototype.update = function() {
-  this.rotation.y -= this.speed * Math.PI / 180 ;     // Rotates  N degrees per frame;
-  for(var i in this.children) {
-    this.children[i].update();
-  }
-};
-
-
-THREE.Planet = function(planetProperties) {
+THREE.SolarBody = function(bodyProperties) {
 
   THREE.Object3D.call( this );
 
-  this.name = planetProperties.name;
-  this.type = 'Planet';
-  this.category = planetProperties.category;
-  this.radius = planetProperties.radius || 50;
-  this.vRotation = planetProperties.vRotation || 0;
-  this.URLTexture = planetProperties.URLTexture;
-  this.tilt = planetProperties.tilt || 0;
+  this.name = bodyProperties.name;
+  this.type = 'SolarBody';
+
+  this.category = bodyProperties.category;
+  this.radius = bodyProperties.radius || 50;
+  this.vRotation = bodyProperties.vRotation || 0;
+  this.URLTexture = bodyProperties.URLTexture;
+  this.tilt = bodyProperties.tilt || 0;
 
   this.geometry = new THREE.SphereGeometry(this.radius, 50, 50);
-  planetProperties.textureProperties.name = this.name; // TEMPORAL
-
-  this.material = createMaterial(planetProperties.textureProperties);
+  this.material = createMaterial(bodyProperties.textureProperties);
 
   this.rotation.x = this.tilt;
 
-  if(planetProperties.cloudsProperties) {
-    this.createClouds(planetProperties.cloudsProperties);
+  if(bodyProperties.cloudsProperties) {
+    this.createClouds(bodyProperties.cloudsProperties);
   }
 
-  if(planetProperties.ringsProperties) {
-    this.createRings(planetProperties.ringsProperties);
+  if(bodyProperties.ringsProperties) {
+    this.createRings(bodyProperties.ringsProperties);
   }
 
   this.updateMorphTargets();
 
   function createMaterial(textureProperties) {
     var material  = new THREE.MeshPhongMaterial();
-
     material.map    = THREE.ImageUtils.loadTexture(textureProperties.map);
     material.bumpMap = textureProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(textureProperties.bumpMap) : undefined;
     material.bumpScale = 0.05;
@@ -72,10 +47,10 @@ THREE.Planet = function(planetProperties) {
 
 };
 
-THREE.Planet.prototype = Object.create( THREE.Mesh.prototype );
-THREE.Planet.prototype.constructor = THREE.Planet;
+THREE.SolarBody.prototype = Object.create( THREE.Mesh.prototype );
+THREE.SolarBody.prototype.constructor = THREE.SolarBody;
 
-THREE.Planet.prototype.createClouds = function(cloudsProperties) {
+THREE.SolarBody.prototype.createClouds = function(cloudsProperties) {
 
   cloudsProperties.radius = cloudsProperties.radius || this.radius + 10;
 
@@ -99,12 +74,12 @@ THREE.Planet.prototype.createClouds = function(cloudsProperties) {
   this.add(cloudMesh);
 };
 
-THREE.Planet.prototype.createRings = function(ringsProperties) {
-  var rings = new THREE.Rings(ringsProperties);
+THREE.SolarBody.prototype.createRings = function(ringsProperties) {
+  var rings = new THREE.SolarRings(ringsProperties);
   this.add(rings);
 };
 
-THREE.Planet.prototype.update = function() {
+THREE.SolarBody.prototype.update = function() {
   this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
   for(var i in this.children) {
     this.children[i].update();
@@ -112,7 +87,51 @@ THREE.Planet.prototype.update = function() {
 };
 
 
-THREE.Rings = function(ringsProperties) {
+THREE.SolarCamera = function(cameraProperties) {
+
+  THREE.PerspectiveCamera.call( this );
+
+  this.type = 'SolarCamera';
+
+  this.zoom = cameraProperties.zoom !== undefined ? cameraProperties.zoom : 1;
+  this.fov = cameraProperties.fov !== undefined ? cameraProperties.fov : 50;
+  this.aspect = cameraProperties.aspect !== undefined ? cameraProperties.aspect : window.innerWidth / window.innerHeight;
+  this.near = cameraProperties.near !== undefined ? cameraProperties.near : 0.1;
+  this.far = cameraProperties.far !== undefined ? cameraProperties.far : 2000;
+  this.position.x = cameraProperties.position.x !== undefined ? cameraProperties.position.x : 0;
+  this.position.y = cameraProperties.position.y !== undefined ? cameraProperties.position.y : 0;
+  this.position.z = cameraProperties.position.z !== undefined ? cameraProperties.position.z : 0;
+
+  this.updateProjectionMatrix();
+};
+
+THREE.SolarCamera.prototype = Object.create( THREE.PerspectiveCamera.prototype);
+THREE.SolarCamera.prototype.constructor = THREE.PerspectiveCamera;
+
+
+THREE.SolarOrbit = function(orbitProperties) {
+
+  THREE.Object3D.call( this );
+
+  this.name = orbitProperties.name;
+  this.type = 'Orbit';
+  this.distance = orbitProperties.distance || 50;
+  this.speed = orbitProperties.speed || 0;
+  this.tilt = orbitProperties.tilt || 0;
+};
+
+THREE.SolarOrbit.prototype = Object.create( THREE.Object3D.prototype );
+THREE.SolarOrbit.prototype.constructor = THREE.SolarOrbit;
+
+THREE.SolarOrbit.prototype.update = function() {
+  this.rotation.y -= this.speed * Math.PI / 180 ;     // Rotates  N degrees per frame;
+  for(var i in this.children) {
+    this.children[i].update();
+  }
+};
+
+
+THREE.SolarRings = function(ringsProperties) {
 
   THREE.Object3D.call( this );
 
@@ -129,11 +148,11 @@ THREE.Rings = function(ringsProperties) {
 
 };
 
-THREE.Rings.prototype = Object.create( THREE.Mesh.prototype );
-THREE.Rings.prototype.constructor = THREE.Rings;
+THREE.SolarRings.prototype = Object.create( THREE.Mesh.prototype );
+THREE.SolarRings.prototype.constructor = THREE.SolarRings;
 
 
-THREE.Rings.prototype.update = function() {
+THREE.SolarRings.prototype.update = function() {
   this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates N degrees per frame;
 };
 
@@ -209,70 +228,53 @@ THREE.RingsGeometry.prototype = Object.create( THREE.RingGeometry.prototype );
 THREE.RingsGeometry.prototype.constructor = THREE.RingsGeometry;
 
 
-THREE.SolarCamera = function(cameraProperties) {
-
-  THREE.PerspectiveCamera.call( this );
-
-  this.type = 'SolarCamera';
-
-  this.zoom = cameraProperties.zoom !== undefined ? cameraProperties.zoom : 1;
-
-  this.fov = cameraProperties.fov !== undefined ? cameraProperties.fov : 50;
-  this.aspect = cameraProperties.aspect !== undefined ? cameraProperties.aspect : window.innerWidth / window.innerHeight;
-  this.near = cameraProperties.near !== undefined ? cameraProperties.near : 0.1;
-  this.far = cameraProperties.far !== undefined ? cameraProperties.far : 2000;
-  this.position.x = cameraProperties.position.x !== undefined ? cameraProperties.position.x : 0;
-  this.position.y = cameraProperties.position.y !== undefined ? cameraProperties.position.y : 0;
-  this.position.z = cameraProperties.position.z !== undefined ? cameraProperties.position.z : 0;
-
-  this.updateProjectionMatrix();
-
-};
-
-THREE.SolarCamera.prototype = Object.create( THREE.PerspectiveCamera.prototype);
-THREE.SolarCamera.prototype.constructor = THREE.PerspectiveCamera;
-
-
 require([
   'scene-factory',
   'solar-service'
 ], function three(SceneFactory, SolarService) {
 
-  var planets = {};
+  var bodies = {};
   var orbits = {};
 
-  SolarService.getCamera(loadCamera);
+  init();
 
-  function loadCamera(cameraProperties) {
-    SceneFactory.createCamera(cameraProperties);
+  function init() {
     SceneFactory.init();
-    SolarService.getPlanets(loadPlanets);
+    SolarService.getCamera(loadCamera);
+    SolarService.getBodies(loadBodies);
+    createLights();
   }
 
-  function loadPlanets(planetsProperties) {
-    planetsProperties.forEach(function(planetProperties) {
-      createPlanet(planetProperties);
+  function loadCamera(cameraProperties) {
+    var camera = new THREE.SolarCamera(cameraProperties);
+    SceneFactory.createCamera(camera);
+    SceneFactory.animate();
+    SceneFactory.createControls();
+  }
+
+  function loadBodies(bodiesProperties) {
+    bodiesProperties.forEach(function(bodyProperties) {
+      createBody(bodyProperties);
     });
   }
 
-  function createPlanet(planetProperties){
-    var planet = new THREE.Planet(planetProperties);
-    planets[planet.name] = planet;
-    if(planetProperties.orbitProperties) {
-      createOrbit(planet, planetProperties.orbitProperties);
-    } else {
-      SceneFactory.addObject(planet);
-    }
-  }
+  function createBody(bodyProperties){
+    var body = new THREE.SolarBody(bodyProperties);
+    bodies[body.name] = body;
 
-  function createOrbit(planet, orbitProperties) {
-    orbitProperties.name = planet.name;
-    var orbit = new THREE.Orbit(orbitProperties);
+    if(!bodyProperties.orbitProperties) {
+      SceneFactory.addObject(body);
+      return;
+    }
+
+    var orbitProperties = bodyProperties.orbitProperties;
+    orbitProperties.name = body.name;
+    var orbit = new THREE.SolarOrbit(orbitProperties);
 
     var parentOrbit = orbits[orbitProperties.round] ? orbits[orbitProperties.round] : undefined;
 
     if(parentOrbit) {
-      orbit.position.z = parentOrbit.position.z + parentOrbit.radius || 0;
+      orbit.position.z = bodies[parentOrbit.name].position.z || 0;
       parentOrbit.add(orbit);
     } else {
       SceneFactory.addObject(orbit);
@@ -280,10 +282,14 @@ require([
 
     orbits[orbitProperties.name] = orbit;
 
-    planet.position.z = orbit.radius || 0;
-    orbit.add(planet);
+    body.position.z = bodies[orbitProperties.round].radius + orbit.distance + body.radius || 0;
+    orbit.add(body);
   }
 
+  function createLights() {
+    var light = new THREE.AmbientLight( 0xFFFFFF);
+    SceneFactory.addObject(light);
+  }
 });
 
 
@@ -295,7 +301,9 @@ define('scene-factory', function() {
 
   var factory = {
     addObject: addObject,
+    animate : animate,
     createCamera: createCamera,
+    createControls: createControls,
     init: init
   };
 
@@ -305,8 +313,11 @@ define('scene-factory', function() {
     scene.add(object);
   }
 
-  function createCamera(cameraProperties) {
-    camera = new THREE.SolarCamera(cameraProperties);
+  function createCamera(cam) {
+    camera = cam;
+  }
+
+  function createControls(){
     controls = new THREE.TrackballControls(camera);
     controls.addEventListener('change', render);
   }
@@ -322,13 +333,6 @@ define('scene-factory', function() {
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     document.body.appendChild( renderer.domElement );
-
-    //var light = new THREE.AmbientLight( 0x888888 );
-    var light = new THREE.AmbientLight( 0xFFFFFF);
-
-    scene.add( light );
-
-    animate();
   }
 
   function animate() {
@@ -341,7 +345,9 @@ define('scene-factory', function() {
       }
     }
 
-    controls.update();
+    if(controls) {
+      controls.update();
+    }
 
     render();
   }
@@ -354,7 +360,7 @@ define('solar-service', function() {
 
   var service = {
     getCamera: getCamera,
-    getPlanets: getPlanets
+    getBodies: getBodies
   };
 
   return service;
@@ -363,8 +369,8 @@ define('solar-service', function() {
     getJSON('../src/data/camera.properties.json', callback);
   }
 
-  function getPlanets(callback){
-    getJSON('../src/data/planets.properties.json', callback);
+  function getBodies(callback){
+    getJSON('../src/data/bodies.properties.json', callback);
   }
 
   function getJSON(src, callback) {
@@ -373,7 +379,7 @@ define('solar-service', function() {
         return callback(data);
       },
       error: function(err) {
-        console.error('Load JSON error:' + err);
+        console.error('Load ' + src + ' error :' + err);
       }
     });
   }

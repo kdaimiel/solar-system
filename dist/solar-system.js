@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.37 - 2015-09-14
+ * @version v0.0.38 - 2015-09-15
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -267,10 +267,10 @@ require([
 
   function createOrbit(planet, orbitProperties) {
     orbitProperties.name = planet.name;
-
     var orbit = new THREE.Orbit(orbitProperties);
 
     var parentOrbit = orbits[orbitProperties.round] ? orbits[orbitProperties.round] : undefined;
+
     if(parentOrbit) {
       orbit.position.z = parentOrbit.position.z + parentOrbit.radius || 0;
       parentOrbit.add(orbit);

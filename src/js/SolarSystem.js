@@ -5,7 +5,6 @@ require([
 ], function three(SceneFactory, SolarService) {
 
   var bodies = {};
-  var orbits = {};
 
   init();
 
@@ -33,28 +32,12 @@ require([
     var body = new THREE.SolarBody(bodyProperties);
     bodies[body.name] = body;
 
-    if(!bodyProperties.orbitProperties) {
-      SceneFactory.addObject(body);
-      return;
-    }
-
-    var orbitProperties = bodyProperties.orbitProperties;
-    orbitProperties.name = body.name;
-    var orbit = new THREE.SolarOrbit(orbitProperties);
-
-    var parentOrbit = orbits[orbitProperties.round] ? orbits[orbitProperties.round] : undefined;
-
-    if(parentOrbit) {
-      orbit.position.z = bodies[parentOrbit.name].position.z || 0;
-      parentOrbit.add(orbit);
+    if(bodyProperties.orbitProperties) {
+      var orbit = new THREE.SolarOrbit(bodyProperties.orbitProperties);
+      bodies[bodyProperties.orbitProperties.round].addSatellite(orbit, body);
     } else {
-      SceneFactory.addObject(orbit);
+      SceneFactory.addObject(body);
     }
-
-    orbits[orbitProperties.name] = orbit;
-
-    body.position.z = bodies[orbitProperties.round].radius + orbit.distance + body.radius || 0;
-    orbit.add(body);
   }
 
   function createLights() {

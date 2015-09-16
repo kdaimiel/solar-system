@@ -77,3 +77,18 @@ THREE.SolarBody.prototype.update = function() {
     this.children[i].update();
   }
 };
+
+THREE.SolarBody.prototype.addSatellite = function(orbit, satellite) {
+
+
+  satellite.orbit = orbit;
+
+  if(this.orbit){
+    this.orbit.add(orbit);
+    orbit.position.z = this.position.z || 0;
+  } else {
+    this.parent.add(orbit);
+  }
+  orbit.add(satellite);
+  satellite.position.z = this.radius + orbit.distance + satellite.radius || 0;
+};

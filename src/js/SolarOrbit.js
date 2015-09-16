@@ -3,8 +3,7 @@ THREE.SolarOrbit = function(orbitProperties) {
 
   THREE.Object3D.call( this );
 
-  this.name = orbitProperties.name;
-  this.type = 'Orbit';
+  this.type = 'SolarOrbit';
   this.distance = orbitProperties.distance || 50;
   this.speed = orbitProperties.speed || 0;
   this.tilt = orbitProperties.tilt || 0;

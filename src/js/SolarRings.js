@@ -3,7 +3,7 @@ THREE.SolarRings = function(ringsProperties) {
 
   THREE.Object3D.call( this );
 
-  this.type = 'Rings';
+  this.type = 'SolarRings';
   this.map = ringsProperties.map;
   this.vRotation = ringsProperties.vRotation || 0;
   this.tilt = ringsProperties.tilt || 0;

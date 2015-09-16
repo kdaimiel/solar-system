@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.41 - 2015-09-15
+ * @version v0.0.42 - 2015-09-16
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -86,6 +86,21 @@ THREE.SolarBody.prototype.update = function() {
   }
 };
 
+THREE.SolarBody.prototype.addSatellite = function(orbit, satellite) {
+
+
+  satellite.orbit = orbit;
+
+  if(this.orbit){
+    this.orbit.add(orbit);
+    orbit.position.z = this.position.z || 0;
+  } else {
+    this.parent.add(orbit);
+  }
+  orbit.add(satellite);
+  satellite.position.z = this.radius + orbit.distance + satellite.radius || 0;
+};
+
 
 THREE.SolarCamera = function(cameraProperties) {
 
@@ -113,8 +128,7 @@ THREE.SolarOrbit = function(orbitProperties) {
 
   THREE.Object3D.call( this );
 
-  this.name = orbitProperties.name;
-  this.type = 'Orbit';
+  this.type = 'SolarOrbit';
   this.distance = orbitProperties.distance || 50;
   this.speed = orbitProperties.speed || 0;
   this.tilt = orbitProperties.tilt || 0;
@@ -135,7 +149,7 @@ THREE.SolarRings = function(ringsProperties) {
 
   THREE.Object3D.call( this );
 
-  this.type = 'Rings';
+  this.type = 'SolarRings';
   this.map = ringsProperties.map;
   this.vRotation = ringsProperties.vRotation || 0;
   this.tilt = ringsProperties.tilt || 0;
@@ -234,7 +248,6 @@ require([
 ], function three(SceneFactory, SolarService) {
 
   var bodies = {};
-  var orbits = {};
 
   init();
 
@@ -262,28 +275,12 @@ require([
     var body = new THREE.SolarBody(bodyProperties);
     bodies[body.name] = body;
 
-    if(!bodyProperties.orbitProperties) {
-      SceneFactory.addObject(body);
-      return;
-    }
-
-    var orbitProperties = bodyProperties.orbitProperties;
-    orbitProperties.name = body.name;
-    var orbit = new THREE.SolarOrbit(orbitProperties);
-
-    var parentOrbit = orbits[orbitProperties.round] ? orbits[orbitProperties.round] : undefined;
-
-    if(parentOrbit) {
-      orbit.position.z = bodies[parentOrbit.name].position.z || 0;
-      parentOrbit.add(orbit);
+    if(bodyProperties.orbitProperties) {
+      var orbit = new THREE.SolarOrbit(bodyProperties.orbitProperties);
+      bodies[bodyProperties.orbitProperties.round].addSatellite(orbit, body);
     } else {
-      SceneFactory.addObject(orbit);
+      SceneFactory.addObject(body);
     }
-
-    orbits[orbitProperties.name] = orbit;
-
-    body.position.z = bodies[orbitProperties.round].radius + orbit.distance + body.radius || 0;
-    orbit.add(body);
   }
 
   function createLights() {

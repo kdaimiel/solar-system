@@ -10,7 +10,7 @@ THREE.SolarRings = function(ringsProperties) {
 
   this.geometry = new THREE.RingsGeometry(ringsProperties);
   var texture = THREE.ImageUtils.loadTexture(this.map);
-  this.material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+  this.material = new THREE.MeshPhongMaterial({ map: texture, side: THREE.DoubleSide });
 
   this.rotation.x = (90 - this.tilt) * Math.PI / 180;
 

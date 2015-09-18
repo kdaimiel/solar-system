@@ -8,8 +8,8 @@ define('scene-factory', function() {
   var factory = {
     addObject: addObject,
     animate : animate,
-    createCamera: createCamera,
-    createControls: createControls,
+    setCamera: setCamera,
+    setControls: setControls,
     init: init
   };
 
@@ -19,12 +19,12 @@ define('scene-factory', function() {
     scene.add(object);
   }
 
-  function createCamera(cam) {
-    camera = cam;
+  function setCamera(newCamera) {
+    camera = newCamera;
   }
 
-  function createControls(){
-    controls = new THREE.TrackballControls(camera);
+  function setControls(newControls){
+    controls = newControls;
     controls.addEventListener('change', render);
   }
 

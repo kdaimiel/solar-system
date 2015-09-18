@@ -18,6 +18,10 @@ define('solar-service', function() {
     getJSON('../src/data/bodies.properties.json', callback);
   }
 
+  /*function getLights(callback){
+    getJSON('../src/data/lights.properties.json', callback);
+  }*/
+
   function getJSON(src, callback) {
     $.ajax(src, {
       success: function(data) {
@@ -28,5 +32,4 @@ define('solar-service', function() {
       }
     });
   }
-
 });

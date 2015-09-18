@@ -31,12 +31,10 @@ THREE.SolarBody = function(bodyProperties) {
     var material  = new THREE.MeshPhongMaterial();
     material.map    = THREE.ImageUtils.loadTexture(textureProperties.map);
     material.bumpMap = textureProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(textureProperties.bumpMap) : undefined;
-    material.bumpScale = 0.05;
     material.specularMap    = textureProperties.specularMap !== undefined ? THREE.ImageUtils.loadTexture(textureProperties.specularMap) : undefined;
-    material.specular  = new THREE.Color('grey');
+    material.reflectivity = 1;
     return material;
   }
-
 };
 
 THREE.SolarBody.prototype = Object.create( THREE.Mesh.prototype );
@@ -44,7 +42,7 @@ THREE.SolarBody.prototype.constructor = THREE.SolarBody;
 
 THREE.SolarBody.prototype.createClouds = function(cloudsProperties) {
 
-  cloudsProperties.radius = cloudsProperties.radius || this.radius + 10;
+  cloudsProperties.radius = cloudsProperties.radius || this.radius + 100;
 
   var geometry   = new THREE.SphereGeometry(cloudsProperties.radius, 50, 50);
   var texture = THREE.ImageUtils.loadTexture(cloudsProperties.map);
@@ -78,9 +76,8 @@ THREE.SolarBody.prototype.update = function() {
   }
 };
 
-THREE.SolarBody.prototype.addSatellite = function(orbit, satellite) {
-
-
+THREE.SolarBody.prototype.addSatellite = function(satellite, orbitProperties) {
+  var orbit = new THREE.SolarOrbit(orbitProperties);
   satellite.orbit = orbit;
 
   if(this.orbit){

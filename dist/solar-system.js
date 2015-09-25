@@ -1,60 +1,24 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.44 - 2015-09-18
+ * @version v0.0.45 - 2015-09-25
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-THREE.SolarBody = function(bodyProperties) {
+THREE.Clouds = function(cloudsProperties) {
 
-  THREE.Object3D.call( this );
+  THREE.Planet.call( this );
 
-  this.name = bodyProperties.name;
-  this.type = 'SolarBody';
-
-  this.category = bodyProperties.category;
-  this.radius = bodyProperties.radius || 50;
-  this.vRotation = bodyProperties.vRotation || 0;
-  this.URLTexture = bodyProperties.URLTexture;
-  this.tilt = bodyProperties.tilt || 0;
-
-  this.geometry = new THREE.SphereGeometry(this.radius, 50, 50);
-  this.material = createMaterial(bodyProperties.textureProperties);
+  this.name = cloudsProperties.name;
+  this.type = cloudsProperties.type || 'Clouds';
 
   this.rotation.x = this.tilt;
 
-  if(bodyProperties.cloudsProperties) {
-    this.createClouds(bodyProperties.cloudsProperties);
-  }
-
-  if(bodyProperties.ringsProperties) {
-    this.createRings(bodyProperties.ringsProperties);
-  }
-
-  this.updateMorphTargets();
-
-  function createMaterial(textureProperties) {
-    var material  = new THREE.MeshPhongMaterial();
-    material.map    = THREE.ImageUtils.loadTexture(textureProperties.map);
-    material.bumpMap = textureProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(textureProperties.bumpMap) : undefined;
-    material.specularMap    = textureProperties.specularMap !== undefined ? THREE.ImageUtils.loadTexture(textureProperties.specularMap) : undefined;
-    material.reflectivity = 1;
-    return material;
-  }
-};
-
-THREE.SolarBody.prototype = Object.create( THREE.Mesh.prototype );
-THREE.SolarBody.prototype.constructor = THREE.SolarBody;
-
-THREE.SolarBody.prototype.createClouds = function(cloudsProperties) {
-
-  cloudsProperties.radius = cloudsProperties.radius || this.radius + 100;
-
-  var geometry   = new THREE.SphereGeometry(cloudsProperties.radius, 50, 50);
+  this.geometry   = new THREE.SphereGeometry(cloudsProperties.radius, 50, 50);
   var texture = THREE.ImageUtils.loadTexture(cloudsProperties.map);
-  var material  = new THREE.MeshPhongMaterial({
+  this.material  = new THREE.MeshPhongMaterial({
     map: texture,
     side: THREE.DoubleSide,
     opacity: cloudsProperties.opacity,
@@ -62,27 +26,74 @@ THREE.SolarBody.prototype.createClouds = function(cloudsProperties) {
     depthWrite : cloudsProperties.depthWrite,
   });
 
-  var cloudMesh = new THREE.Mesh(geometry, material);
-  cloudMesh.rotation.x = this.tilt;
-  cloudMesh.update = function () {
-    this.rotation.x -= cloudsProperties.speed * Math.PI / 180;     // Rotates  N degrees per frame;
-    this.rotation.y -= cloudsProperties.speed * Math.PI / 180;     // Rotates  N degrees per frame;
-    this.rotation.z -= cloudsProperties.speed * Math.PI / 180;     // Rotates  N degrees per frame;
-  };
-  this.add(cloudMesh);
+  this.updateMorphTargets();
 };
 
-THREE.SolarBody.prototype.createRings = function(ringsProperties) {
-  var rings = new THREE.SolarRings(ringsProperties);
-  this.add(rings);
+THREE.Clouds.prototype = Object.create( THREE.Mesh.prototype );
+THREE.Clouds.prototype.constructor = THREE.Clouds;
+
+THREE.Clouds.prototype.update = function() {
+  // Rotates with the same speed in every direction (degrees).
+  this.rotation.x -= this.speed * Math.PI / 180;
+  this.rotation.y -= this.speed * Math.PI / 180;
+  this.rotation.z -= this.speed * Math.PI / 180;
 };
 
-THREE.SolarBody.prototype.update = function() {
-  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
-  for(var i in this.children) {
-    this.children[i].update();
+
+THREE.Planet = function(planetProperties) {
+
+  THREE.SolarBody.call(this, planetProperties);
+
+  if(planetProperties.cloudsProperties) {
+    this.createClouds(planetProperties.cloudsProperties);
+  }
+
+  if(planetProperties.ringsProperties) {
+    this.createRings(planetProperties.ringsProperties);
   }
 };
+
+THREE.Planet.prototype = Object.create( THREE.SolarBody.prototype );
+THREE.Planet.prototype.constructor = THREE.Planet;
+
+THREE.Planet.prototype.createClouds = function(cloudsProperties) {
+  this.add(new THREE.SolarRings(cloudsProperties));
+};
+
+THREE.Planet.prototype.createRings = function(ringsProperties) {
+  this.add(new THREE.SolarRings(ringsProperties));
+};
+
+THREE.Planet.prototype.update = function(camera) {
+  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
+  for(var i in this.children) {
+    this.children[i].update(camera, this);
+  }
+};
+
+
+THREE.SolarBody = function(bodyProperties) {
+  THREE.Object3D.call( this );
+
+  this.name = bodyProperties.name;
+  this.type = bodyProperties.type;
+
+  this.radius = bodyProperties.radius || 50;
+  this.rotation.x = bodyProperties.tilt || 0;
+  this.vRotation = bodyProperties.vRotation || 0;
+
+  this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
+  this.material  = new THREE.MeshPhongMaterial();
+  this.material.map  = THREE.ImageUtils.loadTexture(bodyProperties.map);
+  this.material.bumpMap = bodyProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(bodyProperties.bumpMap) : undefined;
+  this.material.specularMap  = bodyProperties.specularMap !== undefined ? THREE.ImageUtils.loadTexture(bodyProperties.specularMap) : undefined;
+  this.material.depthWrite = false;
+
+  this.updateMorphTargets();
+};
+
+THREE.SolarBody.prototype = Object.create( THREE.Mesh.prototype );
+THREE.SolarBody.prototype.constructor = THREE.SolarBody;
 
 THREE.SolarBody.prototype.addSatellite = function(satellite, orbitProperties) {
   var orbit = new THREE.SolarOrbit(orbitProperties);
@@ -134,17 +145,14 @@ THREE.SolarRings = function(ringsProperties) {
   this.material = new THREE.MeshPhongMaterial({ map: texture, side: THREE.DoubleSide });
 
   this.rotation.x = (90 - this.tilt) * Math.PI / 180;
-
 };
 
 THREE.SolarRings.prototype = Object.create( THREE.Mesh.prototype );
 THREE.SolarRings.prototype.constructor = THREE.SolarRings;
 
-
 THREE.SolarRings.prototype.update = function() {
   this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates N degrees per frame;
 };
-
 
 THREE.RingsGeometry = function ( ringsProperties ) {
 
@@ -162,11 +170,8 @@ THREE.RingsGeometry = function ( ringsProperties ) {
   this.phiSegments = ringsProperties.phiSegments !== undefined ? Math.max( 1, ringsProperties.phiSegments ) : 50;
 
   var i, o, uvs = [], radius = this.innerRadius, radiusStep = ( ( ringsProperties.outerRadius - ringsProperties.innerRadius ) / this.phiSegments ), segment;
-
   for ( i = 0; i < this.phiSegments + 1; i ++ ) { // concentric circles inside ring
-
     for ( o = 0; o < this.thetaSegments + 1; o ++ ) { // number of segments per circle
-
       var vertex = new THREE.Vector3();
       segment = this.thetaStart + o / this.thetaSegments * this.thetaLength;
       vertex.x = radius * Math.cos( segment );
@@ -175,21 +180,14 @@ THREE.RingsGeometry = function ( ringsProperties ) {
       this.vertices.push( vertex );
       uvs.push( new THREE.Vector2( i/(this.thetaSegments-1), o/ (this.phiSegments-1) ) );
     }
-
     radius += radiusStep;
-
   }
 
   var n = new THREE.Vector3( 0, 0, 1 );
-
   for ( i = 0; i < this.phiSegments; i ++ ) { // concentric circles inside ring
-
     var thetaSegment = i * (this.thetaSegments + 1);
-
     for ( o = 0; o < this.thetaSegments ; o ++ ) { // number of segments per circle
-
       segment = o + thetaSegment;
-
       var v1 = segment;
       var v2 = segment + this.thetaSegments + 1;
       var v3 = segment + this.thetaSegments + 2;
@@ -203,14 +201,11 @@ THREE.RingsGeometry = function ( ringsProperties ) {
 
       this.faces.push( new THREE.Face3( v1, v2, v3, [ n.clone(), n.clone(), n.clone() ] ) );
       this.faceVertexUvs[ 0 ].push( [ uvs[ v1 ].clone(), uvs[ v2 ].clone(), uvs[ v3 ].clone() ]);
-
     }
   }
 
   this.computeFaceNormals();
-
   this.boundingSphere = new THREE.Sphere( new THREE.Vector3(), radius );
-
 };
 
 THREE.RingsGeometry.prototype = Object.create( THREE.RingGeometry.prototype );
@@ -230,7 +225,7 @@ require([
     SceneFactory.init();
     SolarService.getCamera(loadCamera);
     SolarService.getBodies(loadBodies);
-    createLights();
+    SolarService.getLights(loadLights);
   }
 
   function loadCamera(cameraProperties) {
@@ -252,37 +247,64 @@ require([
     });
   }
 
-  function createBody(bodyProperties){
-    var body = new THREE.SolarBody(bodyProperties);
-    bodies[body.name] = body;
+  function loadLights(lightsProperties) {
+    lightsProperties.forEach(function(lightProperties) {
+      createLight(lightProperties);
+    });
+  }
 
+
+  function createBody(bodyProperties){
+    var body;
+    switch(bodyProperties.type) {
+    case 'Star':
+      body = new THREE.Star(bodyProperties);
+      break;
+    case 'Planet':
+      body = new THREE.Planet(bodyProperties);
+      break;
+    case 'Dwarf Planet':
+      body = new THREE.Planet(bodyProperties);
+      break;
+    case 'Moon':
+      body = new THREE.Planet(bodyProperties);
+      break;
+    default:
+      console.error(bodyProperties.type + ' is not considered a kind of solar body');
+      return;
+    }
+
+    bodies[body.name] = body;
     if(bodyProperties.orbitProperties) {
       bodies[bodyProperties.orbitProperties.round].addSatellite(body, bodyProperties.orbitProperties);
     } else {
-    var spotLight = new THREE.PointLight( 0xffffff, 1 );
-    //spotLight.position.set( 0, 0, 0 );
-    spotLight.add(body);
-
-    spotLight.castShadow = true;
-
-    spotLight.shadowMapWidth = 1024;
-    spotLight.shadowMapHeight = 1024;
-
-    spotLight.shadowCameraNear = 500;
-    spotLight.shadowCameraFar = 4000;
-    spotLight.shadowCameraFov = 30;
-
-    SceneFactory.addObject(spotLight );
-    //SceneFactory.addObject(body);
+      SceneFactory.addObject(body);
     }
   }
 
-  function createLights() {
-    var light = new THREE.AmbientLight( 0x444444);
+  function createLight(lightProperties) {
+    var light;
+    switch(lightProperties.type) {
+    case 'Ambient Light':
+      light = new THREE.AmbientLight( lightProperties.hexColor || 0x444444);
+      break;
+    case 'Directional Light':
+      light = new THREE.DirectionalLight( lightProperties.hexColor || 0xffffff, lightProperties.intensity || 0.5);
+      light.position.set(lightProperties.position.x || 0, lightProperties.position.y || 0, lightProperties.position.z || 0);
+      break;
+    case 'Point Light':
+      light = new THREE.DirectionalLight( lightProperties.hexColor || 0xffffff);
+      light.position.set(lightProperties.position.x || 0, lightProperties.position.y || 0, lightProperties.position.z || 0);
+      break;
+    case 'Spot Light':
+      light = new THREE.DirectionalLight( lightProperties.hexColor || 0xffffff);
+      light.position.set(lightProperties.position.x || 0, lightProperties.position.y || 0, lightProperties.position.z || 0);
+      break;
+    default:
+      console.error(lightProperties.type + ' is not a kind of light validated');
+      return;
+    }
     SceneFactory.addObject(light);
-
-    //var light = new THREE.DirectionalLight( 0xffffff, 2 );
-    //light.position.set( 0, 0, 1 );
 
     //var light = new THREE.PointLight( 0xFFFFFF, 0.8);
     //light.position.set( 0, 0, 0 );
@@ -303,6 +325,87 @@ require([
     //SceneFactory.addObject(spotLight );
   }
 });
+
+
+THREE.Star = function(starProperties) {
+
+  THREE.SolarBody.call( this, starProperties );
+
+  this.material.depthWrite = false;
+
+  var pointLight = new THREE.PointLight( 0xffffff, 1 );
+  pointLight.update = function(camera) {
+    for(var i in pointLight.children) {
+      if(pointLight.children[i].update) {
+        pointLight.children[i].update(camera);
+      }
+    }
+  };
+  this.add(pointLight);
+
+  this.updateMorphTargets();
+};
+
+THREE.Star.prototype = Object.create( THREE.SolarBody.prototype );
+THREE.Star.prototype.constructor = THREE.Star;
+
+THREE.Star.prototype.update = function(camera) {
+  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
+  if(!this.hasLensFlare) {
+    this.createLensFlare(camera);
+  }
+
+  for(var i in this.children) {
+    this.children[i].update(camera, this);
+  }
+};
+
+THREE.Star.prototype.createLensFlare = function(camera) {
+
+  var dist = camera.position.distanceTo(this.position);
+  var height = this.radius * 2; // visible height
+  //var size = this.radius * 2 / dist;
+  //var aspect = window.width / window.height;
+  //var size = height * aspect;
+  var size =  20 * Math.atan( height / ( 2 * dist ) ) * ( 180 / Math.PI ); // in degrees
+
+  //var size = this.radius * 2 / camera.position.length();
+  var flareColor = new THREE.Color( 0xffffff );
+  flareColor.offsetHSL( 0.08, 0.5, 0.5 );
+
+  var textureFlare1 = THREE.ImageUtils.loadTexture('img/sun/lensflare1.png');
+  var textureFlare2 = THREE.ImageUtils.loadTexture('img/sun/lensflare2.png');
+  var textureFlare3 = THREE.ImageUtils.loadTexture('img/sun/lensflare3.png');
+  var textureFlare4 = THREE.ImageUtils.loadTexture('img/sun/lensflare4.png');
+
+  var lensFlare = new THREE.LensFlare( textureFlare1, size * 16, 0.0, THREE.AdditiveBlending, flareColor );
+  lensFlare.add( textureFlare2, size * 17, 0.0, THREE.AdditiveBlending );
+  lensFlare.add( textureFlare3, size * 20, 0.0, THREE.AdditiveBlending );
+  lensFlare.add( textureFlare4, size * 48, 0.0, THREE.AdditiveBlending );
+
+  lensFlare.position = this.position;
+  lensFlare.size = size;
+  //lensFlare.scale = size / camera.position.length();
+
+  //  this function will operate over each lensflare artifact, moving them around the screen
+  lensFlare.update = function(camera, object) {
+    var f, fl = this.lensFlares.length;
+    var flare;
+    var size = object.radius * 2;
+
+    var dist = camera.position.distanceTo(object.position);
+
+    for( f = 0; f < fl; f ++ ) {
+      flare = this.lensFlares[ f ];
+      flare.pisition = object.position;
+      flare.scale = size / dist;
+      //flare.opacity = 0.5;
+    }
+  };
+
+  this.add(lensFlare);
+  this.hasLensFlare = true;
+};
 
 
 define('scene-factory', function() {
@@ -353,7 +456,7 @@ define('scene-factory', function() {
 
     for(var i in scene.children) {
       if(scene.children[i].update) {
-        scene.children[i].update();
+        scene.children[i].update(camera);
       }
     }
 
@@ -372,7 +475,8 @@ define('solar-service', function() {
 
   var service = {
     getCamera: getCamera,
-    getBodies: getBodies
+    getBodies: getBodies,
+    getLights: getLights
   };
 
   return service;
@@ -385,9 +489,9 @@ define('solar-service', function() {
     getJSON('../src/data/bodies.properties.json', callback);
   }
 
-  /*function getLights(callback){
+  function getLights(callback){
     getJSON('../src/data/lights.properties.json', callback);
-  }*/
+  }
 
   function getJSON(src, callback) {
     $.ajax(src, {

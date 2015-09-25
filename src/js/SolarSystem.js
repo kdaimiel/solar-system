@@ -12,7 +12,7 @@ require([
     SceneFactory.init();
     SolarService.getCamera(loadCamera);
     SolarService.getBodies(loadBodies);
-    createLights();
+    SolarService.getLights(loadLights);
   }
 
   function loadCamera(cameraProperties) {
@@ -34,37 +34,64 @@ require([
     });
   }
 
-  function createBody(bodyProperties){
-    var body = new THREE.SolarBody(bodyProperties);
-    bodies[body.name] = body;
+  function loadLights(lightsProperties) {
+    lightsProperties.forEach(function(lightProperties) {
+      createLight(lightProperties);
+    });
+  }
 
+
+  function createBody(bodyProperties){
+    var body;
+    switch(bodyProperties.type) {
+    case 'Star':
+      body = new THREE.Star(bodyProperties);
+      break;
+    case 'Planet':
+      body = new THREE.Planet(bodyProperties);
+      break;
+    case 'Dwarf Planet':
+      body = new THREE.Planet(bodyProperties);
+      break;
+    case 'Moon':
+      body = new THREE.Planet(bodyProperties);
+      break;
+    default:
+      console.error(bodyProperties.type + ' is not considered a kind of solar body');
+      return;
+    }
+
+    bodies[body.name] = body;
     if(bodyProperties.orbitProperties) {
       bodies[bodyProperties.orbitProperties.round].addSatellite(body, bodyProperties.orbitProperties);
     } else {
-    var spotLight = new THREE.PointLight( 0xffffff, 1 );
-    //spotLight.position.set( 0, 0, 0 );
-    spotLight.add(body);
-
-    spotLight.castShadow = true;
-
-    spotLight.shadowMapWidth = 1024;
-    spotLight.shadowMapHeight = 1024;
-
-    spotLight.shadowCameraNear = 500;
-    spotLight.shadowCameraFar = 4000;
-    spotLight.shadowCameraFov = 30;
-
-    SceneFactory.addObject(spotLight );
-    //SceneFactory.addObject(body);
+      SceneFactory.addObject(body);
     }
   }
 
-  function createLights() {
-    var light = new THREE.AmbientLight( 0x444444);
+  function createLight(lightProperties) {
+    var light;
+    switch(lightProperties.type) {
+    case 'Ambient Light':
+      light = new THREE.AmbientLight( lightProperties.hexColor || 0x444444);
+      break;
+    case 'Directional Light':
+      light = new THREE.DirectionalLight( lightProperties.hexColor || 0xffffff, lightProperties.intensity || 0.5);
+      light.position.set(lightProperties.position.x || 0, lightProperties.position.y || 0, lightProperties.position.z || 0);
+      break;
+    case 'Point Light':
+      light = new THREE.DirectionalLight( lightProperties.hexColor || 0xffffff);
+      light.position.set(lightProperties.position.x || 0, lightProperties.position.y || 0, lightProperties.position.z || 0);
+      break;
+    case 'Spot Light':
+      light = new THREE.DirectionalLight( lightProperties.hexColor || 0xffffff);
+      light.position.set(lightProperties.position.x || 0, lightProperties.position.y || 0, lightProperties.position.z || 0);
+      break;
+    default:
+      console.error(lightProperties.type + ' is not a kind of light validated');
+      return;
+    }
     SceneFactory.addObject(light);
-
-    //var light = new THREE.DirectionalLight( 0xffffff, 2 );
-    //light.position.set( 0, 0, 1 );
 
     //var light = new THREE.PointLight( 0xFFFFFF, 0.8);
     //light.position.set( 0, 0, 0 );

@@ -47,7 +47,7 @@ define('scene-factory', function() {
 
     for(var i in scene.children) {
       if(scene.children[i].update) {
-        scene.children[i].update();
+        scene.children[i].update(camera);
       }
     }
 

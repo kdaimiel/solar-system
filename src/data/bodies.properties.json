@@ -1,186 +1,164 @@
 [
   {
     "name": "Sun",
-    "category": "Star",
-    "radius": 10442,
+    "type": "Star",
+    "radius": 10.4,
     "tilt": 7.25,
     "vRotation": 0.1,
-    "textureProperties": {
-      "map" : "img/sun/sunmap.jpg"
-    }
+    "map" : "img/sun/sun_surface.png"
   },
   {
     "name": "Mercury",
-    "category": "Planet",
-    "radius": 190,
+    "type": "Planet",
+    "radius": 0.19,
     "tilt": 0,
     "vRotation": 0.5,
-    "textureProperties": {
-      "map": "img/mercury/mercurymap.jpg",
-      "bumpMap": "img/mercury/mercurybump.jpg"
-    },
+    "map": "img/mercury/mercurymap.jpg",
+    "bumpMap": "img/mercury/mercurybump.jpg",
     "orbitProperties": {
       "round" : "Sun",
-      "distance": 12000,
+      "distance": 12,
       "speed": 0.2
     }
   },
   {
     "name": "Venus",
-    "category": "Planet",
-    "radius": 470,
+    "type": "Planet",
+    "radius": 0.47,
     "tilt": 177.2,
     "vRotation": 0.4,
-    "textureProperties": {
-      "map": "img/venus/venusmap.jpg",
-      "bumpMap": "img/venus/venusbumpthumb.jpg"
-    },
+    "map": "img/venus/venusmap.jpg",
+    "bumpMap": "img/venus/venusbumpthumb.jpg",
     "orbitProperties": {
       "round" : "Sun",
-      "distance": 13800,
+      "distance": 13.8,
       "speed": 0.4
     }
   },
   {
     "name": "Earth",
-    "category": "Planet",
-    "radius": 1000,
+    "type": "Planet",
+    "radius": 1,
     "tilt": 23.17,
     "vRotation": 0.3,
-    "textureProperties": {
-      "map": "img/earth/earthmap1k.jpg",
-      "bumpMap": "img/earth/earthbump1k.jpg",
-      "specularMap": "img/earth/earthspec1k.jpg"
-    },
+    "map": "img/earth/earthmap1k.jpg",
+    "bumpMap": "img/earth/earthbump1k.jpg",
+    "specularMap": "img/earth/earthspec1k.jpg",
     "orbitProperties": {
       "round" : "Sun",
-      "distance": 14500,
-      "speed": 0.2
+      "distance": 14.5,
+      "speed": 0
     },
     "cloudsProperties": {
       "opacity": 0.5,
       "transparent" : true,
       "depthWrite"  : false,
-      "speed": 0.1,
+      "speed": 0.01,
       "map": "img/earth/earthcloudmap.jpg"
     }
   },
   {
     "name": "Moon",
-    "category": "Moon",
-    "radius": 200,
+    "type": "Moon",
+    "radius": 0.2,
     "tilt": 0.2,
     "vRotation": 0.1,
-    "textureProperties": {
-      "map": "img/moon/moonmap1k.jpg",
-      "bumpMap": "img/moon/moonbump1k.jpg"
-    },
+    "map": "img/moon/moonmap1k.jpg",
+    "bumpMap": "img/moon/moonbump1k.jpg",
     "orbitProperties": {
       "round" : "Earth",
-      "distance": 500,
+      "distance": 0.5,
       "speed": 0.4
     }
   },
   {
     "name": "Mars",
-    "category": "Planet",
-    "radius": 260.94,
+    "type": "Planet",
+    "radius": 0.26,
     "tilt": 25.12,
     "vRotation": 0.2,
-    "textureProperties": {
-      "map": "img/mars/mars_1k_color.jpg",
-      "bumpMap": "img/mars/mars_1k_topo.jpg"
-    },
+    "map": "img/mars/mars_1k_color.jpg",
+    "bumpMap": "img/mars/mars_1k_topo.jpg",
     "orbitProperties": {
       "round" : "Sun",
-      "distance": 18000,
+      "distance": 18,
       "speed": 0.2
     }
   },
   {
     "name": "Jupiter",
-    "category": "Planet",
-    "radius": 2560.96,
+    "type": "Planet",
+    "radius": 2.56,
     "tilt": 3.5,
     "vRotation": 1,
-    "textureProperties": {
-      "map": "img/jupiter/jupitermap.jpg"
-    },
+    "map": "img/jupiter/jupitermap.jpg",
     "orbitProperties": {
       "round" : "Sun",
-      "distance": 30000,
+      "distance": 30,
       "speed": 0.1
     }
   },
   {
     "name": "Saturn",
-    "category": "Planet",
-    "radius": 1800,
+    "type": "Planet",
+    "radius": 1.8,
     "tilt": 26.44,
     "vRotation": 0.8,
-    "textureProperties": {
-      "map": "img/saturn/saturnmap.jpg"
-    },
+    "map": "img/saturn/saturnmap.jpg",
     "orbitProperties": {
       "round" : "Sun",
-      "distance": 45000,
+      "distance": 45,
       "speed": 0.05
     },
     "ringsProperties" : {
-      "innerRadius": 2500,
-      "outerRadius": 5600,
+      "innerRadius": 2.5,
+      "outerRadius": 5.6,
       "map": "img/saturn/saturnringcolor.jpg"
     }
   },
   {
     "name": "Uranus",
-    "category": "Planet",
-    "radius": 1000,
+    "type": "Planet",
+    "radius": 1,
     "tilt": 97.55,
     "vRotation": 0.1,
-    "textureProperties": {
-      "map": "img/uranus/uranusmap.jpg"
-    },
+    "map": "img/uranus/uranusmap.jpg",
     "orbitProperties": {
       "round" : "Sun",
-      "distance": 60000,
+      "distance": 60,
       "speed": 0.04
     },
     "ringsProperties" : {
-      "innerRadius": 2500,
-      "outerRadius": 2700,
+      "innerRadius": 2.5,
+      "outerRadius": 2.7,
       "tilt": 80,
       "map": "img/uranus/uranusringcolour.jpg"
     }
   },
   {
     "name": "Neptune",
-    "category": "Planet",
-    "radius": 800,
+    "type": "Planet",
+    "radius": 0.8,
     "tilt": 28.48,
     "vRotation": 0.1,
-    "textureProperties": {
-      "map": "img/neptune/neptunemap.jpg"
-    },
+    "map": "img/neptune/neptunemap.jpg",
     "orbitProperties": {
       "round" : "Sun",
-      "distance": 70000,
+      "distance": 70,
       "speed": 0.03
     }
   },
   {
     "name": "Pluto",
-    "category": "Dwarf Planet",
-    "radius": 500.17,
+    "type": "Dwarf Planet",
+    "radius": 0.55,
     "tilt": 120,
     "vRotation": 0.1,
-    "textureProperties": {
-      "map": "img/pluto/plutomap2k.jpg",
-      "bumpMap": "img/pluto/plutobump2k.jpg"
-    },
+    "map": "img/pluto/plutomap2k.jpg",
+    "bumpMap": "img/pluto/plutobump2k.jpg",
     "orbitProperties": {
       "round" : "Sun",
-      "distance": 85000,
+      "distance": 85,
       "speed": 0.01
     }
   }

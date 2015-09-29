@@ -1,24 +1,22 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.47 - 2015-09-29
+ * @version v0.0.48 - 2015-09-29
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-THREE.Clouds = function(cloudsProperties) {
+THREE.CloudsMesh = function(cloudsProperties) {
 
   THREE.Object3D.call( this );
 
-  this.type = cloudsProperties.type || 'Clouds';
-
-  this.rotation.x = this.tilt;
+  this.type = cloudsProperties.type || 'CloudsMesh';
+  this.speed = cloudsProperties.speed || 0.1;
 
   this.geometry   = new THREE.SphereGeometry(cloudsProperties.radius, 100, 100);
-  var texture = THREE.ImageUtils.loadTexture(cloudsProperties.map);
   this.material  = new THREE.MeshPhongMaterial({
-    map: texture,
+    map: THREE.ImageUtils.loadTexture(cloudsProperties.map),
     side: THREE.DoubleSide,
     opacity: cloudsProperties.opacity,
     transparent: cloudsProperties.transparent,
@@ -28,10 +26,10 @@ THREE.Clouds = function(cloudsProperties) {
   this.updateMorphTargets();
 };
 
-THREE.Clouds.prototype = Object.create( THREE.Mesh.prototype );
-THREE.Clouds.prototype.constructor = THREE.Clouds;
+THREE.CloudsMesh.prototype = Object.create( THREE.Mesh.prototype );
+THREE.CloudsMesh.prototype.constructor = THREE.CloudsMesh;
 
-THREE.Clouds.prototype.update = function() {
+THREE.CloudsMesh.prototype.update = function() {
   // Rotates with the same speed in every direction (degrees).
   this.rotation.x -= this.speed * Math.PI / 180;
   this.rotation.y -= this.speed * Math.PI / 180;
@@ -39,90 +37,20 @@ THREE.Clouds.prototype.update = function() {
 };
 
 
-THREE.Planet = function(planetProperties) {
-
-  THREE.SolarBody.call(this, planetProperties);
-
-  if(planetProperties.cloudsProperties) {
-    this.createClouds(planetProperties.cloudsProperties);
-  }
-
-  if(planetProperties.ringsProperties) {
-    this.createRings(planetProperties.ringsProperties);
-  }
-};
-
-THREE.Planet.prototype = Object.create( THREE.SolarBody.prototype );
-THREE.Planet.prototype.constructor = THREE.Planet;
-
-THREE.Planet.prototype.createClouds = function(cloudsProperties) {
-  this.add(new THREE.Clouds(cloudsProperties));
-};
-
-THREE.Planet.prototype.createRings = function(ringsProperties) {
-  this.add(new THREE.SolarRings(ringsProperties));
-};
-
-THREE.Planet.prototype.update = function(camera) {
-  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
-  for(var i in this.children) {
-    this.children[i].update(camera, this);
-  }
-};
-
-
-THREE.SolarBody = function(bodyProperties) {
+THREE.OrbitMesh = function(orbitProperties) {
 
   THREE.Object3D.call( this );
 
-  this.name = bodyProperties.name;
-  this.type = bodyProperties.type;
-
-  this.radius = bodyProperties.radius || 50;
-  this.rotation.x = bodyProperties.tilt || 0;
-  this.vRotation = bodyProperties.vRotation || 0;
-
-  this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
-  this.material  = new THREE.MeshPhongMaterial();
-  this.material.map  = THREE.ImageUtils.loadTexture(bodyProperties.map);
-  this.material.bumpMap = bodyProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(bodyProperties.bumpMap) : undefined;
-  this.material.specularMap  = bodyProperties.specularMap !== undefined ? THREE.ImageUtils.loadTexture(bodyProperties.specularMap) : undefined;
-
-  this.updateMorphTargets();
-};
-
-THREE.SolarBody.prototype = Object.create( THREE.Mesh.prototype );
-THREE.SolarBody.prototype.constructor = THREE.SolarBody;
-
-THREE.SolarBody.prototype.addSatellite = function(satellite, orbitProperties) {
-  var orbit = new THREE.SolarOrbit(orbitProperties);
-  satellite.orbit = orbit;
-
-  if(this.orbit){
-    this.orbit.add(orbit);
-    orbit.position.z = this.position.z || 0;
-  } else {
-    this.parent.add(orbit);
-  }
-  orbit.add(satellite);
-  satellite.position.z = this.radius + orbit.distance + satellite.radius || 0;
-};
-
-
-THREE.SolarOrbit = function(orbitProperties) {
-
-  THREE.Object3D.call( this );
-
-  this.type = 'SolarOrbit';
+  this.type = 'OrbitMesh';
   this.distance = orbitProperties.distance || 50;
   this.speed = orbitProperties.speed || 0;
   this.tilt = orbitProperties.tilt || 0;
 };
 
-THREE.SolarOrbit.prototype = Object.create( THREE.Object3D.prototype );
-THREE.SolarOrbit.prototype.constructor = THREE.SolarOrbit;
+THREE.OrbitMesh.prototype = Object.create( THREE.Mesh.prototype );
+THREE.OrbitMesh.prototype.constructor = THREE.OrbitMesh;
 
-THREE.SolarOrbit.prototype.update = function() {
+THREE.OrbitMesh.prototype.update = function() {
   this.rotation.y -= this.speed * Math.PI / 180 ;     // Rotates  N degrees per frame;
   for(var i in this.children) {
     this.children[i].update();
@@ -130,27 +58,32 @@ THREE.SolarOrbit.prototype.update = function() {
 };
 
 
-THREE.SolarRings = function(ringsProperties) {
+THREE.PlanetMesh = function(planetProperties) {
+  THREE.SolarBody.call(this, planetProperties);
 
-  THREE.Object3D.call( this );
+  this.radius = planetProperties.radius || 50;
+  this.rotation.x = planetProperties.tilt || 0;
+  this.vRotation = planetProperties.vRotation || 0;
 
-  this.type = 'SolarRings';
-  this.map = ringsProperties.map;
-  this.vRotation = ringsProperties.vRotation || 0;
-  this.tilt = ringsProperties.tilt || 0;
+  this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
+  this.material  = new THREE.MeshPhongMaterial({
+    map: THREE.ImageUtils.loadTexture(planetProperties.map),
+    side: THREE.DoubleSide
+  });
+  this.material.bumpMap = planetProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(planetProperties.bumpMap) : undefined;
+  this.material.specularMap  = planetProperties.specularMap !== undefined ? THREE.ImageUtils.loadTexture(planetProperties.specularMap) : undefined;
 
-  this.geometry = new THREE.RingsGeometry(ringsProperties);
-  var texture = THREE.ImageUtils.loadTexture(this.map);
-  this.material = new THREE.MeshPhongMaterial({ map: texture, side: THREE.DoubleSide });
-
-  this.rotation.x = (90 - this.tilt) * Math.PI / 180;
+  this.updateMorphTargets();
 };
 
-THREE.SolarRings.prototype = Object.create( THREE.Mesh.prototype );
-THREE.SolarRings.prototype.constructor = THREE.SolarRings;
+THREE.PlanetMesh.prototype = Object.create( THREE.SolarBody.prototype );
+THREE.PlanetMesh.prototype.constructor = THREE.PlanetMesh;
 
-THREE.SolarRings.prototype.update = function() {
-  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates N degrees per frame;
+THREE.PlanetMesh.prototype.update = function(camera) {
+  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
+  for(var i in this.children) {
+    this.children[i].update(camera, this);
+  }
 };
 
 THREE.RingsGeometry = function ( ringsProperties ) {
@@ -211,17 +144,83 @@ THREE.RingsGeometry.prototype = Object.create( THREE.RingGeometry.prototype );
 THREE.RingsGeometry.prototype.constructor = THREE.RingsGeometry;
 
 
+THREE.RingsMesh = function(ringsProperties) {
+
+  THREE.Object3D.call( this );
+
+  this.type = 'RingsMesh';
+  this.rotation.x = (90 - ringsProperties.tilt) * Math.PI / 180;
+  this.vRotation = ringsProperties.vRotation || 0;
+
+  this.geometry = new THREE.RingsGeometry(ringsProperties);
+  this.material = new THREE.MeshPhongMaterial({
+    map: THREE.ImageUtils.loadTexture(ringsProperties.map),
+    side: THREE.DoubleSide
+  });
+};
+
+THREE.RingsMesh.prototype = Object.create( THREE.Mesh.prototype );
+THREE.RingsMesh.prototype.constructor = THREE.RingsMesh;
+
+THREE.RingsMesh.prototype.update = function() {
+  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates N degrees per frame;
+};
+
+
+THREE.SolarBody = function(bodyProperties) {
+
+  THREE.Object3D.call( this );
+
+  this.name = bodyProperties.name;
+  this.type = bodyProperties.type;
+
+  if(bodyProperties.cloudsProperties) {
+    this.addClouds(bodyProperties.cloudsProperties);
+  }
+
+  if(bodyProperties.ringsProperties) {
+    this.addRings(bodyProperties.ringsProperties);
+  }
+};
+
+THREE.SolarBody.prototype = Object.create( THREE.Mesh.prototype );
+THREE.SolarBody.prototype.constructor = THREE.SolarBody;
+
+THREE.SolarBody.prototype.addClouds = function(cloudsProperties) {
+  this.add(new THREE.CloudsMesh(cloudsProperties));
+};
+
+THREE.SolarBody.prototype.addRings = function(ringsProperties) {
+  this.add(new THREE.RingsMesh(ringsProperties));
+};
+
+THREE.SolarBody.prototype.addSatellite = function(satellite, orbitProperties) {
+  var orbit = new THREE.OrbitMesh(orbitProperties);
+  satellite.orbit = orbit;
+
+  if(this.orbit){
+    this.orbit.add(orbit);
+    orbit.position.z = this.position.z || 0;
+  } else {
+    this.parent.add(orbit);
+  }
+  orbit.add(satellite);
+  satellite.position.z = this.radius + orbit.distance + satellite.radius || 0;
+};
+
+
 require([
+  'scene-builder',
   'scene-factory',
   'solar-service'
-], function three(SceneFactory, SolarService) {
+], function three(SceneBuilder, SceneFactory, SolarService) {
 
   var bodies = {};
 
   init();
 
   function init() {
-    SceneFactory.init();
+    SceneBuilder.init();
     SolarService.getCameras(loadCameras);
     SolarService.getBodies(loadBodies);
     SolarService.getLights(loadLights);
@@ -231,16 +230,16 @@ require([
     var body;
     switch(bodyProperties.type) {
     case 'Star':
-      body = new THREE.Star(bodyProperties);
+      body = new THREE.StarMesh(bodyProperties);
       break;
     case 'Planet':
-      body = new THREE.Planet(bodyProperties);
+      body = new THREE.PlanetMesh(bodyProperties);
       break;
     case 'Dwarf Planet':
-      body = new THREE.Planet(bodyProperties);
+      body = new THREE.PlanetMesh(bodyProperties);
       break;
     case 'Moon':
-      body = new THREE.Planet(bodyProperties);
+      body = new THREE.PlanetMesh(bodyProperties);
       break;
     default:
       console.error(bodyProperties.type + ' is not considered a kind of solar body');
@@ -251,118 +250,17 @@ require([
     if(bodyProperties.orbitProperties) {
       bodies[bodyProperties.orbitProperties.round].addSatellite(body, bodyProperties.orbitProperties);
     } else {
-      SceneFactory.addObject(body);
+      SceneBuilder.addObject(body);
     }
-  }
-
-  function createCamera(cameraProperties) {
-    var camera;
-
-    cameraProperties.aspect = cameraProperties.aspect || window.innerWidth / window.innerHeight;
-
-    switch(cameraProperties.type) {
-    case 'PerspectiveCamera':
-      camera = new THREE.PerspectiveCamera(cameraProperties.fov, cameraProperties.aspect, cameraProperties.near, cameraProperties.far);
-      break;
-    case 'CubeCamera':
-      camera = new THREE.CubeCamera(cameraProperties.near, cameraProperties.far , cameraProperties.cubeResolution);
-      break;
-    case 'OrthographicCamera':
-      camera = new THREE.OrthographicCamera(cameraProperties.left, cameraProperties.right , cameraProperties.top,  cameraProperties.bottom, cameraProperties.near, cameraProperties.far);
-      break;
-    default:
-      console.error(cameraProperties.type + ' is not a kind of valid camera');
-      return;
-    }
-
-    if(cameraProperties.position) {
-      camera.position.x = cameraProperties.position.x || 0;
-      camera.position.y = cameraProperties.position.y || 0;
-      camera.position.z = cameraProperties.position.z || 0;
-    }
-
-    camera.zoom = cameraProperties.zoom || 1;
-
-    SceneFactory.setCamera(camera);
-    SceneFactory.animate();
-
-    var controls;
-    switch(cameraProperties.controls) {
-    case 'TrackballControls':
-      controls = new THREE.TrackballControls(camera);
-      break;
-    case 'DeviceOrientationControls':
-      controls = new THREE.DeviceOrientationControls( camera );
-      break;
-    case 'FlyControls':
-      controls = new THREE.FlyControls( camera );
-      break;
-    case 'OrbitControls':
-      controls = new THREE.OrbitControls( camera );
-      break;
-    case 'PointerLockControls':
-      controls = new THREE.PointerLockControls( camera );
-      break;
-    case 'TransformControls':
-      controls = new THREE.TransformControls( camera );
-      break;
-    default:
-      console.error(cameraProperties.controls + ' is not a kind of valid camera controls');
-      return;
-    }
-    SceneFactory.setControls(controls);
-  }
-
-  function createLight(lightProperties) {
-
-    var color = new THREE.Color(lightProperties.hexColor) || 0xffffff;
-    var light;
-    switch(lightProperties.type) {
-    case 'AmbientLight':
-      light = new THREE.AmbientLight( color);
-      break;
-    case 'DirectionalLight':
-      light = new THREE.DirectionalLight( color, lightProperties.intensity || 0.5);
-      break;
-    case 'PointLight':
-      light = new THREE.PointLight( color, lightProperties.intensity || 1.0, lightProperties.distance || 0.0, lightProperties.decay || 1);
-      break;
-    case 'SpotLight':
-      light = new THREE.SpotLight( color, lightProperties.intensity || 1.0, lightProperties.distance || 0.0, lightProperties.angle || Math.PI/3, lightProperties.exponent || 10.0, lightProperties.decay || 1);
-      break;
-    default:
-      console.error(lightProperties.type + ' is not a kind of valid light');
-      return;
-    }
-
-    if(lightProperties.position) {
-      light.position.set(lightProperties.position.x || 0, lightProperties.position.y || 0, lightProperties.position.z || 0);
-    }
-
-    light.onlyShadow = lightProperties.onlyShadow || false;
-    light.castShadow = lightProperties.castShadow || false;
-    light.shadowCameraNear = lightProperties.shadowCameraNear || 50;
-    light.shadowCameraFar = lightProperties.shadowCameraFar || 5000;
-    light.shadowCameraLeft = lightProperties.shadowCameraLeft || -500;
-    light.shadowCameraRight = lightProperties.shadowCameraRight || 500;
-    light.shadowCameraTop = lightProperties.shadowCameraTop || 500;
-    light.shadowCameraBottom = lightProperties.shadowCameraBottom || -500;
-    light.shadowCameraVisible = lightProperties.shadowCameraVisible || false;
-    light.shadowBias = lightProperties.shadowBias || 0;
-    light.shadowDarkness = lightProperties.shadowDarkness || 0.5;
-    light.shadowMapWidth = lightProperties.shadowMapWidth || 512;
-    light.shadowMapWidth = lightProperties.shadowMapHeight || 512;
-    light.shadowMapSize = lightProperties.shadowMapSize;
-    light.shadowCamera = lightProperties.shadowCamera;
-    light.shadowMatrix = lightProperties.shadowMatrix;
-    light.shadowMap = lightProperties.shadowMap;
-
-    SceneFactory.addObject(light);
   }
 
   function loadCameras(camerasProperties) {
     camerasProperties.forEach(function(cameraProperties) {
-      createCamera(cameraProperties);
+      var camera = SceneFactory.createCamera(cameraProperties);
+      SceneBuilder.addCamera(camera);
+      var controls = SceneFactory.createControls(camera, cameraProperties.controls);
+      SceneBuilder.setControls(controls);
+      SceneBuilder.animate();
     });
   }
 
@@ -374,18 +272,31 @@ require([
 
   function loadLights(lightsProperties) {
     lightsProperties.forEach(function(lightProperties) {
-      createLight(lightProperties);
+      var light = SceneFactory.createLight(lightProperties);
+      SceneBuilder.addObject(light);
     });
   }
 
 });
 
 
-THREE.Star = function(starProperties) {
+THREE.StarMesh = function(starProperties) {
 
   THREE.SolarBody.call( this, starProperties );
 
-  this.material.depthWrite = false;
+  this.radius = starProperties.radius || 50;
+  this.rotation.x = starProperties.tilt || 0;
+  this.vRotation = starProperties.vRotation || 0;
+
+  this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
+  this.material  = new THREE.MeshPhongMaterial({
+    map: THREE.ImageUtils.loadTexture(starProperties.map),
+    side: THREE.DoubleSide,
+    depthWrite: false
+  });
+
+  this.material.bumpMap = starProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(starProperties.bumpMap) : undefined;
+  this.material.specularMap  = starProperties.specularMap !== undefined ? THREE.ImageUtils.loadTexture(starProperties.specularMap) : undefined;
 
   var pointLight = new THREE.PointLight( 0xffffff, 1 );
   pointLight.update = function(camera) {
@@ -400,13 +311,13 @@ THREE.Star = function(starProperties) {
   this.updateMorphTargets();
 };
 
-THREE.Star.prototype = Object.create( THREE.SolarBody.prototype );
-THREE.Star.prototype.constructor = THREE.Star;
+THREE.StarMesh.prototype = Object.create( THREE.SolarBody.prototype );
+THREE.StarMesh.prototype.constructor = THREE.StarMesh;
 
-THREE.Star.prototype.update = function(camera) {
+THREE.StarMesh.prototype.update = function(camera) {
   this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
   if(!this.hasLensFlare) {
-    //this.createLensFlare(camera);
+    this.createLensFlare(camera);
   }
 
   for(var i in this.children) {
@@ -414,7 +325,7 @@ THREE.Star.prototype.update = function(camera) {
   }
 };
 
-THREE.Star.prototype.createLensFlare = function(camera) {
+THREE.StarMesh.prototype.createLensFlare = function(camera) {
 
   var dist = camera.position.distanceTo(this.position);
   var height = this.radius * 2; // visible height
@@ -462,28 +373,28 @@ THREE.Star.prototype.createLensFlare = function(camera) {
 };
 
 
-define('scene-factory', function() {
+define('scene-builder', function() {
 
   'use strict';
 
   var scene, camera, renderer, controls;
 
   var factory = {
+    addCamera: addCamera,
     addObject: addObject,
     animate : animate,
-    setCamera: setCamera,
     setControls: setControls,
     init: init
   };
 
   return factory;
 
-  function addObject(object) {
-    scene.add(object);
+  function addCamera(newCamera) {
+    camera = newCamera;
   }
 
-  function setCamera(newCamera) {
-    camera = newCamera;
+  function addObject(object) {
+    scene.add(object);
   }
 
   function setControls(newControls){
@@ -519,6 +430,125 @@ define('scene-factory', function() {
 
     render();
   }
+});
+
+
+define('scene-factory', function() {
+
+  'use strict';
+
+  var factory = {
+    createCamera: createCamera,
+    createControls: createControls,
+    createLight : createLight
+  };
+
+  return factory;
+
+  function createCamera(cameraProperties) {
+    var camera;
+    cameraProperties.aspect = cameraProperties.aspect || window.innerWidth / window.innerHeight;
+    switch(cameraProperties.type) {
+    case 'PerspectiveCamera':
+      camera = new THREE.PerspectiveCamera(cameraProperties.fov, cameraProperties.aspect, cameraProperties.near, cameraProperties.far);
+      break;
+    case 'CubeCamera':
+      camera = new THREE.CubeCamera(cameraProperties.near, cameraProperties.far , cameraProperties.cubeResolution);
+      break;
+    case 'OrthographicCamera':
+      camera = new THREE.OrthographicCamera(cameraProperties.left, cameraProperties.right , cameraProperties.top,  cameraProperties.bottom, cameraProperties.near, cameraProperties.far);
+      break;
+    default:
+      console.error(cameraProperties.type + ' is not a kind of valid camera');
+      return;
+    }
+
+    if(cameraProperties.position) {
+      camera.position.x = cameraProperties.position.x || 0;
+      camera.position.y = cameraProperties.position.y || 0;
+      camera.position.z = cameraProperties.position.z || 0;
+    }
+
+    camera.zoom = cameraProperties.zoom || 1;
+
+    return camera;
+  }
+
+  function createControls(camera, controlsType) {
+    var controls;
+    switch(controlsType) {
+    case 'TrackballControls':
+      controls = new THREE.TrackballControls(camera);
+      break;
+    case 'DeviceOrientationControls':
+      controls = new THREE.DeviceOrientationControls( camera );
+      break;
+    case 'FlyControls':
+      controls = new THREE.FlyControls( camera );
+      break;
+    case 'OrbitControls':
+      controls = new THREE.OrbitControls( camera );
+      break;
+    case 'PointerLockControls':
+      controls = new THREE.PointerLockControls( camera );
+      break;
+    case 'TransformControls':
+      controls = new THREE.TransformControls( camera );
+      break;
+    default:
+      console.error(controlsType + ' is not a kind of valid camera controls');
+      return;
+    }
+    return controls;
+  }
+
+  function createLight(lightProperties) {
+
+    var color = new THREE.Color(lightProperties.hexColor) || 0xffffff;
+    var light;
+    switch(lightProperties.type) {
+    case 'AmbientLight':
+      light = new THREE.AmbientLight( color);
+      break;
+    case 'DirectionalLight':
+      light = new THREE.DirectionalLight( color, lightProperties.intensity || 0.5);
+      break;
+    case 'PointLight':
+      light = new THREE.PointLight( color, lightProperties.intensity || 1.0, lightProperties.distance || 0.0, lightProperties.decay || 1);
+      break;
+    case 'SpotLight':
+      light = new THREE.SpotLight( color, lightProperties.intensity || 1.0, lightProperties.distance || 0.0, lightProperties.angle || Math.PI/3, lightProperties.exponent || 10.0, lightProperties.decay || 1);
+      break;
+    default:
+      console.error(lightProperties.type + ' is not a kind of valid light');
+      return;
+    }
+
+    if(lightProperties.position) {
+      light.position.set(lightProperties.position.x || 0, lightProperties.position.y || 0, lightProperties.position.z || 0);
+    }
+
+    light.onlyShadow = lightProperties.onlyShadow || false;
+    light.castShadow = lightProperties.castShadow || false;
+    light.shadowCameraNear = lightProperties.shadowCameraNear || 50;
+    light.shadowCameraFar = lightProperties.shadowCameraFar || 5000;
+    light.shadowCameraLeft = lightProperties.shadowCameraLeft || -500;
+    light.shadowCameraRight = lightProperties.shadowCameraRight || 500;
+    light.shadowCameraTop = lightProperties.shadowCameraTop || 500;
+    light.shadowCameraBottom = lightProperties.shadowCameraBottom || -500;
+    light.shadowCameraVisible = lightProperties.shadowCameraVisible || false;
+    light.shadowBias = lightProperties.shadowBias || 0;
+    light.shadowDarkness = lightProperties.shadowDarkness || 0.5;
+    light.shadowMapWidth = lightProperties.shadowMapWidth || 512;
+    light.shadowMapWidth = lightProperties.shadowMapHeight || 512;
+    light.shadowMapSize = lightProperties.shadowMapSize;
+    light.shadowCamera = lightProperties.shadowCamera;
+    light.shadowMatrix = lightProperties.shadowMatrix;
+    light.shadowMap = lightProperties.shadowMap;
+
+    return light;
+  }
+
 });
 
 

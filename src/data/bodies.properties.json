@@ -40,21 +40,21 @@
     "type": "Planet",
     "radius": 1,
     "tilt": 23.17,
-    "vRotation": 0.3,
+    "vRotation": 0.1,
     "map": "img/earth/earthmap1k.jpg",
     "bumpMap": "img/earth/earthbump1k.jpg",
     "specularMap": "img/earth/earthspec1k.jpg",
     "orbitProperties": {
       "round" : "Sun",
       "distance": 14.5,
-      "speed": 0
+      "speed": 0.2
     },
     "cloudsProperties": {
-      "radius": 3,
+      "radius": 1.01,
       "opacity": 0.5,
-      "transparent" : false,
+      "transparent" : true,
       "depthWrite"  : false,
-      "speed": 0.01,
+      "speed": 0.5,
       "map": "img/earth/earthcloudmap.jpg"
     }
   },

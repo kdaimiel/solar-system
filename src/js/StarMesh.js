@@ -1,9 +1,21 @@
 
-THREE.Star = function(starProperties) {
+THREE.StarMesh = function(starProperties) {
 
   THREE.SolarBody.call( this, starProperties );
 
-  this.material.depthWrite = false;
+  this.radius = starProperties.radius || 50;
+  this.rotation.x = starProperties.tilt || 0;
+  this.vRotation = starProperties.vRotation || 0;
+
+  this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
+  this.material  = new THREE.MeshPhongMaterial({
+    map: THREE.ImageUtils.loadTexture(starProperties.map),
+    side: THREE.DoubleSide,
+    depthWrite: false
+  });
+
+  this.material.bumpMap = starProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(starProperties.bumpMap) : undefined;
+  this.material.specularMap  = starProperties.specularMap !== undefined ? THREE.ImageUtils.loadTexture(starProperties.specularMap) : undefined;
 
   var pointLight = new THREE.PointLight( 0xffffff, 1 );
   pointLight.update = function(camera) {
@@ -18,13 +30,13 @@ THREE.Star = function(starProperties) {
   this.updateMorphTargets();
 };
 
-THREE.Star.prototype = Object.create( THREE.SolarBody.prototype );
-THREE.Star.prototype.constructor = THREE.Star;
+THREE.StarMesh.prototype = Object.create( THREE.SolarBody.prototype );
+THREE.StarMesh.prototype.constructor = THREE.StarMesh;
 
-THREE.Star.prototype.update = function(camera) {
+THREE.StarMesh.prototype.update = function(camera) {
   this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
   if(!this.hasLensFlare) {
-    //this.createLensFlare(camera);
+    this.createLensFlare(camera);
   }
 
   for(var i in this.children) {
@@ -32,7 +44,7 @@ THREE.Star.prototype.update = function(camera) {
   }
 };
 
-THREE.Star.prototype.createLensFlare = function(camera) {
+THREE.StarMesh.prototype.createLensFlare = function(camera) {
 
   var dist = camera.position.distanceTo(this.position);
   var height = this.radius * 2; // visible height

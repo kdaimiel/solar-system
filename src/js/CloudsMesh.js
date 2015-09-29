@@ -1,16 +1,14 @@
 
-THREE.Clouds = function(cloudsProperties) {
+THREE.CloudsMesh = function(cloudsProperties) {
 
   THREE.Object3D.call( this );
 
-  this.type = cloudsProperties.type || 'Clouds';
-
-  this.rotation.x = this.tilt;
+  this.type = cloudsProperties.type || 'CloudsMesh';
+  this.speed = cloudsProperties.speed || 0.1;
 
   this.geometry   = new THREE.SphereGeometry(cloudsProperties.radius, 100, 100);
-  var texture = THREE.ImageUtils.loadTexture(cloudsProperties.map);
   this.material  = new THREE.MeshPhongMaterial({
-    map: texture,
+    map: THREE.ImageUtils.loadTexture(cloudsProperties.map),
     side: THREE.DoubleSide,
     opacity: cloudsProperties.opacity,
     transparent: cloudsProperties.transparent,
@@ -20,10 +18,10 @@ THREE.Clouds = function(cloudsProperties) {
   this.updateMorphTargets();
 };
 
-THREE.Clouds.prototype = Object.create( THREE.Mesh.prototype );
-THREE.Clouds.prototype.constructor = THREE.Clouds;
+THREE.CloudsMesh.prototype = Object.create( THREE.Mesh.prototype );
+THREE.CloudsMesh.prototype.constructor = THREE.CloudsMesh;
 
-THREE.Clouds.prototype.update = function() {
+THREE.CloudsMesh.prototype.update = function() {
   // Rotates with the same speed in every direction (degrees).
   this.rotation.x -= this.speed * Math.PI / 180;
   this.rotation.y -= this.speed * Math.PI / 180;

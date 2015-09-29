@@ -42,7 +42,6 @@ define('scene-factory', function() {
   }
 
   function animate() {
-
     requestAnimationFrame( animate );
 
     for(var i in scene.children) {

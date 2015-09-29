@@ -50,8 +50,9 @@
       "speed": 0
     },
     "cloudsProperties": {
+      "radius": 3,
       "opacity": 0.5,
-      "transparent" : true,
+      "transparent" : false,
       "depthWrite"  : false,
       "speed": 0.01,
       "map": "img/earth/earthcloudmap.jpg"

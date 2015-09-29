@@ -1,5 +1,6 @@
 
 THREE.SolarBody = function(bodyProperties) {
+
   THREE.Object3D.call( this );
 
   this.name = bodyProperties.name;
@@ -14,7 +15,6 @@ THREE.SolarBody = function(bodyProperties) {
   this.material.map  = THREE.ImageUtils.loadTexture(bodyProperties.map);
   this.material.bumpMap = bodyProperties.bumpMap !== undefined ? THREE.ImageUtils.loadTexture(bodyProperties.bumpMap) : undefined;
   this.material.specularMap  = bodyProperties.specularMap !== undefined ? THREE.ImageUtils.loadTexture(bodyProperties.specularMap) : undefined;
-  this.material.depthWrite = false;
 
   this.updateMorphTargets();
 };

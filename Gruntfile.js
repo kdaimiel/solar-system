@@ -120,6 +120,21 @@ module.exports = function(grunt) {
         commitFiles: ['-a'],
         pushTo: '<%= pkg.repository %>'
       }
+    },
+    gitadd: {
+      task: {
+        options: {
+          force: true
+        },
+        files: {
+          src: [
+            base + '/**/*.js',
+            base + '/*.js',
+            '<%= jshint.all %>',
+            demo + '/*'
+          ]
+        }
+      }
     }
   });
 
@@ -146,11 +161,13 @@ module.exports = function(grunt) {
     'test',
     'bump-only',
     'build',
+    'gitadd',
     'bump-commit'
   ]);
 
   grunt.registerTask('default', ['test', 'serve']);
 
+  grunt.loadNpmTasks('grunt-git');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');

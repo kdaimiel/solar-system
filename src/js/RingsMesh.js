@@ -4,7 +4,7 @@ THREE.RingsMesh = function(ringsProperties) {
   THREE.Object3D.call( this );
 
   this.type = 'RingsMesh';
-  this.rotation.x = (90 - ringsProperties.tilt) * Math.PI / 180;
+  this.rotation.x = (90 - (ringsProperties.tilt || 0)) * Math.PI / 180;
   this.vRotation = ringsProperties.vRotation || 0;
 
   this.geometry = new THREE.RingsGeometry(ringsProperties);

@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.49 - 2015-09-29
+ * @version v0.0.50 - 2015-09-30
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -11,9 +11,9 @@ THREE.CloudsMesh = function(cloudsProperties) {
 
   THREE.Object3D.call( this );
 
-  this.type = cloudsProperties.type || 'CloudsMesh';
-  this.speed = cloudsProperties.speed || 0.1;
+  this.speed = cloudsProperties.speed || 0.20; // The max speed of the clouds rotation
 
+  this.type = cloudsProperties.type || 'CloudsMesh';
   this.geometry   = new THREE.SphereGeometry(cloudsProperties.radius, 100, 100);
   this.material  = new THREE.MeshPhongMaterial({
     map: THREE.ImageUtils.loadTexture(cloudsProperties.map),
@@ -30,10 +30,9 @@ THREE.CloudsMesh.prototype = Object.create( THREE.Mesh.prototype );
 THREE.CloudsMesh.prototype.constructor = THREE.CloudsMesh;
 
 THREE.CloudsMesh.prototype.update = function() {
-  // Rotates with the same speed in every direction (degrees).
-  this.rotation.x -= this.speed * Math.PI / 180;
-  this.rotation.y -= this.speed * Math.PI / 180;
-  this.rotation.z -= this.speed * Math.PI / 180;
+  // Clouds rote in every direction to random speed between 0.0 and the speed (degrees).
+  this.rotation.x -= THREE.Math.randFloat( 0.00, this.speed ) * Math.PI / 180;
+  this.rotation.y -= THREE.Math.randFloat( 0.00, this.speed ) * Math.PI / 180;
 };
 
 
@@ -149,7 +148,7 @@ THREE.RingsMesh = function(ringsProperties) {
   THREE.Object3D.call( this );
 
   this.type = 'RingsMesh';
-  this.rotation.x = (90 - ringsProperties.tilt) * Math.PI / 180;
+  this.rotation.x = (90 - (ringsProperties.tilt || 0)) * Math.PI / 180;
   this.vRotation = ringsProperties.vRotation || 0;
 
   this.geometry = new THREE.RingsGeometry(ringsProperties);
@@ -221,7 +220,7 @@ require([
 
   function init() {
     SceneBuilder.init();
-    SolarService.getCameras(loadCameras);
+    SolarService.getCamera(loadCamera);
     SolarService.getBodies(loadBodies);
     SolarService.getLights(loadLights);
   }
@@ -254,14 +253,13 @@ require([
     }
   }
 
-  function loadCameras(camerasProperties) {
-    camerasProperties.forEach(function(cameraProperties) {
-      var camera = SceneFactory.createCamera(cameraProperties);
-      SceneBuilder.addCamera(camera);
-      var controls = SceneFactory.createControls(camera, cameraProperties.controls);
-      SceneBuilder.setControls(controls);
-      SceneBuilder.animate();
-    });
+  function loadCamera(cameraProperties) {
+    var camera = SceneFactory.createCamera(cameraProperties);
+    SceneBuilder.setCamera(camera);
+
+    var controls = SceneFactory.createControls(camera, cameraProperties.controls);
+    SceneBuilder.setControls(controls);
+    SceneBuilder.animate();
   }
 
   function loadBodies(bodiesProperties) {
@@ -380,16 +378,16 @@ define('scene-builder', function() {
   var scene, camera, renderer, controls;
 
   var factory = {
-    addCamera: addCamera,
     addObject: addObject,
     animate : animate,
+    setCamera: setCamera,
     setControls: setControls,
     init: init
   };
 
   return factory;
 
-  function addCamera(newCamera) {
+  function setCamera(newCamera) {
     camera = newCamera;
   }
 
@@ -557,15 +555,15 @@ define('solar-service', function() {
   'use strict';
 
   var service = {
-    getCameras: getCameras,
+    getCamera: getCamera,
     getBodies: getBodies,
     getLights: getLights
   };
 
   return service;
 
-  function getCameras(callback){
-    getJSON('../src/data/cameras.properties.json', callback);
+  function getCamera(callback){
+    getJSON('../src/data/camera.properties.json', callback);
   }
 
   function getBodies(callback){

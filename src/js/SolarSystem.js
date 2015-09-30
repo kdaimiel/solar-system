@@ -11,7 +11,7 @@ require([
 
   function init() {
     SceneBuilder.init();
-    SolarService.getCameras(loadCameras);
+    SolarService.getCamera(loadCamera);
     SolarService.getBodies(loadBodies);
     SolarService.getLights(loadLights);
   }
@@ -44,14 +44,13 @@ require([
     }
   }
 
-  function loadCameras(camerasProperties) {
-    camerasProperties.forEach(function(cameraProperties) {
-      var camera = SceneFactory.createCamera(cameraProperties);
-      SceneBuilder.addCamera(camera);
-      var controls = SceneFactory.createControls(camera, cameraProperties.controls);
-      SceneBuilder.setControls(controls);
-      SceneBuilder.animate();
-    });
+  function loadCamera(cameraProperties) {
+    var camera = SceneFactory.createCamera(cameraProperties);
+    SceneBuilder.setCamera(camera);
+
+    var controls = SceneFactory.createControls(camera, cameraProperties.controls);
+    SceneBuilder.setControls(controls);
+    SceneBuilder.animate();
   }
 
   function loadBodies(bodiesProperties) {

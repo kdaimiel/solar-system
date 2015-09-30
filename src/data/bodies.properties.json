@@ -54,7 +54,7 @@
       "opacity": 0.5,
       "transparent" : true,
       "depthWrite"  : false,
-      "speed": 0.5,
+      "speed": 0.2,
       "map": "img/earth/earthcloudmap.jpg"
     }
   },

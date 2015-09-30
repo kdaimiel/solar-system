@@ -4,15 +4,15 @@ define('solar-service', function() {
   'use strict';
 
   var service = {
-    getCameras: getCameras,
+    getCamera: getCamera,
     getBodies: getBodies,
     getLights: getLights
   };
 
   return service;
 
-  function getCameras(callback){
-    getJSON('../src/data/cameras.properties.json', callback);
+  function getCamera(callback){
+    getJSON('../src/data/camera.properties.json', callback);
   }
 
   function getBodies(callback){

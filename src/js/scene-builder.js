@@ -6,16 +6,16 @@ define('scene-builder', function() {
   var scene, camera, renderer, controls;
 
   var factory = {
-    addCamera: addCamera,
     addObject: addObject,
     animate : animate,
+    setCamera: setCamera,
     setControls: setControls,
     init: init
   };
 
   return factory;
 
-  function addCamera(newCamera) {
+  function setCamera(newCamera) {
     camera = newCamera;
   }
 

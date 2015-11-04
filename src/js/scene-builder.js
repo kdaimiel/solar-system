@@ -17,15 +17,18 @@ define('scene-builder', function() {
 
   function setCamera(newCamera) {
     camera = newCamera;
+    console.log('New camera has been placed in the scene');
   }
 
   function addObject(object) {
     scene.add(object);
+    console.log('New object of type "' + object.type + '"" has been added to the scene');
   }
 
   function setControls(newControls){
     controls = newControls;
     controls.addEventListener('change', render);
+    console.log('New controls have been added to the camera');
   }
 
   function render() {
@@ -37,11 +40,14 @@ define('scene-builder', function() {
 
     renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.shadowMap.enabled = true;
 
     document.body.appendChild( renderer.domElement );
+    console.log('Scene initiated');
   }
 
   function animate() {
+
     requestAnimationFrame( animate );
 
     for(var i in scene.children) {

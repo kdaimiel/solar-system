@@ -94,20 +94,20 @@ define('scene-factory', function() {
       light.position.set(lightProperties.position.x || 0, lightProperties.position.y || 0, lightProperties.position.z || 0);
     }
 
-    light.onlyShadow = lightProperties.onlyShadow || false;
+    //light.onlyShadow = lightProperties.onlyShadow || false;
     light.castShadow = lightProperties.castShadow || false;
-    light.shadowCameraNear = lightProperties.shadowCameraNear || 50;
-    light.shadowCameraFar = lightProperties.shadowCameraFar || 5000;
-    light.shadowCameraLeft = lightProperties.shadowCameraLeft || -500;
-    light.shadowCameraRight = lightProperties.shadowCameraRight || 500;
-    light.shadowCameraTop = lightProperties.shadowCameraTop || 500;
-    light.shadowCameraBottom = lightProperties.shadowCameraBottom || -500;
-    light.shadowCameraVisible = lightProperties.shadowCameraVisible || false;
-    light.shadowBias = lightProperties.shadowBias || 0;
-    light.shadowDarkness = lightProperties.shadowDarkness || 0.5;
-    light.shadowMapWidth = lightProperties.shadowMapWidth || 512;
-    light.shadowMapWidth = lightProperties.shadowMapHeight || 512;
-    light.shadowMapSize = lightProperties.shadowMapSize;
+    //light.shadowCameraNear = lightProperties.shadowCameraNear || 50;
+    //light.shadowCameraFar = lightProperties.shadowCameraFar || 5000;
+    //light.shadowCameraLeft = lightProperties.shadowCameraLeft || -500;
+    //light.shadowCameraRight = lightProperties.shadowCameraRight || 500;
+    //light.shadowCameraTop = lightProperties.shadowCameraTop || 500;
+    //light.shadowCameraBottom = lightProperties.shadowCameraBottom || -500;
+    //light.shadowCameraVisible = lightProperties.shadowCameraVisible || false;
+    //light.shadowBias = lightProperties.shadowBias || 0;
+    //light.shadowDarkness = lightProperties.shadowDarkness || 0.5;
+    //light.shadowMapWidth = lightProperties.shadowMapWidth || 512;
+    //light.shadowMapHeight = lightProperties.shadowMapHeight || 512;
+    //light.shadowMapSize = lightProperties.shadowMapSize;
     light.shadowCamera = lightProperties.shadowCamera;
     light.shadowMatrix = lightProperties.shadowMatrix;
     light.shadowMap = lightProperties.shadowMap;

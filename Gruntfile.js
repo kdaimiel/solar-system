@@ -1,7 +1,6 @@
 /**
  * Gruntfile.js
  *
- * Copyright (c) 2012 quickcue
  */
 
 module.exports = function(grunt) {
@@ -14,6 +13,10 @@ module.exports = function(grunt) {
   // Configure the src path
   var base = 'src';
   var demo = 'demo';
+  var src = [
+    base + '/js/objects/SolarBody.js',
+    base + '/**/*.js'
+  ];
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -37,7 +40,7 @@ module.exports = function(grunt) {
         stripBanners: true
       },
       dist: {
-        src: base + '/js/*.js',
+        src: src,
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
@@ -51,7 +54,7 @@ module.exports = function(grunt) {
       livereload: {
         options: {
           open : {
-            target: 'http://localhost:9000/demo/', // target url to open
+            target: 'http://localhost:9000/', // target url to open
             callback: function() {} // called when the app has opened
           }
         }
@@ -78,7 +81,8 @@ module.exports = function(grunt) {
           base + '/**/*.js',
           base + '/*.js',
           '<%= jshint.all %>',
-          demo + '/*'
+          demo + '/*',
+          'dist/*.js'
         ],
         tasks: ['jshint']
       },
@@ -99,7 +103,8 @@ module.exports = function(grunt) {
           '<%= watch.json.files %>',
           '**/*.css',
           '**/*.html'
-        ]
+        ],
+        tasks: ['build']
       }
     },
     uglify: {
@@ -107,7 +112,7 @@ module.exports = function(grunt) {
         banner: '<%= meta.banner %>\n'
       },
       build: {
-        src: base + '/js/*.js',
+        src: src,
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
@@ -131,7 +136,8 @@ module.exports = function(grunt) {
             base + '/**/*.js',
             base + '/*.js',
             '<%= jshint.all %>',
-            demo + '/*'
+            demo + '/*',
+            '*'
           ]
         }
       }
@@ -161,7 +167,7 @@ module.exports = function(grunt) {
     'test',
     'bump-only',
     'build',
-    'gitadd',
+    //'gitadd',
     'bump-commit'
   ]);
 

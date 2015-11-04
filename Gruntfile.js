@@ -164,6 +164,7 @@ module.exports = function(grunt) {
     'test',
     'build',
     'gitadd',
+    'bump-only',
     'bump-commit'
   ]);
 

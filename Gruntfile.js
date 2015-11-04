@@ -129,15 +129,12 @@ module.exports = function(grunt) {
     gitadd: {
       task: {
         options: {
-          force: true
+          exclude: true,
+          force: false
         },
         files: {
           src: [
-            base + '/**/*.js',
-            base + '/*.js',
-            '<%= jshint.all %>',
-            demo + '/*',
-            '*'
+            '.'
           ]
         }
       }
@@ -167,7 +164,7 @@ module.exports = function(grunt) {
     'test',
     'bump-only',
     'build',
-    //'gitadd',
+    'gitadd',
     'bump-commit'
   ]);
 

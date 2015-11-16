@@ -19,15 +19,16 @@ THREE.StarMesh = function(starProperties) {
       depthWrite: false
     });
 
-    var pointLight = new THREE.PointLight( 0xffffff, 1 );
-    pointLight.update = function(camera) {
-      for(var i in pointLight.children) {
-        if(pointLight.children[i].update) {
-          pointLight.children[i].update(camera);
+    // PointLight cannot cast shadow for performance capacity.
+    var light = new THREE.PointLight( 0xffffff, 1 );
+    light.update = function(camera) {
+      for(var i in light.children) {
+        if(light.children[i].update) {
+          light.children[i].update(camera);
         }
       }
     };
-    this.add(pointLight);
+    this.add(light);
   }
 };
 

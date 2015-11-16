@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.79 - 2015-11-04
+ * @version v0.0.80 - 2015-11-16
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -213,7 +213,7 @@ THREE.CloudsMesh = function(cloudsProperties) {
       side: THREE.DoubleSide,
       opacity: cloudsProperties.opacity,
       transparent: cloudsProperties.transparent,
-      depthWrite : cloudsProperties.depthWrite,
+      depthWrite : cloudsProperties.depthWrite
     });
 
     this.updateMorphTargets();
@@ -272,9 +272,6 @@ THREE.PlanetMesh = function(planetProperties) {
     this.material  = new THREE.MeshPhongMaterial({
       map: map,
       side: THREE.DoubleSide,
-      opacity: 1,
-      lights: true,
-      shading: THREE.SmoothShading
     });
 
     if(planetProperties.bumpMap) {
@@ -354,15 +351,16 @@ THREE.StarMesh = function(starProperties) {
       depthWrite: false
     });
 
-    var pointLight = new THREE.PointLight( 0xffffff, 1 );
-    pointLight.update = function(camera) {
-      for(var i in pointLight.children) {
-        if(pointLight.children[i].update) {
-          pointLight.children[i].update(camera);
+    // PointLight cannot cast shadow for performance capacity.
+    var light = new THREE.PointLight( 0xffffff, 1 );
+    light.update = function(camera) {
+      for(var i in light.children) {
+        if(light.children[i].update) {
+          light.children[i].update(camera);
         }
       }
     };
-    this.add(pointLight);
+    this.add(light);
   }
 };
 
@@ -474,14 +472,14 @@ define('scene-builder', function() {
 
     renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.shadowMap.enabled = true;
 
     document.body.appendChild( renderer.domElement );
     console.log('Scene initiated');
+
+    window.addEventListener( 'resize', onWindowResize, false );
   }
 
   function animate() {
-
     requestAnimationFrame( animate );
 
     for(var i in scene.children) {
@@ -495,6 +493,15 @@ define('scene-builder', function() {
     }
 
     render();
+  }
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+    controls.handleResize();
   }
 });
 

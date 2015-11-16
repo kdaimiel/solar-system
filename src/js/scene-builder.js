@@ -40,14 +40,14 @@ define('scene-builder', function() {
 
     renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.shadowMap.enabled = true;
 
     document.body.appendChild( renderer.domElement );
     console.log('Scene initiated');
+
+    window.addEventListener( 'resize', onWindowResize, false );
   }
 
   function animate() {
-
     requestAnimationFrame( animate );
 
     for(var i in scene.children) {
@@ -61,5 +61,14 @@ define('scene-builder', function() {
     }
 
     render();
+  }
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+    controls.handleResize();
   }
 });

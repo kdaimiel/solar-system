@@ -20,7 +20,7 @@ THREE.CloudsMesh = function(cloudsProperties) {
       side: THREE.DoubleSide,
       opacity: cloudsProperties.opacity,
       transparent: cloudsProperties.transparent,
-      depthWrite : cloudsProperties.depthWrite,
+      depthWrite : cloudsProperties.depthWrite
     });
 
     this.updateMorphTargets();

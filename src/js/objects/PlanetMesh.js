@@ -15,9 +15,6 @@ THREE.PlanetMesh = function(planetProperties) {
     this.material  = new THREE.MeshPhongMaterial({
       map: map,
       side: THREE.DoubleSide,
-      opacity: 1,
-      lights: true,
-      shading: THREE.SmoothShading
     });
 
     if(planetProperties.bumpMap) {

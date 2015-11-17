@@ -19,6 +19,7 @@
   "globals": {
       "requestAnimationFrame": false,
       "THREE": true,
-      "define": true
+      "define": true,
+      "Stats": true
   }
 }

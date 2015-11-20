@@ -48,12 +48,20 @@ THREE.StarMesh.prototype.update = function(camera) {
 
 THREE.StarMesh.prototype.createLensFlare = function(camera) {
 
+  var vFOV = camera.fov * Math.PI / 180;
   var dist = camera.position.distanceTo(this.position);
-  var height = this.radius * 2; // visible height
   //var size = this.radius * 2 / dist;
-  //var aspect = window.width / window.height;
-  //var size = height * aspect;
-  var size =  20 * Math.atan( height / ( 2 * dist ) ) * ( 180 / Math.PI ); // in degrees
+  //var size =  20 * Math.atan( height / ( 2 * dist ) ) * ( 180 / Math.PI ); // in degrees
+
+  //var size = 2 * Math.atan( (height / camera.aspect) / ( 2 * dist ) ) * ( 180 / Math.PI );
+
+  var height = 2 * Math.tan( vFOV / 2 ) * dist;
+  var rate = this.radius * 2 / height ;
+  var size = window.innerHeight * (this.radius * 2 / height);
+
+  console.log(window.innerHeight);
+  console.log(rate);
+  console.log(size);
 
   //var size = this.radius * 2 / camera.position.length();
   var flareColor = new THREE.Color( 0xffffff );
@@ -61,6 +69,9 @@ THREE.StarMesh.prototype.createLensFlare = function(camera) {
 
   var lensFlare = new THREE.LensFlare(flareColor );
   var texloader = new THREE.TextureLoader();
+  texloader.load('img/sun/lensflare0.png', function(textureFlare) {
+    lensFlare.add( textureFlare, size, 0.0, THREE.AdditiveBlending );
+  });
   texloader.load('img/sun/lensflare1.png', function(textureFlare) {
     lensFlare.add( textureFlare, size * 16, 0.0, THREE.AdditiveBlending );
   });
@@ -75,23 +86,31 @@ THREE.StarMesh.prototype.createLensFlare = function(camera) {
   });
 
   lensFlare.position = this.position;
-  lensFlare.size = size;
+
+  //lensFlare.size = size;
   //lensFlare.scale = size / camera.position.length();
 
   //  this function will operate over each lensflare artifact, moving them around the screen
   lensFlare.update = function(camera, object) {
-    var f, fl = this.lensFlares.length;
+    /*var f, fl = this.lensFlares.length;
     var flare;
-    var size = object.radius * 2;
-
     var dist = camera.position.distanceTo(object.position);
 
     for( f = 0; f < fl; f ++ ) {
       flare = this.lensFlares[ f ];
+      console.log(flare);
       flare.pisition = object.position;
-      flare.scale = size / dist;
-      //flare.opacity = 0.5;
+      flare.scale = flare.size / dist;
+    }*/
+
+    console.log(this.lensFlares[1]);
+
+    var dist = camera.position.distanceTo(object.position);
+    for(var i in this.lensFlares) {
+      this.lensFlares[i].position = object.position;
+      this.lensFlares[i].scale = object.radius * 2  / dist;
     }
+
   };
 
   this.add(lensFlare);

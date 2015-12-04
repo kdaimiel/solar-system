@@ -51,22 +51,25 @@ THREE.StarMesh.prototype.createLensFlare = function() {
   //var height = 2 * Math.tan( vFOV / 2 ) * dist;
   //var size = window.innerHeight * (this.radius * 2 / height);
 
-  var size = this.radius * 4;
-  var flareColor = new THREE.Color( 0xffff00);
+  var size = this.radius * 2;
+  var flareColor = new THREE.Color( 0xffffff);
 
   var lensFlare = new THREE.LensFlare(flareColor );
   var texloader = new THREE.TextureLoader();
   texloader.load('img/sun/lensflare1.png', function(textureFlare) {
-    lensFlare.add( textureFlare, size * 8, 0.0, THREE.AdditiveBlending );
+    lensFlare.add( textureFlare, size * 16, 0.0, THREE.AdditiveBlending );
   });
   texloader.load('img/sun/lensflare2.png', function(textureFlare) {
-    lensFlare.add( textureFlare, size * 8, 0.0, THREE.AdditiveBlending );
+    lensFlare.add( textureFlare, size * 16, 0.0, THREE.AdditiveBlending );
   });
   texloader.load('img/sun/lensflare3.png', function(textureFlare) {
-    lensFlare.add( textureFlare, size * 8, 0.0, THREE.AdditiveBlending );
+    lensFlare.add( textureFlare, size * 16, 0.0, THREE.AdditiveBlending );
   });
   texloader.load('img/sun/lensflare4.png', function(textureFlare) {
-    lensFlare.add( textureFlare, size * 32, 0.0, THREE.AdditiveBlending );
+    lensFlare.add( textureFlare, size * 64, 0.0, THREE.AdditiveBlending );
+  });
+  texloader.load('img/background.jpg', function(textureFlare) {
+    lensFlare.add( textureFlare, size * 64, 0.0, THREE.AdditiveBlending );
   });
 
   lensFlare.position = this.position;

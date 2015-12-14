@@ -56,7 +56,7 @@ THREE.StarMesh.prototype.createLensFlare = function() {
 
   var lensFlare = new THREE.LensFlare(flareColor );
   var texloader = new THREE.TextureLoader();
-  texloader.load('img/sun/lensflare1.png', function(textureFlare) {
+  texloader.load('img/sun/lensflare0.png', function(textureFlare) {
     lensFlare.add( textureFlare, size * 16, 0.0, THREE.AdditiveBlending );
   });
   texloader.load('img/sun/lensflare2.png', function(textureFlare) {
@@ -66,9 +66,6 @@ THREE.StarMesh.prototype.createLensFlare = function() {
     lensFlare.add( textureFlare, size * 16, 0.0, THREE.AdditiveBlending );
   });
   texloader.load('img/sun/lensflare4.png', function(textureFlare) {
-    lensFlare.add( textureFlare, size * 64, 0.0, THREE.AdditiveBlending );
-  });
-  texloader.load('img/background.jpg', function(textureFlare) {
     lensFlare.add( textureFlare, size * 64, 0.0, THREE.AdditiveBlending );
   });
 

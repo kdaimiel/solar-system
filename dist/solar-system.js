@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.85 - 2015-12-04
+ * @version v0.0.86 - 2015-12-14
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -390,7 +390,7 @@ THREE.StarMesh.prototype.createLensFlare = function() {
 
   var lensFlare = new THREE.LensFlare(flareColor );
   var texloader = new THREE.TextureLoader();
-  texloader.load('img/sun/lensflare1.png', function(textureFlare) {
+  texloader.load('img/sun/lensflare0.png', function(textureFlare) {
     lensFlare.add( textureFlare, size * 16, 0.0, THREE.AdditiveBlending );
   });
   texloader.load('img/sun/lensflare2.png', function(textureFlare) {
@@ -400,9 +400,6 @@ THREE.StarMesh.prototype.createLensFlare = function() {
     lensFlare.add( textureFlare, size * 16, 0.0, THREE.AdditiveBlending );
   });
   texloader.load('img/sun/lensflare4.png', function(textureFlare) {
-    lensFlare.add( textureFlare, size * 64, 0.0, THREE.AdditiveBlending );
-  });
-  texloader.load('img/background.jpg', function(textureFlare) {
     lensFlare.add( textureFlare, size * 64, 0.0, THREE.AdditiveBlending );
   });
 

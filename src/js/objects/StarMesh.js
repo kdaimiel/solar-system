@@ -6,6 +6,7 @@ THREE.StarMesh = function(starProperties) {
   this.radius = starProperties.radius || 50;
   this.rotation.x = starProperties.tilt || 0;
   this.vRotation = starProperties.vRotation || 0;
+  this.intesity = starProperties.intensity || 0.8;
 
   var texloader = new THREE.TextureLoader();
   texloader.load(starProperties.map, loadTexture.bind(this));
@@ -14,7 +15,7 @@ THREE.StarMesh = function(starProperties) {
 
   function loadTexture(map) {
 
-    this.material  = new THREE.MeshPhongMaterial({
+    this.material  = new THREE.MeshBasicMaterial({
       map: map,
       side: THREE.BackSide
     });
@@ -51,12 +52,12 @@ THREE.StarMesh.prototype.createLensFlare = function() {
   //var height = 2 * Math.tan( vFOV / 2 ) * dist;
   //var size = window.innerHeight * (this.radius * 2 / height);
 
-  var size = this.radius * 2;
+  var size = this.radius * 2 * this.intesity;
   var flareColor = new THREE.Color( 0xffffff);
-
   var lensFlare = new THREE.LensFlare(flareColor );
   var texloader = new THREE.TextureLoader();
-  texloader.load('img/sun/lensflare0.png', function(textureFlare) {
+
+  texloader.load('img/sun/lensflare1.png', function(textureFlare) {
     lensFlare.add( textureFlare, size * 16, 0.0, THREE.AdditiveBlending );
   });
   texloader.load('img/sun/lensflare2.png', function(textureFlare) {

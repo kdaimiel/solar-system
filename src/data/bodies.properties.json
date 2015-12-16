@@ -3,9 +3,10 @@
     "name": "Sun",
     "type": "Star",
     "radius": 10.4,
+    "intensity": 0.8,
     "tilt": 7.25,
     "vRotation": 0.1,
-    "map" : "img/sun/sun_surface.png"
+    "map" : "img/sun/sunmap.jpg"
   },
   {
     "name": "Mercury",

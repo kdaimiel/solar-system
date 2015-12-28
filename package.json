@@ -1,6 +1,6 @@
 {
   "name": "solar-system",
-  "version": "0.0.94",
+  "version": "0.0.95",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -21,7 +21,7 @@
   },
   "description": "Solar System with Threejs",
   "main": "Gruntfile.js",
-  "repository": "https://github.com/KenEDR/three-solar-system.git",
+  "repository": "https://github.com/kdaimiel/solar-system.git",
   "keywords": [
     "Threejs",
     "solar",
@@ -31,7 +31,7 @@
   "author": "Enrique Daimiel Ruiz <k.daimiel@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KenEDR/three-solar-system/issues"
+    "url": "https://github.com/kdaimiel/solar-system/issues"
   },
-  "homepage": "https://github.com/KenEDR/three-solar-system#readme"
+  "homepage": "https://github.com/kdaimiel/solar-system#readme"
 }

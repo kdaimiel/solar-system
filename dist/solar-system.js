@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.0.88 - 2015-12-16
+ * @version v0.0.93 - 2015-12-28
  * @link https://github.com/KenEDR/three-solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -262,7 +262,6 @@ THREE.PlanetMesh = function(planetProperties) {
   this.radius = planetProperties.radius || 50;
   this.rotation.x = planetProperties.tilt || 0;
   this.vRotation = planetProperties.vRotation || 0;
-  this.castShadow = this.receiveShadow = true;
 
   this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
 
@@ -272,8 +271,7 @@ THREE.PlanetMesh = function(planetProperties) {
   function loadTexture(map){
     this.material  = new THREE.MeshPhongMaterial({
       map: map,
-      side: THREE.DoubleSide,
-      shading: THREE.SmoothShading
+      side: THREE.DoubleSide
     });
 
     if(planetProperties.bumpMap) {

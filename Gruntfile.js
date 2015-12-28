@@ -138,6 +138,14 @@ module.exports = function(grunt) {
           ]
         }
       }
+    },
+    'npm-publish': {
+      options: {
+        // list of tasks that are required before publishing
+        requires: ['build'],
+        // if the workspace is dirty, abort publishing (to avoid publishing local changes)
+        abortIfDirty: false
+      }
     }
   });
 
@@ -163,8 +171,9 @@ module.exports = function(grunt) {
   grunt.registerTask('release', [
     'test',
     'build',
-    'gitadd',
     'bump-only',
+    'npm-publish',
+    'gitadd',
     'bump-commit'
   ]);
 

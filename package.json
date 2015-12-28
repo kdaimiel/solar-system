@@ -1,6 +1,6 @@
 {
   "name": "solar-system",
-  "version": "0.0.93",
+  "version": "0.0.94",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",

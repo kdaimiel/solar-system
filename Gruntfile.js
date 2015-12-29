@@ -144,8 +144,7 @@ module.exports = function(grunt) {
         // list of tasks that are required before publishing
         requires: ['build'],
         // if the workspace is dirty, abort publishing (to avoid publishing local changes)
-        abortIfDirty: false,
-        tag: 'canary'
+        abortIfDirty: false
       }
     }
   });

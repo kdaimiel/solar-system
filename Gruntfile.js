@@ -173,9 +173,9 @@ module.exports = function(grunt) {
     'test',
     'build',
     'bump-only',
-    'npm-publish',
     'gitadd',
-    'bump-commit'
+    'bump-commit',
+    'npm-publish'
   ]);
 
   grunt.registerTask('default', ['test', 'serve']);

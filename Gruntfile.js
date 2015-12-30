@@ -156,7 +156,7 @@ module.exports = function(grunt) {
       task: {
         options: {
           branch: 'master',
-          remote: 'master',
+          //remote: 'master',
           upstream: true
         },
         files: {

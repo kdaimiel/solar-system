@@ -196,6 +196,7 @@ module.exports = function(grunt) {
     //'bump-only'
   ]);
 
+
   // Register default task
   grunt.registerTask('default', ['test', 'serve']);
 

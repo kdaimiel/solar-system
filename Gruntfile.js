@@ -142,6 +142,9 @@ module.exports = function(grunt) {
     },
     gitcommit: {
       task: {
+        options: {
+          allowEmpty: true
+        },
         files: {
           src: [
             '.'
@@ -195,7 +198,6 @@ module.exports = function(grunt) {
     //'npm-publish',
     //'bump-only'
   ]);
-
 
   // Register default task
   grunt.registerTask('default', ['test', 'serve']);

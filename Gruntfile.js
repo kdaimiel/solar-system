@@ -155,6 +155,7 @@ module.exports = function(grunt) {
     gitpush: {
       task: {
         options: {
+          branch: 'master',
           remote: 'master',
           upstream: true
         },

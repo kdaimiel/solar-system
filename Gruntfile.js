@@ -127,6 +127,13 @@ module.exports = function(grunt) {
         pushTo: '<%= pkg.repository %>'
       }
     },
+    gitcheckout: {
+      task: {
+        options: {
+                branch: 'master'
+        }
+      }
+    },
     gitadd: {
       task: {
         options: {
@@ -197,6 +204,7 @@ module.exports = function(grunt) {
   grunt.registerTask('release', [
     'test',
     'build',
+    'gitcheckout',
     'gitadd',
     'gitcommit',
     'gitpush'

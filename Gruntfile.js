@@ -1,13 +1,9 @@
 /**
  * Gruntfile.js
-<<<<<<< HEAD
  * @Description Solar System with Threejs
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
-=======
- *
->>>>>>> a1a2c584065dead22d2050662718241bb07fad85
  */
 
 module.exports = function(grunt) {
@@ -131,13 +127,6 @@ module.exports = function(grunt) {
         pushTo: '<%= pkg.repository %>'
       }
     },
-    gitcheckout: {
-      task: {
-        options: {
-          branch: 'master'
-        }
-      }
-    },
     gitadd: {
       task: {
         options: {
@@ -154,6 +143,7 @@ module.exports = function(grunt) {
     gitcommit: {
       task: {
         options: {
+          message: '<%= pkg.description %>',
           allowEmpty: true
         },
         files: {
@@ -205,15 +195,17 @@ module.exports = function(grunt) {
     'newer:jshint'
   ]);
 
-  grunt.registerTask('release', [
-    'test',
-    'build',
-    //'gitcheckout',
+  grunt.registerTask('git-release', [
     'gitadd',
     'gitcommit',
     'gitpush'
-    //'npm-publish',
-    //'bump-only'
+  ]);
+
+  grunt.registerTask('release', [
+    'test',
+    'build',
+    'git-release',
+    'bump-only'
   ]);
 
   // Register default task

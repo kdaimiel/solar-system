@@ -1,9 +1,13 @@
 /**
  * Gruntfile.js
+<<<<<<< HEAD
  * @Description Solar System with Threejs
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
+=======
+ *
+>>>>>>> a1a2c584065dead22d2050662718241bb07fad85
  */
 
 module.exports = function(grunt) {
@@ -130,7 +134,7 @@ module.exports = function(grunt) {
     gitcheckout: {
       task: {
         options: {
-                branch: 'master'
+          branch: 'master'
         }
       }
     },
@@ -204,7 +208,7 @@ module.exports = function(grunt) {
   grunt.registerTask('release', [
     'test',
     'build',
-    'gitcheckout',
+    //'gitcheckout',
     'gitadd',
     'gitcommit',
     'gitpush'
@@ -222,5 +226,4 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-bump');
-
 };

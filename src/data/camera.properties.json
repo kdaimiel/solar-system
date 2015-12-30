@@ -1,0 +1,12 @@
+{
+  "type": "PerspectiveCamera",
+  "fov": 75,
+  "near": 0.01,
+  "far": 3000,
+  "position" : {
+    "x": 2,
+    "y": 2,
+    "z": 17
+  },
+  "controls": "TrackballControls"
+}

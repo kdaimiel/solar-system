@@ -1,4 +1,10 @@
-
+/*
+ * solar-service
+ * @Description Solar Builder sets and renders the scene.
+ * @link https://github.com/kdaimiel/solar-system#readme
+ * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
 define('scene-builder', function() {
 
   'use strict';
@@ -17,18 +23,18 @@ define('scene-builder', function() {
 
   function setCamera(newCamera) {
     camera = newCamera;
-    console.log('New camera has been placed in the scene');
+    //console.log('New camera has been placed in the scene');
   }
 
   function addObject(object) {
     scene.add(object);
-    console.log('New object of type "' + object.type + '"" has been added to the scene');
+    //console.log('New object of type "' + object.type + '"" has been added to the scene');
   }
 
   function setControls(newControls){
     controls = newControls;
     controls.addEventListener('change', render);
-    console.log('New controls have been added to the camera');
+    //console.log('New controls have been added to the camera');
   }
 
   function render() {
@@ -43,15 +49,16 @@ define('scene-builder', function() {
 
     document.body.appendChild( renderer.domElement );
 
+    // Set stats
     stats = new Stats();
-    //stats.setMode( 2);
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.top = '0px';
     document.body.appendChild( stats.domElement );
 
+    // Catch
     window.addEventListener( 'resize', onWindowResize, false );
 
-    console.log('Scene initiated');
+    //console.log('Scene initiated');
   }
 
   function animate() {

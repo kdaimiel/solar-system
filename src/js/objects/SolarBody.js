@@ -1,4 +1,10 @@
-
+/*
+ * SolarBody
+ * @Description Solar abstract object.
+ * @link https://github.com/kdaimiel/solar-system#readme
+ * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
 THREE.SolarBody = function(bodyProperties) {
 
   THREE.Object3D.call( this );
@@ -9,6 +15,10 @@ THREE.SolarBody = function(bodyProperties) {
   this.geometry = new THREE.Geometry();
   this.material = new THREE.MeshBasicMaterial();
 
+  if(bodyProperties.orbitProperties){
+    this.orbitProperties = bodyProperties.orbitProperties;
+  }
+
   if(bodyProperties.cloudsProperties) {
     this.addClouds(bodyProperties.cloudsProperties);
   }
@@ -18,6 +28,7 @@ THREE.SolarBody = function(bodyProperties) {
   }
 
   this.updateMorphTargets();
+
 };
 
 THREE.SolarBody.prototype = Object.create( THREE.Mesh.prototype );
@@ -45,13 +56,9 @@ THREE.SolarBody.prototype.addSatellite = function(satellite, orbitProperties) {
   satellite.position.z = this.radius + orbit.distance + satellite.radius || 0;
 };
 
-//Mirar
-THREE.SolarBody.prototype.loadMap = function(material, materialProperties) {
-  material  = new THREE.MeshPhongMaterial({
-    map: materialProperties.map,
-    side: THREE.DoubleSide,
-    opacity: materialProperties.opacity,
-    transparent: materialProperties.transparent,
-    depthWrite : materialProperties.depthWrite,
-  });
+THREE.SolarBody.prototype.update = function(camera) {
+  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
+  for(var i in this.children) {
+    this.children[i].update(camera, this);
+  }
 };

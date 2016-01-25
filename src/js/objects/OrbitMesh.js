@@ -1,4 +1,10 @@
-
+/*
+ * OrbitMesh
+ * @Description Mesh to define the orbits of planets.
+ * @link https://github.com/kdaimiel/solar-system#readme
+ * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
 THREE.OrbitMesh = function(orbitProperties) {
 
   THREE.Object3D.call( this );

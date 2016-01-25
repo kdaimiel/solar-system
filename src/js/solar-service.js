@@ -1,4 +1,10 @@
-
+/*
+ * solar-service
+ * @Description Solar Service defines methods to get JSON properties
+ * @link https://github.com/kdaimiel/solar-system#readme
+ * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
 define('solar-service', function() {
 
   'use strict';
@@ -11,16 +17,16 @@ define('solar-service', function() {
 
   return service;
 
-  function getCamera(callback){
-    getJSON('../src/data/camera.properties.json', callback);
+  function getCamera(cameraJSONProperties, callback){
+    getJSON(cameraJSONProperties, callback);
   }
 
-  function getBodies(callback){
-    getJSON('../src/data/bodies.properties.json', callback);
+  function getBodies(bodiesJSONProperties, callback){
+    getJSON(bodiesJSONProperties, callback);
   }
 
-  function getLights(callback){
-    getJSON('../src/data/lights.properties.json', callback);
+  function getLights(lightsJSONProperties, callback){
+    getJSON(lightsJSONProperties, callback);
   }
 
   function getJSON(src, callback) {

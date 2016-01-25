@@ -1,4 +1,10 @@
-
+/*
+ * CloudsMesh
+ * @Description Mesh to build the clouds of planets.
+ * @link https://github.com/kdaimiel/solar-system#readme
+ * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
 THREE.CloudsMesh = function(cloudsProperties) {
 
   THREE.Object3D.call( this );
@@ -31,7 +37,7 @@ THREE.CloudsMesh.prototype = Object.create( THREE.Mesh.prototype );
 THREE.CloudsMesh.prototype.constructor = THREE.CloudsMesh;
 
 THREE.CloudsMesh.prototype.update = function() {
-  // Clouds rote with random speed between 0.0 and the speed (degrees).
+  // Clouds rote with random speed between 0.0 and speed (degrees).
   this.rotation.x -= THREE.Math.randFloat( 0.00, this.speed ) * Math.PI / 180;
   this.rotation.y -= THREE.Math.randFloat( 0.00, this.speed ) * Math.PI / 180;
 };

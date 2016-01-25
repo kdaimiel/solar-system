@@ -1,4 +1,10 @@
-
+/*
+ * RingsMesh
+ * @Description Mesh to build the rings of planets.
+ * @link https://github.com/kdaimiel/solar-system#readme
+ * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
 THREE.RingsMesh = function(ringsProperties) {
 
   THREE.Mesh.call( this );

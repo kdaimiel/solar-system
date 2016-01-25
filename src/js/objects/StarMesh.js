@@ -1,4 +1,10 @@
-
+/*
+ * StarMesh
+ * @Description Mesh to build stars.
+ * @link https://github.com/kdaimiel/solar-system#readme
+ * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
 THREE.StarMesh = function(starProperties) {
 
   THREE.SolarBody.call( this, starProperties );
@@ -14,7 +20,6 @@ THREE.StarMesh = function(starProperties) {
   this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
 
   function loadTexture(map) {
-
     this.material  = new THREE.MeshBasicMaterial({
       map: map,
       side: THREE.BackSide
@@ -38,19 +43,7 @@ THREE.StarMesh = function(starProperties) {
 THREE.StarMesh.prototype = Object.create( THREE.SolarBody.prototype );
 THREE.StarMesh.prototype.constructor = THREE.StarMesh;
 
-THREE.StarMesh.prototype.update = function(camera) {
-  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
-  for(var i in this.children) {
-    this.children[i].update(camera, this);
-  }
-};
-
 THREE.StarMesh.prototype.createLensFlare = function() {
-
-  //var vFOV = camera.fov * Math.PI / 180;
-  //var dist = camera.position.distanceTo(this.position);
-  //var height = 2 * Math.tan( vFOV / 2 ) * dist;
-  //var size = window.innerHeight * (this.radius * 2 / height);
 
   var size = this.radius * 2 * this.intesity;
   var flareColor = new THREE.Color( 0xffffff);
@@ -72,7 +65,7 @@ THREE.StarMesh.prototype.createLensFlare = function() {
 
   lensFlare.position = this.position;
 
-  //  this function will operate over each lensflare artifact, moving them around the screen
+  //  This function will operate over each lensflare artifact, moving them around the screen
   lensFlare.update = function(camera, object) {
     var dist = camera.position.distanceTo(object.position);
     for(var i in this.lensFlares) {

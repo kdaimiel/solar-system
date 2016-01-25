@@ -1,4 +1,10 @@
-
+/*
+ * PlanetMesh
+ * @Description Mesh to build planets.
+ * @link https://github.com/kdaimiel/solar-system#readme
+ * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
 THREE.PlanetMesh = function(planetProperties) {
   THREE.SolarBody.call(this, planetProperties);
 
@@ -38,10 +44,3 @@ THREE.PlanetMesh = function(planetProperties) {
 
 THREE.PlanetMesh.prototype = Object.create( THREE.SolarBody.prototype );
 THREE.PlanetMesh.prototype.constructor = THREE.PlanetMesh;
-
-THREE.PlanetMesh.prototype.update = function(camera) {
-  this.rotation.y -= this.vRotation * Math.PI / 180;     // Rotates  N degrees per frame;
-  for(var i in this.children) {
-    this.children[i].update(camera, this);
-  }
-};

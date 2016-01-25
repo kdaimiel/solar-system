@@ -19,6 +19,7 @@ module.exports = function(grunt) {
   var dist = 'dist';
   var src = [
     base + '/js/objects/SolarBody.js',
+    base + '/js/objects/PlanetMesh.js',
     base + '/**/*.js'
   ];
 
@@ -36,7 +37,7 @@ module.exports = function(grunt) {
     },
     // The actual grunt server settings
     clean: {
-      dist: dist
+      dist: [dist /*, 'distApk'*/]
     },
     concat: {
       options: {
@@ -187,7 +188,7 @@ module.exports = function(grunt) {
     'clean',
     'test',
     'concat',
-    'uglify'
+    'uglify',
   ]);
 
   grunt.registerTask('test', [
@@ -212,6 +213,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['test', 'serve']);
 
   // Load external grunt tasks
+  grunt.loadNpmTasks('grunt-cordovacli');
   grunt.loadNpmTasks('grunt-npm');
   grunt.loadNpmTasks('grunt-git');
   grunt.loadNpmTasks('grunt-contrib-clean');

@@ -6,16 +6,21 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 define(['scene-factory', 'solar-properties'], function(SceneFactory, SolarProperties) {
-//define( function() {
 
   var camera;
+  var cameraProperties;
   var controls;
+  var controlsProperties;
   var light;
+  var lightProperties;
 
   beforeEach(function() {
     camera = null;
+    cameraProperties = null;
     controls = null;
+    controlsProperties = null;
     light = null;
+    lightProperties = null;
   });
 
   describe('Testing solar service', function() {
@@ -25,59 +30,67 @@ define(['scene-factory', 'solar-properties'], function(SceneFactory, SolarProper
       expect(SolarProperties).not.toBe(null);
     });
 
-    it('Testing createCamera method creating a PerspectiveCamera', function() {
-
-    });
-
-    it('Testing createCamera method creating a PerspectiveCamera with wrong parameters ', function() {
+    it('Testing createCamera method creating a camera with wrong parameters ', function() {
+      expect(SceneFactory.createCamera, null).toThrowError(TypeError);
       camera = SceneFactory.createCamera({});
       expect(camera).toBe(undefined);
       controls = SceneFactory.createControls(camera, {});
       expect(controls).toBe(undefined);
+    });
 
-      //var camera = SolarFactory.createCamera(null);
-      //expect(camera).toBe(undefined);
+    it('Testing createCamera method creating a PerspectiveCamera', function() {
+      cameraProperties = {
+        type: 'PerspectiveCamera',
+      };
+      camera = SceneFactory.createCamera(cameraProperties);
+      var camera2 = new THREE.PerspectiveCamera();
+
+      compareCameras(camera, camera2);
     });
 
     it('Testing createCamera method creating a CubeCamera', function() {
-      //var camera = SolarFactory.createCamera(null);
-      //expect(camera).toBe(undefined);
-    });
+      cameraProperties = {
+        type: 'CubeCamera',
+      };
+      camera = SceneFactory.createCamera(cameraProperties);
+      var camera2 = new THREE.CubeCamera();
 
-    it('Testing createCamera method creating a CubeCamera with wrong parameters ', function() {
-      //var camera = SolarFactory.createCamera(null);
-      //expect(camera).toBe(undefined);
+      compareCameras(camera, camera2);
     });
 
     it('Testing createCamera method creating a OrthographicCamera', function() {
-      //var camera = SolarFactory.createCamera(null);
-      //expect(camera).toBe(undefined);
+      cameraProperties = {
+        type: 'OrthographicCamera',
+      };
+      camera = SceneFactory.createCamera(cameraProperties);
+      var camera2 = new THREE.OrthographicCamera();
+
+      compareCameras(camera, camera2);
     });
 
-    it('Testing createCamera method creating a OrthographicCamera with wrong parameters ', function() {
-      //var camera = SolarFactory.createCamera(null);
-      //expect(camera).toBe(undefined);
+    it('Testing createControls method test', function() {
     });
 
-    it('The createControls method test', function() {
+    it('Testing createControls method  with wrong parameters ', function() {
     });
 
-    it('The createControls method method with wrong parameters ', function() {
+    it('Testing createLight method test', function() {
     });
 
-    it('The createLight method test', function() {
-    });
+    it('Testing createLight method with wrong parameters ', function() {
 
-    it('The createLight method method with wrong parameters ', function() {
-
-      console.log('A');
-      //expect(SceneFactory.createLight({})).toThrowError(TypeError);
-      console.log('B');
-
+      expect(SceneFactory.createLight, null).toThrowError(TypeError);
 
       light = SceneFactory.createLight({});
       expect(light).toBe(undefined);
     });
+
+    function compareCameras(camera, camera2){
+      expect(camera).not.toBe(undefined);
+      expect(camera2).not.toBe(undefined);
+      expect(camera.type).toEqual(camera2.type);
+      expect(camera.prototype).toEqual(camera2.prototype);
+    }
 
   });
 });

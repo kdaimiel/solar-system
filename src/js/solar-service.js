@@ -12,7 +12,7 @@ define('solar-service', function() {
   var service = {
     getCamera: getCamera,
     getBodies: getBodies,
-    getLights: getLights
+    getLights: getLights,
   };
 
   return service;

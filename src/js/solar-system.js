@@ -5,14 +5,14 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-define('solar-system', function(require) {
+define('solar-system', [
+  'scene-builder',
+  'scene-factory',
+  'solar-service',
+  'solar-properties'
+], function(SceneBuilder, SceneFactory, SolarService, SolarProperties) {
 
   'use strict';
-
-  var SceneBuilder = require('scene-builder');
-  var SceneFactory = require('scene-factory');
-  var SolarService = require('solar-service');
-  var SolarProperties = require('solar-system-properties');
 
   var bodies = {};
 

@@ -14,14 +14,15 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
 
   // Configure properties
-  var base = 'src';
-  var demo = 'demo';
+  /*var src = [
+    'src/js/objects/SolarBody.js',
+    'src/js/objects/PlanetMesh.js',
+    'src'
+  ];*/
+  var src = 'src';
+  var test = 'test';
   var dist = 'dist';
-  var src = [
-    base + '/js/objects/SolarBody.js',
-    base + '/js/objects/PlanetMesh.js',
-    base + '/**/*.js'
-  ];
+  var demo = 'demo';
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -37,17 +38,7 @@ module.exports = function(grunt) {
     },
     // The actual grunt server settings
     clean: {
-      dist: [dist /*, 'distApk'*/]
-    },
-    concat: {
-      options: {
-        banner: '<%= meta.banner %>\n',
-        stripBanners: true
-      },
-      dist: {
-        src: src,
-        dest: dist + '/<%= pkg.name %>.js'
-      }
+      dist: dist
     },
     connect: {
       options: {
@@ -69,29 +60,30 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc'
       },
       all: [
-        base + '/**/*.js',
+        src + '/**/*.js',
+        test + '/**/*.js',
+        demo + '/**/*.js',
         '*.js'
       ]
     },
     jsonlint: {
       pkg: [ 'package.json' ],
       bower: [ '{bower}.json' ],
-      files: [ base + '/data/*.json']
+      files: [ src + '/**/*.json']
+    },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+      }
     },
     watch: {
       js: {
-        files: [
-          base + '/**/*.js',
-          base + '/*.js',
-          '<%= jshint.all %>',
-          demo + '/*.js',
-          dist + '/*.js'
-        ],
+        files: ['<%= jshint.all %>'],
         tasks: ['jshint']
       },
       json: {
         files: [
-          base + '/data/*.json',
+          '<%= jsonlint.files %>',
           '{package,bower}.json'
         ],
         tasks: ['jsonlint']
@@ -109,12 +101,30 @@ module.exports = function(grunt) {
         tasks: ['build']
       }
     },
+    concat: {
+      options: {
+        banner: '<%= meta.banner %>\n',
+        stripBanners: true
+      },
+      dist: {
+        src: [
+          'src/js/objects/SolarBody.js',
+          'src/js/objects/PlanetMesh.js',
+          src + '/**/*.js'
+        ],
+        dest: dist + '/<%= pkg.name %>.js'
+      }
+    },
     uglify: {
       options: {
         banner: '<%= meta.banner %>\n'
       },
       build: {
-        src: src,
+        src: [
+          'src/js/objects/SolarBody.js',
+          'src/js/objects/PlanetMesh.js',
+          src + '/**/*.js'
+        ],
         dest: dist + '/<%= pkg.name %>.min.js'
       }
     },
@@ -193,7 +203,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'newer:jsonlint',
-    'newer:jshint'
+    'newer:jshint',
+    'karma:unit'
   ]);
 
   grunt.registerTask('git-release', [
@@ -210,7 +221,7 @@ module.exports = function(grunt) {
   ]);
 
   // Register default task
-  grunt.registerTask('default', ['test', 'serve']);
+  grunt.registerTask('default', ['build', 'serve']);
 
   // Load external grunt tasks
   grunt.loadNpmTasks('grunt-cordovacli');
@@ -220,4 +231,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-bump');
+  grunt.loadNpmTasks('grunt-karma');
+
 };

@@ -5,8 +5,9 @@
   "jquery": true,
   "node": true,
   "bitwise": true,
-  "camelcase": true,
+  "camelcase": false,
   "curly": true,
+  "jasmine": true,
   "eqeqeq": true,
   "immed": true,
   "newcap": true,
@@ -17,9 +18,14 @@
   "smarttabs": true,
   "trailing": true,
   "globals": {
-      "requestAnimationFrame": false,
-      "THREE": true,
-      "define": true,
-      "Stats": true
+    "requestAnimationFrame": false,
+    "THREE": true,
+    "define": true,
+    "Stats": true,
+    "requirejs": true,
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "beforeEach": true
   }
 }

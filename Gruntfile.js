@@ -215,7 +215,6 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('release', [
-    'test',
     'build',
     'git-release',
     'bump-only'

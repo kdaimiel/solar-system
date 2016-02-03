@@ -208,16 +208,21 @@ module.exports = function(grunt) {
     'karma:unit'
   ]);
 
-  grunt.registerTask('git-release', [
+  grunt.registerTask('git-commit', [
     'gitadd',
     'gitcommit',
-    'gitpush'
+  ]);
+
+  grunt.registerTask('commit', [
+    'build',
+    'git-commit',
+    'bump-only'
   ]);
 
   grunt.registerTask('release', [
     'build',
-    'git-release',
-    'bump-only'
+    'commit',
+    'git-push'
   ]);
 
   // Register default task

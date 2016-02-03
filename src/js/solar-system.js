@@ -39,19 +39,19 @@ define('solar-system', [
     }
   }
 
+  function addMoon(moonProperties) {
+    var moon = SceneFactory.createMoon(moonProperties);
+    addSolarBody(moon);
+  }
+
   function addPlanet(planetProperties){
-    var planet = new THREE.PlanetMesh(planetProperties);
+    var planet = SceneFactory.createPlanet(planetProperties);
     addSolarBody(planet);
   }
 
   function addStar(starProperties){
-    var star = new THREE.StarMesh(starProperties);
+    var star = SceneFactory.createStar(starProperties);
     addSolarBody(star);
-  }
-
-  function addMoon(moonProperties) {
-    var moon = new THREE.MoonMesh(moonProperties);
-    addSolarBody(moon);
   }
 
   function loadObjectFronJSONFiles(){

@@ -13,33 +13,6 @@ THREE.PlanetMesh = function(planetProperties) {
   this.vRotation = planetProperties.vRotation || 0;
 
   this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
-
-  var texloader = new THREE.TextureLoader();
-  texloader.load(planetProperties.map, loadTexture.bind(this));
-
-  function loadTexture(map){
-    this.material  = new THREE.MeshPhongMaterial({
-      map: map,
-      side: THREE.DoubleSide
-    });
-
-    if(planetProperties.bumpMap) {
-      texloader.load(planetProperties.bumpMap, loadbumpMap.bind(this));
-    }
-
-    if(planetProperties.specularMap) {
-      texloader.load(planetProperties.specularMap, loadspecularMap.bind(this));
-    }
-  }
-
-  function loadbumpMap(bumpMap) {
-    this.material.bumpMap = bumpMap;
-  }
-
-  function loadspecularMap(specularMap) {
-    this.material.specularMap = specularMap;
-  }
-
 };
 
 THREE.PlanetMesh.prototype = Object.create( THREE.SolarBody.prototype );

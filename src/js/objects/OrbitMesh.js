@@ -7,20 +7,15 @@
  */
 THREE.OrbitMesh = function(orbitProperties) {
 
-  THREE.Object3D.call( this );
+  THREE.SolarBody.call(this, orbitProperties);
 
   this.type = 'OrbitMesh';
   this.distance = orbitProperties.distance || 50;
   this.speed = orbitProperties.speed || 0;
   this.tilt = orbitProperties.tilt || 0;
-
-  this.geometry = new THREE.Geometry();
-  this.material = new THREE.MeshBasicMaterial();
-
-  this.updateMorphTargets();
 };
 
-THREE.OrbitMesh.prototype = Object.create( THREE.Mesh.prototype );
+THREE.OrbitMesh.prototype = Object.create( THREE.SolarBody.prototype );
 THREE.OrbitMesh.prototype.constructor = THREE.OrbitMesh;
 
 THREE.OrbitMesh.prototype.update = function() {

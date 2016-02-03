@@ -17,17 +17,12 @@ module.exports = function(config) {
     files: [
       'bower_components/jquery/dist/jquery.js',
       'bower_components/threejs/build/three.js',
-      /*{pattern: 'bower_components/threejs/examples/js/controls/**.js', included: true},
-      'bower_components/threejs/examples/js/libs/stats.min.js',
-      'bower_components/threejs/examples/js/libs/require.js',
-      'src/js/solar-service.js',
+      {pattern: 'bower_components/threejs/examples/js/controls/**.js', included: true},
+      /*'bower_components/threejs/examples/js/libs/stats.min.js',
+      'bower_components/threejs/examples/js/libs/require.js',*/
       'src/js/objects/SolarBody.js',
-      'src/js/objects/PlanetMesh.js',*/
-     // 'src/**/*js',
-
-      {pattern: 'src/**/*properties.js', included: true},
-      {pattern: 'src/**/*service.js', included: true},
-      {pattern: 'src/**/*factory.js', included: true},
+      'src/js/objects/PlanetMesh.js',
+      {pattern: 'src/**/*js', included: true},
       {pattern: 'test/**/*Spec.js', included: false},
 
       'test/test-main.js'

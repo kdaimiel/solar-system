@@ -14,30 +14,8 @@ THREE.StarMesh = function(starProperties) {
   this.vRotation = starProperties.vRotation || 0;
   this.intesity = starProperties.intensity || 0.8;
 
-  var texloader = new THREE.TextureLoader();
-  texloader.load(starProperties.map, loadTexture.bind(this));
-
   this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
 
-  function loadTexture(map) {
-    this.material  = new THREE.MeshBasicMaterial({
-      map: map,
-      side: THREE.BackSide
-    });
-
-    // PointLight cannot cast shadow because of performance capacity.
-    var light = new THREE.PointLight( 0xffffff, 1.5, 4500 );
-    light.update = function(camera) {
-      for(var i in light.children) {
-        if(light.children[i].update) {
-          light.children[i].update(camera);
-        }
-      }
-    };
-    this.add(light);
-
-    this.createLensFlare();
-  }
 };
 
 THREE.StarMesh.prototype = Object.create( THREE.SolarBody.prototype );
@@ -78,4 +56,24 @@ THREE.StarMesh.prototype.createLensFlare = function() {
 
   this.add(lensFlare);
   this.hasLensFlare = true;
+};
+
+THREE.StarMesh.prototype.loadTexture = function (map){
+  this.material  = new THREE.MeshBasicMaterial({
+    map: map,
+    side: THREE.BackSide
+  });
+
+  // PointLight cannot cast shadow because of performance capacity.
+  var light = new THREE.PointLight( 0xffffff, 1.5, 4500 );
+  light.update = function(camera) {
+    for(var i in light.children) {
+      if(light.children[i].update) {
+        light.children[i].update(camera);
+      }
+    }
+  };
+  this.add(light);
+
+  this.createLensFlare();
 };

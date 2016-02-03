@@ -12,7 +12,10 @@ define('scene-factory', function() {
   var factory = {
     createCamera: createCamera,
     createControls: createControls,
-    createLight: createLight
+    createLight: createLight,
+    createMoon: createMoon,
+    createPlanet: createPlanet,
+    createStar: createStar
   };
 
   return factory;
@@ -31,8 +34,7 @@ define('scene-factory', function() {
       camera = new THREE.OrthographicCamera(cameraProperties.left, cameraProperties.right , cameraProperties.top,  cameraProperties.bottom, cameraProperties.near, cameraProperties.far);
       break;
     default:
-      console.error(cameraProperties.type + ' is not a kind of valid camera');
-      return;
+      throw new TypeError(cameraProperties.type + ' is not a kind of valid camera');
     }
 
     if(cameraProperties.position) {
@@ -68,8 +70,7 @@ define('scene-factory', function() {
       controls = new THREE.TransformControls( camera );
       break;
     default:
-      console.error(controlsType + ' is not a kind of valid camera controls');
-      return;
+      throw new TypeError(controlsType + ' is not a kind of valid camera controls');
     }
     return controls;
   }
@@ -113,8 +114,7 @@ define('scene-factory', function() {
       light.shadowMap = lightProperties.shadowMap;
       break;
     default:
-      console.error(lightProperties.type + ' is not a kind of valid light');
-      return;
+      throw new TypeError(lightProperties.type + ' is not a kind of valid light');
     }
 
     if(lightProperties.position) {
@@ -122,6 +122,21 @@ define('scene-factory', function() {
     }
 
     return light;
+  }
+
+  function createMoon(moonProperties) {
+    var moon = new THREE.MoonMesh(moonProperties);
+    return moon;
+  }
+
+  function createPlanet(planetProperties){
+    var planet = new THREE.PlanetMesh(planetProperties);
+    return planet;
+  }
+
+  function createStar(starProperties){
+    var star = new THREE.StarMesh(starProperties);
+    return star;
   }
 
 });

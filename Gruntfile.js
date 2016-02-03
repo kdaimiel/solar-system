@@ -68,7 +68,7 @@ module.exports = function(grunt) {
     },
     jsonlint: {
       pkg: [ 'package.json' ],
-      bower: [ '{bower}.json' ],
+      bower: [ 'bower.json' ],
       files: [ src + '/**/*.json']
     },
     karma: {
@@ -95,6 +95,7 @@ module.exports = function(grunt) {
         files: [
           '<%= watch.js.files %>',
           '<%= watch.json.files %>',
+          '<%= jshint.options.jshintrc %>',
           '**/*.css',
           '**/*.html'
         ],

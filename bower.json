@@ -1,9 +1,37 @@
 {
   "name": "temp",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "dependencies": {
     "threejs": "",
     "jquery": "~2.1.4"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "description": "Solar System with Threejs",
+  "repository": "https://github.com/kdaimiel/solar-system.git",
+  "keywords": [
+    "Threejs",
+    "solar",
+    "system",
+    "three.js"
+  ],
+  "author": "Enrique Daimiel Ruiz <k.daimiel@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kdaimiel/solar-system/issues"
+  },
+  "homepage": "https://github.com/kdaimiel/solar-system#readme",
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "src",
+    "test",
+    ".editorconfig",
+    ".gitignore",
+    ".jshintrc",
+    ".npmignore",
+    "Gruntfile.js",
+    "index.html",
+    "karma.conf.js",
+    "npm-debug.log"
+  ]
 }

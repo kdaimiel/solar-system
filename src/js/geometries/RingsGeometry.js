@@ -5,22 +5,22 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-THREE.RingsGeometry = function ( ringsProperties ) {
+THREE.RingsGeometry = function (innerRadius, outerRadius, thetaStart, thetaLength, thetaSegments, phiSegments) {
 
   THREE.Geometry.call( this );
 
   this.type = 'RingsGeometry';
 
-  this.innerRadius = ringsProperties.innerRadius || 0;
-  this.outerRadius = ringsProperties.outerRadius || 50;
+  this.innerRadius = innerRadius || 0;
+  this.outerRadius = outerRadius || 50;
 
-  this.thetaStart = ringsProperties.thetaStart !== undefined ? ringsProperties.thetaStart : 0;
-  this.thetaLength = ringsProperties.thetaLength !== undefined ? ringsProperties.thetaLength : Math.PI * 2;
+  this.thetaStart = thetaStart !== undefined ? thetaStart : 0;
+  this.thetaLength = thetaLength !== undefined ? thetaLength : Math.PI * 2;
 
-  this.thetaSegments = ringsProperties.thetaSegments !== undefined ? Math.max( 3, ringsProperties.thetaSegments ) : 50;
-  this.phiSegments = ringsProperties.phiSegments !== undefined ? Math.max( 1, ringsProperties.phiSegments ) : 50;
+  this.thetaSegments = thetaSegments !== undefined ? Math.max( 3, thetaSegments ) : 50;
+  this.phiSegments = phiSegments !== undefined ? Math.max( 1, phiSegments ) : 50;
 
-  var i, o, uvs = [], radius = this.innerRadius, radiusStep = ( ( ringsProperties.outerRadius - ringsProperties.innerRadius ) / this.phiSegments ), segment;
+  var i, o, uvs = [], radius = this.innerRadius, radiusStep = ( ( outerRadius - innerRadius ) / this.phiSegments ), segment;
   for ( i = 0; i < this.phiSegments + 1; i ++ ) { // concentric circles inside ring
     for ( o = 0; o < this.thetaSegments + 1; o ++ ) { // number of segments per circle
       var vertex = new THREE.Vector3();

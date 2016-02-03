@@ -18,14 +18,16 @@
   "smarttabs": true,
   "trailing": true,
   "globals": {
-    "requestAnimationFrame": false,
+    "requestAnimationFrame": true,
     "THREE": true,
     "define": true,
     "Stats": true,
     "requirejs": true,
     "describe": true,
     "it": true,
+    "xit": true,
     "expect": true,
-    "beforeEach": true
+    "beforeEach": true,
+    "spyOn": true
   }
 }

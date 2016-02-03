@@ -62,6 +62,11 @@ define('scene-builder', function() {
   }
 
   function animate() {
+
+    if(!scene) {
+      throw new TypeError('Scene has to be initiated before animate');
+    }
+
     requestAnimationFrame( animate );
 
     for(var i in scene.children) {

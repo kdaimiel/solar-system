@@ -170,7 +170,8 @@ module.exports = function(grunt) {
         options: {
           branch: 'master',
           remote: '<%= pkg.repository %>',
-          upstream: true
+          upstream: true,
+          tags: true
         },
         files: {
           src: [
@@ -218,7 +219,8 @@ module.exports = function(grunt) {
   grunt.registerTask('release', [
     'build',
     'commit',
-    'gitpush'
+    'gitpush',
+    'npm-publish'
   ]);
 
   // Register default task

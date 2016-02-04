@@ -1,6 +1,6 @@
 {
   "name": "temp",
-  "version": "0.1.23",
+  "version": "0.1.32",
   "dependencies": {
     "threejs": "",
     "jquery": "~2.1.4"

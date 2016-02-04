@@ -212,12 +212,11 @@ module.exports = function(grunt) {
   grunt.registerTask('commit', [
     'build',
     'gitadd',
-    'gitcommit',
+    //'gitcommit',
     'bump-only'
   ]);
 
   grunt.registerTask('release', [
-    'build',
     'commit',
     'gitpush',
     'npm-publish'

@@ -12,8 +12,8 @@ describe('Testing RingsMesh', function() {
     expect(THREE.RingsMesh, null).toThrowError(TypeError);
   });
 
-  xit('Testing RingsMesh', function() {
-    var rings = THREE.RingsMesh({});
+  it('Testing RingsMesh', function() {
+    var rings = new THREE.RingsMesh({});
     expect(rings).not.toBe(undefined);
   });
 

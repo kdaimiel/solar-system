@@ -12,8 +12,8 @@ describe('Testing SolarBody', function() {
     expect(THREE.SolarBody, null).toThrowError(TypeError);
   });
 
-  xit('Testing SolarBody', function() {
-    var solarBody = THREE.SolarBody({});
+  it('Testing SolarBody', function() {
+    var solarBody = new THREE.SolarBody({});
     expect(solarBody).not.toBe(undefined);
   });
 

@@ -12,8 +12,8 @@ describe('Testing PlanetMesh', function() {
     expect(THREE.PlanetMesh, null).toThrowError(TypeError);
   });
 
-  xit('Testing PlanetMesh', function() {
-    var planet = THREE.PlanetMesh({});
+  it('Testing PlanetMesh', function() {
+    var planet = new THREE.PlanetMesh({});
     expect(planet).not.toBe(undefined);
   });
 

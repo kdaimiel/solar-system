@@ -12,8 +12,8 @@ describe('Testing CloudsMesh', function() {
     expect(THREE.CloudsMesh, null).toThrowError(TypeError);
   });
 
-  xit('Testing CloudsMesh', function() {
-    var clouds = THREE.CloudsMesh({});
+  it('Testing CloudsMesh', function() {
+    var clouds = new THREE.CloudsMesh({});
     expect(clouds).not.toBe(undefined);
   });
 

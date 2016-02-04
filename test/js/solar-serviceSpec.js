@@ -39,7 +39,6 @@ define(['solar-service', 'solar-properties'], function(SolarService, SolarProper
     });
 
     function loadJSON(properties) {
-      console.log(properties);
       expect(properties).not.toBe(null);
     }
 

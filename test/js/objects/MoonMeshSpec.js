@@ -12,8 +12,8 @@ describe('Testing MoonMesh', function() {
     expect(THREE.MoonMesh, null).toThrowError(TypeError);
   });
 
-  xit('Testing MoonMesh', function() {
-    var moon = THREE.MoonMesh({});
+  it('Testing MoonMesh', function() {
+    var moon = new THREE.MoonMesh({});
     expect(moon).not.toBe(undefined);
   });
 

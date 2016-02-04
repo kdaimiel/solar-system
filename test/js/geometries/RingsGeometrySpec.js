@@ -12,13 +12,8 @@ describe('Testing RingsGeometry', function() {
     expect(THREE.RingsGeometry, null).toThrowError(TypeError);
   });
 
-  xit('Testing RingsGeometry', function() {
-    var ringsProperties = {
-      innerRadius: 2.5,
-      outerRadius: 5.6,
-      map: 'img/saturn/saturnringcolor.jpg'
-    };
-    var geometry = THREE.RingsGeometry(ringsProperties);
+  it('Testing RingsGeometry', function() {
+    var geometry = new THREE.RingsGeometry({});
     expect(geometry).not.toBe(undefined);
   });
 

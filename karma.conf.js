@@ -18,8 +18,7 @@ module.exports = function(config) {
       'bower_components/jquery/dist/jquery.js',
       'bower_components/threejs/build/three.js',
       {pattern: 'bower_components/threejs/examples/js/controls/**.js', included: true},
-      /*'bower_components/threejs/examples/js/libs/stats.min.js',
-      'bower_components/threejs/examples/js/libs/require.js',*/
+      'bower_components/threejs/examples/js/libs/stats.min.js',
       'src/js/objects/SolarBody.js',
       'src/js/objects/PlanetMesh.js',
       {pattern: 'src/**/*js', included: true},
@@ -66,7 +65,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'], //An browser with WebGLRenderer is needed to pass test
 
 
     // Continuous Integration mode

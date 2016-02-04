@@ -40,8 +40,7 @@ define(['scene-builder'], function(SceneBuilder) {
         expect(SceneBuilder.animate).toThrowError(TypeError);
       });
 
-      xit('Testing animate method after being initiated before ', function() {
-        spyOn(THREE, 'WebGLRenderer');
+      it('Testing animate method after being initiated before ', function() {
         SceneBuilder.init();
         SceneBuilder.animate();
       });
@@ -72,8 +71,7 @@ define(['scene-builder'], function(SceneBuilder) {
       SceneBuilder.setControls(controls);
     });
 
-    xit('Testing init method', function() {
-      spyOn(THREE, 'WebGLRenderer');
+    it('Testing init method', function() {
       SceneBuilder.init();
     });
 

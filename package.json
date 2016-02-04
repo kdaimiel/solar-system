@@ -1,6 +1,6 @@
 {
   "name": "solar-system",
-  "version": "0.1.36",
+  "version": "0.1.37",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -21,6 +21,7 @@
     "grunt-template-jasmine-requirejs": "^0.2.3",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.19",
+    "karma-chrome-launcher": "^0.2.2",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.3",
     "karma-requirejs": "^0.2.3",

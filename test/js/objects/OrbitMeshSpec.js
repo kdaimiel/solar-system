@@ -12,8 +12,8 @@ describe('Testing OrbitMesh', function() {
     expect(THREE.OrbitMesh, null).toThrowError(TypeError);
   });
 
-  xit('Testing OrbitMesh', function() {
-    var orbit = THREE.OrbitMesh({});
+  it('Testing OrbitMesh', function() {
+    var orbit = new THREE.OrbitMesh({});
     expect(orbit).not.toBe(undefined);
   });
 

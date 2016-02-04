@@ -12,8 +12,8 @@ describe('Testing StarMesh', function() {
     expect(THREE.StarMesh, null).toThrowError(TypeError);
   });
 
-  xit('Testing StarMesh', function() {
-    var star = THREE.StarMesh({});
+  it('Testing StarMesh', function() {
+    var star = new THREE.StarMesh({});
     expect(star).not.toBe(undefined);
   });
 

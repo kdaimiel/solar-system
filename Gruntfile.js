@@ -165,6 +165,14 @@ module.exports = function(grunt) {
         }
       }
     },
+    gittag: {
+      addtag: {
+        options: {
+          tag:'v<%= pkg.version %>',
+          message: '<%= pkg.description %>'
+        }
+      }
+    },
     gitpush: {
       task: {
         options: {
@@ -212,7 +220,7 @@ module.exports = function(grunt) {
   grunt.registerTask('commit', [
     'build',
     'gitadd',
-    //'gitcommit',
+    'gitcommit',
     'bump-only'
   ]);
 

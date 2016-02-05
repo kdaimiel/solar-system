@@ -1,5 +1,5 @@
 /*
- * scene-factorySpec
+ * scene-factorySpec.js
  * @Description Unit tests for scene-factory module.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
@@ -13,13 +13,12 @@ define(['scene-factory'], function(SceneFactory) {
       expect(SceneFactory).not.toBe(null);
     });
 
-    it('Testing createCamera method', function() {
+    describe('Testing createCamera method', function() {
 
       it('Testing createCamera method creating a camera with wrong parameters ', function() {
         expect(SceneFactory.createCamera, null).toThrowError(TypeError);
         expect(SceneFactory.createCamera, {}).toThrowError(TypeError);
       });
-
 
       it('Testing createCamera method creating a PerspectiveCamera', function() {
         var cameraProperties = {
@@ -52,13 +51,9 @@ define(['scene-factory'], function(SceneFactory) {
       });
     });
 
-    it('Testing createControls method', function(){
+    describe('Testing createControls method', function(){
 
-      var camera;
-
-      beforeEach(function() {
-        camera = new THREE.PerspectiveCamera();
-      });
+      var camera = new THREE.PerspectiveCamera();
 
       it('Testing createControls method  with wrong parameters ', function() {
         expect(SceneFactory.createControls, null, null).toThrowError(TypeError);
@@ -103,7 +98,7 @@ define(['scene-factory'], function(SceneFactory) {
 
     });
 
-    it('Testing createLight method', function() {
+    describe('Testing createLight method', function() {
 
       it('Testing createLight method with wrong parameters ', function() {
         expect(SceneFactory.createLight, null).toThrowError(TypeError);

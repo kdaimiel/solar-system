@@ -1,5 +1,5 @@
 /*
- * PlanetMesh
+ * PlanetMesh.js
  * @Description Mesh to build planets.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>

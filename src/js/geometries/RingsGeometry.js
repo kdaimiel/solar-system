@@ -1,5 +1,5 @@
 /*
- * RingsGeometry
+ * RingsGeometry.js
  * @Description Rings' Planet geometry.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>

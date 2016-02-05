@@ -1,5 +1,5 @@
 /*
- * RingsMesh
+ * RingsMesh.js
  * @Description Mesh to build the rings of planets.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>

@@ -1,5 +1,5 @@
 /*
- * solar-factory
+ * solar-factory.js
  * @Description Solar Factory creates scene objects
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>

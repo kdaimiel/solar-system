@@ -1,5 +1,5 @@
 /*
- * solar-serviceSpec
+ * solar-serviceSpec.js
  * @Description Unit tests for solar-service module.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>

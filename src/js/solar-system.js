@@ -1,5 +1,5 @@
 /*
- * solar-system
+ * solar-system.js
  * @Description Solar System defines methods to init the scene.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>

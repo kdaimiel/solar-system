@@ -1,5 +1,5 @@
 /*
- * MoonMesh
+ * MoonMesh.js
  * @Description Unit tests for MoonMesh.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
@@ -8,13 +8,31 @@
 
 describe('Testing MoonMesh', function() {
 
+  var moon;
+
   it('Testing MoonMesh with wrong parameters', function() {
     expect(THREE.MoonMesh, null).toThrowError(TypeError);
   });
 
-  it('Testing MoonMesh', function() {
-    var moon = new THREE.MoonMesh({});
+  xit('Testing MoonMesh', function() {
+    moon = new THREE.MoonMesh();
     expect(moon).not.toBe(undefined);
+    moon = new THREE.MoonMesh({});
+    expect(moon).not.toBe(undefined);
+  });
+
+  describe('Testing MoonMesh methods', function() {
+    moon = new THREE.MoonMesh({});
+
+    it('Testing loadTexture method in MoonMesh', function() {
+      moon.loadTexture(null);
+      moon.loadTexture('doesnotexit');
+    });
+
+    it('Testing update method in MoonMesh', function() {
+      moon.update();
+    });
+
   });
 
 });

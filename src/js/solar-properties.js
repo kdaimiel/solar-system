@@ -1,5 +1,5 @@
 /*
- * solar-properties
+ * solar-properties.js
  * @Description Module to define solar system properties.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>

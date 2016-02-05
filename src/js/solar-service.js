@@ -1,5 +1,5 @@
 /*
- * solar-service
+ * solar-service.js
  * @Description Solar Service defines methods to get JSON properties
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>

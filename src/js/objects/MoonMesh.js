@@ -1,5 +1,5 @@
 /*
- * MoonMesh
+ * MoonMesh.js
  * @Description Mesh to build moons.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>

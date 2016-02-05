@@ -1,5 +1,5 @@
 /*
- * solar-service
+ * solar-service.js
  * @Description Solar Builder sets and renders the scene.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>

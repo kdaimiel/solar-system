@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.1.37 - 2016-02-04
+ * @version v0.1.38 - 2016-02-05
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -184,12 +184,6 @@ THREE.CloudsMesh = function(cloudsProperties) {
 THREE.CloudsMesh.prototype = Object.create( THREE.SolarBody.prototype );
 THREE.CloudsMesh.prototype.constructor = THREE.CloudsMesh;
 
-THREE.CloudsMesh.prototype.update = function() {
-  // Clouds rote with random speed between 0.0 and speed (degrees).
-  this.rotation.x -= THREE.Math.randFloat( 0.00, this.speed ) * Math.PI / 180;
-  this.rotation.y -= THREE.Math.randFloat( 0.00, this.speed ) * Math.PI / 180;
-};
-
 THREE.CloudsMesh.prototype.loadTexture = function (map){
   this.material  = new THREE.MeshPhongMaterial({
     map: map,
@@ -198,6 +192,12 @@ THREE.CloudsMesh.prototype.loadTexture = function (map){
     transparent: this.transparent,
     depthWrite : this.depthWrite
   });
+};
+
+THREE.CloudsMesh.prototype.update = function() {
+  // Clouds rote with random speed between 0.0 and speed (degrees).
+  this.rotation.x -= THREE.Math.randFloat( 0.00, this.speed ) * Math.PI / 180;
+  this.rotation.y -= THREE.Math.randFloat( 0.00, this.speed ) * Math.PI / 180;
 };
 
 THREE.MoonMesh = function(moonProperties) {
@@ -270,6 +270,19 @@ THREE.StarMesh = function(starProperties) {
 
   this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
 
+    // PointLight cannot cast shadow because of performance capacity.
+  var light = new THREE.PointLight( 0xffffff, 1.5, 4500 );
+  light.update = function(camera) {
+    for(var i in light.children) {
+      if(light.children[i].update) {
+        light.children[i].update(camera);
+      }
+    }
+  };
+  this.add(light);
+
+  this.createLensFlare();
+
 };
 
 THREE.StarMesh.prototype = Object.create( THREE.SolarBody.prototype );
@@ -299,10 +312,12 @@ THREE.StarMesh.prototype.createLensFlare = function() {
 
   //  This function will operate over each lensflare artifact, moving them around the screen
   lensFlare.update = function(camera, object) {
-    var dist = camera.position.distanceTo(object.position);
-    for(var i in this.lensFlares) {
-      this.lensFlares[i].position = object.position;
-      this.lensFlares[i].scale = this.lensFlares[i].size /  dist;
+    if(camera) {
+      var dist = camera.position.distanceTo(object.position);
+      for(var i in this.lensFlares) {
+        this.lensFlares[i].position = object.position;
+        this.lensFlares[i].scale = this.lensFlares[i].size /  dist;
+      }
     }
 
     this.updateLensFlares();
@@ -317,19 +332,6 @@ THREE.StarMesh.prototype.loadTexture = function (map){
     map: map,
     side: THREE.BackSide
   });
-
-  // PointLight cannot cast shadow because of performance capacity.
-  var light = new THREE.PointLight( 0xffffff, 1.5, 4500 );
-  light.update = function(camera) {
-    for(var i in light.children) {
-      if(light.children[i].update) {
-        light.children[i].update(camera);
-      }
-    }
-  };
-  this.add(light);
-
-  this.createLensFlare();
 };
 
 define('scene-builder', function() {

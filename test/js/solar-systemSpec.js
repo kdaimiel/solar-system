@@ -1,5 +1,5 @@
 /*
- * solar-systemSpec
+ * solar-systemSpec.js
  * @Description Unit tests for solar-system module.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
@@ -13,33 +13,28 @@ define(['solar-system'], function(SolarSystem) {
       expect(SolarSystem).not.toBe(null);
     });
 
+    it('Testing addMoon method with wrong parameters', function() {
+      expect(SolarSystem.addMoon, null).toThrowError(TypeError);
+    });
+
     it('Testing addMoon method', function() {
-
-      it('Testing addMoon method with wrong parameters', function() {
-        expect(SolarSystem.addMoon, null).toThrowError(TypeError);
-      });
-
       SolarSystem.addMoon({});
+    });
 
+    it('Testing addPlanet method with wrong parameters', function() {
+      expect(SolarSystem.addPlanet, null).toThrowError(TypeError);
     });
 
     it('Testing addPlanet method', function() {
-
-      it('Testing addPlanet method with wrong parameters', function() {
-        expect(SolarSystem.addPlanet, null).toThrowError(TypeError);
-      });
       SolarSystem.addPlanet({});
+    });
 
+    it('Testing addStar method with wrong parameters', function() {
+      expect(SolarSystem.addStar, null).toThrowError(TypeError);
     });
 
     it('Testing addStar method', function() {
-
-      it('Testing addStar method with wrong parameters', function() {
-        expect(SolarSystem.addStar, null).toThrowError(TypeError);
-      });
-
       SolarSystem.addStar({});
-
     });
 
     it('Testing init method', function() {

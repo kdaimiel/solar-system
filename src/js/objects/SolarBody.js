@@ -1,5 +1,5 @@
 /*
- * SolarBody
+ * SolarBody.js
  * @Description Solar abstract object.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>

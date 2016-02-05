@@ -1,5 +1,5 @@
 /*
- * RingsGeometrySpec
+ * RingsGeometrySpec.js
  * @Description Unit tests for RingsGeometry.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
@@ -13,7 +13,10 @@ describe('Testing RingsGeometry', function() {
   });
 
   it('Testing RingsGeometry', function() {
-    var geometry = new THREE.RingsGeometry({});
+    var geometry;
+    geometry = new THREE.RingsGeometry();
+    expect(geometry).not.toBe(undefined);
+    geometry = new THREE.RingsGeometry({});
     expect(geometry).not.toBe(undefined);
   });
 

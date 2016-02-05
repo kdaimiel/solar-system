@@ -1,5 +1,5 @@
 /*
- * StarMesh
+ * StarMesh.js
  * @Description Mesh to build stars.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
@@ -15,6 +15,19 @@ THREE.StarMesh = function(starProperties) {
   this.intesity = starProperties.intensity || 0.8;
 
   this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
+
+    // PointLight cannot cast shadow because of performance capacity.
+  var light = new THREE.PointLight( 0xffffff, 1.5, 4500 );
+  light.update = function(camera) {
+    for(var i in light.children) {
+      if(light.children[i].update) {
+        light.children[i].update(camera);
+      }
+    }
+  };
+  this.add(light);
+
+  this.createLensFlare();
 
 };
 
@@ -45,10 +58,12 @@ THREE.StarMesh.prototype.createLensFlare = function() {
 
   //  This function will operate over each lensflare artifact, moving them around the screen
   lensFlare.update = function(camera, object) {
-    var dist = camera.position.distanceTo(object.position);
-    for(var i in this.lensFlares) {
-      this.lensFlares[i].position = object.position;
-      this.lensFlares[i].scale = this.lensFlares[i].size /  dist;
+    if(camera) {
+      var dist = camera.position.distanceTo(object.position);
+      for(var i in this.lensFlares) {
+        this.lensFlares[i].position = object.position;
+        this.lensFlares[i].scale = this.lensFlares[i].size /  dist;
+      }
     }
 
     this.updateLensFlares();
@@ -63,17 +78,4 @@ THREE.StarMesh.prototype.loadTexture = function (map){
     map: map,
     side: THREE.BackSide
   });
-
-  // PointLight cannot cast shadow because of performance capacity.
-  var light = new THREE.PointLight( 0xffffff, 1.5, 4500 );
-  light.update = function(camera) {
-    for(var i in light.children) {
-      if(light.children[i].update) {
-        light.children[i].update(camera);
-      }
-    }
-  };
-  this.add(light);
-
-  this.createLensFlare();
 };

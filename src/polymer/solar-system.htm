@@ -1,0 +1,46 @@
+<dom-module id="solar-system">
+
+  <link rel="import" href="../../bower_components/polymer/polymer.html">
+  <script type="text/javascript" src="../../bower_components/threejs/examples/js/libs/require.js"></script>
+  <template>
+  </template>
+  <style>
+  </style>
+  <script>
+    /*
+     * SolarSystemComponent.js
+     * @Description SolarSystemComponent polymer component.
+     * @link https://github.com/kdaimiel/solar-system#readme
+     * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+     * @license MIT License, http://www.opensource.org/licenses/MIT
+     */
+
+    require(['solar-system'], function three(SolarSystem) {
+
+      // element registration
+      Polymer({
+        is: 'solar-system',
+        properties: {
+          width: {
+            type: Number,
+            value: window.innerWidth
+          },
+          height: {
+            type: Number,
+            value: window.innerHeight
+          }
+        },
+        ready: function() {
+          this.text = 'Ciao Mondo!';
+          console.log(this.text);
+          console.log(this);
+          console.log(this.width);
+          console.log(this.offsetWidth);
+          SolarSystem.init(this);
+          SolarSystem.loadObjectFronJSONFiles();
+        }
+      });
+    });
+
+  </script>
+</dom-module>

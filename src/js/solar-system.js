@@ -26,8 +26,8 @@ define('solar-system', [
 
   return solarSystem;
 
-  function init() {
-    SceneBuilder.init();
+  function init(element) {
+    SceneBuilder.init(element);
   }
 
   function addSolarBody(solarBody){

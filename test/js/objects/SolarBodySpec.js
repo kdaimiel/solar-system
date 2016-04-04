@@ -9,16 +9,30 @@
 describe('Testing SolarBody', function() {
 
   var solarBody;
+  var bodyProperties;
 
-  it('Testing SolarBody with wrong parameters', function() {
-    expect(THREE.SolarBody, null).toThrowError(TypeError);
-  });
-
-  xit('Testing SolarBody', function() {
+  it('Testing SolarBody constructor', function() {
     solarBody = new THREE.SolarBody();
     expect(solarBody).not.toBe(undefined);
+
     solarBody = new THREE.SolarBody({});
     expect(solarBody).not.toBe(undefined);
+
+    solarBody = new THREE.SolarBody(null);
+    expect(solarBody).not.toBe(undefined);
+
+    solarBody = new THREE.SolarBody('SolarBody', 'SolarBodyType');
+    expect(solarBody.name).toBe('SolarBody');
+    expect(solarBody.type).toBe('SolarBodyType');
+
+    bodyProperties = {
+      name: 'SolarBody',
+      type: 'SolarBodyType'
+    };
+    solarBody = new THREE.SolarBody(bodyProperties);
+    expect(solarBody.name).toBe('SolarBody');
+    expect(solarBody.type).toBe('SolarBodyType');
+
   });
 
   describe('Testing SolarBody methods', function() {

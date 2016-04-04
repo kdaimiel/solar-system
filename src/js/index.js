@@ -5,7 +5,7 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-require(['solar-system'], function three(SolarSystem) {
+/*require(['solar-system'], function three(SolarSystem) {
   SolarSystem.init();
   SolarSystem.loadObjectFronJSONFiles();
-});
+});*/

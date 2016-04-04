@@ -9,6 +9,9 @@ define(['scene-builder'], function(SceneBuilder) {
 
   describe('Testing scene-builder', function() {
 
+    // Mocked Dom Element to test scene builder.
+    var element = document.createElement('div');
+
     it('Check required modules', function() {
       expect(SceneBuilder).not.toBe(null);
     });
@@ -41,7 +44,7 @@ define(['scene-builder'], function(SceneBuilder) {
       });
 
       it('Testing animate method after being initiated before ', function() {
-        SceneBuilder.init();
+        SceneBuilder.init(element);
         SceneBuilder.animate();
       });
 
@@ -69,7 +72,7 @@ define(['scene-builder'], function(SceneBuilder) {
     });
 
     it('Testing init method', function() {
-      SceneBuilder.init();
+      SceneBuilder.init(element);
     });
 
   });

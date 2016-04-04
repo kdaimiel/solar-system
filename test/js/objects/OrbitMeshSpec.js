@@ -9,16 +9,33 @@
 describe('Testing OrbitMesh', function() {
 
   var orbit;
+  var orbitProperties;
 
-  it('Testing OrbitMesh with wrong parameters', function() {
-    expect(THREE.OrbitMesh, null).toThrowError(TypeError);
-  });
-
-  xit('Testing OrbitMesh', function() {
+  it('Testing OrbitMesh constructor', function() {
     orbit = new THREE.OrbitMesh();
     expect(orbit).not.toBe(undefined);
+
     orbit = new THREE.OrbitMesh({});
     expect(orbit).not.toBe(undefined);
+
+    orbit = new THREE.OrbitMesh(null);
+    expect(orbit).not.toBe(undefined);
+
+    orbit = new THREE.OrbitMesh('Orbit', 'OrbitType', 2000);
+    expect(orbit.name).toBe('Orbit');
+    expect(orbit.type).toBe('OrbitType');
+    expect(orbit.distance).toBe(2000);
+
+    orbitProperties = {
+      name: 'Orbit',
+      type: 'OrbitType',
+      distance: 2000
+    };
+    orbit = new THREE.OrbitMesh(orbitProperties);
+    expect(orbit.name).toBe('Orbit');
+    expect(orbit.type).toBe('OrbitType');
+    expect(orbit.distance).toBe(2000);
+
   });
 
   describe('Testing OrbitMesh methods', function() {

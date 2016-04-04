@@ -77,25 +77,15 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      js: {
-        files: ['<%= jshint.all %>'],
-        tasks: ['jshint']
-      },
-      json: {
-        files: [
-          '<%= jsonlint.files %>',
-          '{package,bower}.json'
-        ],
-        tasks: ['jsonlint']
-      },
       reload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= watch.js.files %>',
-          '<%= watch.json.files %>',
+          '<%= jshint.all %>',
+          '<%= jsonlint.files %>',
           '<%= jshint.options.jshintrc %>',
+          '**/*.jsx',
           '**/*.css',
           '**/*.html'
         ],
@@ -235,7 +225,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['build', 'serve']);
 
   // Load external grunt tasks
-  grunt.loadNpmTasks('grunt-cordovacli');
   grunt.loadNpmTasks('grunt-npm');
   grunt.loadNpmTasks('grunt-git');
   grunt.loadNpmTasks('grunt-contrib-clean');

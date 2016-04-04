@@ -5,18 +5,33 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-THREE.CloudsMesh = function(cloudsProperties) {
+THREE.CloudsMesh = function(cloudProperties) {
 
-  THREE.SolarBody.call(this, cloudsProperties);
+  this.properties = _.extend({
+    name: arguments[0] || null,
+    type: arguments[1] || 'CloudsMesh',
+    radius: arguments[2] || 20,
+    opacity: arguments[3] || 0.5,
+    transparent: arguments[4] || true,
+    depthWrite: arguments[5] || false,
+    speed: arguments[6] || 0.20, // The max speed of the clouds rotation
+    map: arguments[7] || null,
+    bumpMap: arguments[8] || null,
+    specularMap: arguments[9] || null,
+    orbitProperties: arguments[10] || null,
+    cloudsProperties: arguments[11] || null,
+    ringsProperties: arguments[12] || null
+  }, cloudProperties);
 
-  this.opacity = cloudsProperties.opacity || 0.5;
-  this.transparent = cloudsProperties.transparent || true;
-  this.depthWrite = cloudsProperties.depthWrite || false;
-  this.speed = cloudsProperties.speed || 0.20; // The max speed of the clouds rotation
+  THREE.SolarBody.call(this, this.properties);
 
-  this.type = cloudsProperties.type || 'CloudsMesh';
+  this.radius = this.properties.radius;
+  this.opacity = this.properties.opacity;
+  this.transparent = this.properties.transparent;
+  this.depthWrite = this.properties.depthWrite;
+  this.speed = this.properties.speed;
 
-  this.geometry   = new THREE.SphereGeometry(cloudsProperties.radius, 100, 100);
+  this.geometry   = new THREE.SphereGeometry(this.radius, 100, 100);
 };
 
 THREE.CloudsMesh.prototype = Object.create( THREE.SolarBody.prototype );

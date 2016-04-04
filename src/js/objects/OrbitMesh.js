@@ -7,12 +7,19 @@
  */
 THREE.OrbitMesh = function(orbitProperties) {
 
-  THREE.SolarBody.call(this, orbitProperties);
+  this.properties = _.extend({
+    name: arguments[0] || null,
+    type: arguments[1] || 'OrbitMesh',
+    distance: arguments[2] || 50,
+    speed: arguments[3] || 0,
+    tilt: arguments[4] || 0
+  }, orbitProperties);
 
-  this.type = 'OrbitMesh';
-  this.distance = orbitProperties.distance || 50;
-  this.speed = orbitProperties.speed || 0;
-  this.tilt = orbitProperties.tilt || 0;
+  THREE.SolarBody.call(this, this.properties);
+
+  this.distance = this.properties.distance;
+  this.speed = this.properties.speed;
+  this.tilt = this.properties.tilt;
 };
 
 THREE.OrbitMesh.prototype = Object.create( THREE.SolarBody.prototype );

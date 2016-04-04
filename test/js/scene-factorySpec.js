@@ -156,11 +156,6 @@ define(['scene-factory'], function(SceneFactory) {
       });
     });
 
-    it('Testing createMoon method creating a moon with wrong parameters ', function() {
-      expect(SceneFactory.createMoon, null).toThrowError(TypeError);
-      expect(SceneFactory.createMoon, {}).toThrowError(TypeError);
-    });
-
     it('Testing createMoon method', function() {
       var moonProperties = {
         type: 'Moon'
@@ -171,11 +166,6 @@ define(['scene-factory'], function(SceneFactory) {
       compareObjects(moon, moon2);
     });
 
-    it('Testing createPlanet method creating a planet with wrong parameters ', function() {
-      expect(SceneFactory.createPlanet, null).toThrowError(TypeError);
-      expect(SceneFactory.createPlanet, {}).toThrowError(TypeError);
-    });
-
     it('Testing createPlanet method', function() {
       var planetProperties = {
         type: 'Planet'
@@ -184,11 +174,6 @@ define(['scene-factory'], function(SceneFactory) {
       var planet2 = new THREE.PlanetMesh(planetProperties);
 
       compareObjects(planet, planet2);
-    });
-
-    it('Testing createStar method creating a star with wrong parameters ', function() {
-      expect(SceneFactory.createStar, null).toThrowError(TypeError);
-      expect(SceneFactory.createStar, {}).toThrowError(TypeError);
     });
 
     it('Testing createStar method', function() {

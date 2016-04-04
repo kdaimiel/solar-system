@@ -9,16 +9,33 @@
 describe('Testing MoonMesh', function() {
 
   var moon;
+  var moonProperties;
 
-  it('Testing MoonMesh with wrong parameters', function() {
-    expect(THREE.MoonMesh, null).toThrowError(TypeError);
-  });
-
-  xit('Testing MoonMesh', function() {
+  it('Testing MoonMesh constructor', function() {
     moon = new THREE.MoonMesh();
     expect(moon).not.toBe(undefined);
+
     moon = new THREE.MoonMesh({});
     expect(moon).not.toBe(undefined);
+
+    moon = new THREE.MoonMesh(null);
+    expect(moon).not.toBe(undefined);
+
+    moon = new THREE.MoonMesh('Moon', 'MoonType', 2000);
+    expect(moon.name).toBe('Moon');
+    expect(moon.type).toBe('MoonType');
+    expect(moon.radius).toBe(2000);
+
+    moonProperties = {
+      name: 'Moon',
+      type: 'MoonType',
+      radius: 2000
+    };
+    moon = new THREE.MoonMesh(moonProperties);
+    expect(moon.name).toBe('Moon');
+    expect(moon.type).toBe('MoonType');
+    expect(moon.radius).toBe(2000);
+
   });
 
   describe('Testing MoonMesh methods', function() {

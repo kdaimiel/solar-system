@@ -6,11 +6,20 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 THREE.PlanetMesh = function(planetProperties) {
-  THREE.SolarBody.call(this, planetProperties);
 
-  this.radius = planetProperties.radius || 50;
-  this.rotation.x = planetProperties.tilt || 0;
-  this.vRotation = planetProperties.vRotation || 0;
+  this.properties = _.extend({
+    name: arguments[0] || null,
+    type: arguments[1] || 'PlanetMesh',
+    radius: arguments[2] || 50,
+    tilt: arguments[3] || 0,
+    vRotation: arguments[4] || 0
+  }, planetProperties);
+
+  THREE.SolarBody.call(this, this.properties);
+
+  this.radius = this.properties.radius;
+  this.rotation.x = this.properties.tilt;
+  this.vRotation = this.properties.vRotation;
 
   this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
 };

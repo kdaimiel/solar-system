@@ -10,6 +10,7 @@ define('scene-builder', function() {
   'use strict';
 
   var scene, camera, renderer, controls, stats;
+  var display;
 
   var factory = {
     addObject: addObject,
@@ -41,11 +42,12 @@ define('scene-builder', function() {
     renderer.render(scene, camera);
   }
 
-  function init() {
+  function init(element) {
     scene = new THREE.Scene();
+    display = element || null;
 
     renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize(display.width || window.innerWidth , display.height || window.innerHeight);
 
     document.body.appendChild( renderer.domElement );
 
@@ -84,10 +86,10 @@ define('scene-builder', function() {
   }
 
   function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = (display.width || window.innerWidth) / (display.height || window.innerHeight);
     camera.updateProjectionMatrix();
 
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( display.width || window.innerWidth , display.height || window.innerHeight );
 
     controls.handleResize();
   }

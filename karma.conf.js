@@ -15,13 +15,14 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'bower_components/underscore/underscore.js',
       'bower_components/jquery/dist/jquery.js',
-      'bower_components/threejs/build/three.js',
-      {pattern: 'bower_components/threejs/examples/js/controls/**.js', included: true},
-      'bower_components/threejs/examples/js/libs/stats.min.js',
+      'bower_components/three.js/build/three.js',
+      {pattern: 'bower_components/three.js/examples/js/controls/**.js', included: true},
+      'bower_components/three.js/examples/js/libs/stats.min.js',
       'src/js/objects/SolarBody.js',
       'src/js/objects/PlanetMesh.js',
-      {pattern: 'src/**/*js', included: true},
+      {pattern: 'src/js/**/*js', included: true},
       {pattern: 'test/**/*Spec.js', included: false},
 
       'test/test-main.js'

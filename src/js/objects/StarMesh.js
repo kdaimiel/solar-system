@@ -7,16 +7,31 @@
  */
 THREE.StarMesh = function(starProperties) {
 
-  THREE.SolarBody.call( this, starProperties );
+  this.properties = _.extend({
+    name: arguments[0] || null,
+    type: arguments[1] || 'StarMesh',
+    radius: arguments[2] || 50,
+    tilt: arguments[3] || 0,
+    vRotation: arguments[4] || 0,
+    intesity: arguments[5] || 0.8,
+    map: arguments[6] || null,
+    bumpMap: arguments[7] || null,
+    specularMap: arguments[8] || null,
+    orbitProperties: arguments[9] || null,
+    cloudsProperties: arguments[10] || null,
+    ringsProperties: arguments[11] || null
+  }, starProperties);
 
-  this.radius = starProperties.radius || 50;
-  this.rotation.x = starProperties.tilt || 0;
-  this.vRotation = starProperties.vRotation || 0;
-  this.intesity = starProperties.intensity || 0.8;
+  THREE.SolarBody.call( this, this.properties );
+
+  this.radius = this.properties.radius;
+  this.rotation.x = this.properties.tilt;
+  this.vRotation = this.properties.vRotation;
+  this.intesity = this.properties.intensity;
 
   this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
 
-    // PointLight cannot cast shadow because of performance capacity.
+  // PointLight cannot cast shadow because of performance capacity.
   var light = new THREE.PointLight( 0xffffff, 1.5, 4500 );
   light.update = function(camera) {
     for(var i in light.children) {
@@ -28,7 +43,6 @@ THREE.StarMesh = function(starProperties) {
   this.add(light);
 
   this.createLensFlare();
-
 };
 
 THREE.StarMesh.prototype = Object.create( THREE.SolarBody.prototype );

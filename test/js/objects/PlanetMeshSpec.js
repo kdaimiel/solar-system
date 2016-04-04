@@ -9,16 +9,33 @@
 describe('Testing PlanetMesh', function() {
 
   var planet;
+  var planetProperties;
 
-  it('Testing PlanetMesh with wrong parameters', function() {
-    expect(THREE.PlanetMesh, null).toThrowError(TypeError);
-  });
-
-  xit('Testing PlanetMesh', function() {
+  it('Testing PlanetMesh constructor', function() {
     planet = new THREE.PlanetMesh();
     expect(planet).not.toBe(undefined);
+
     planet = new THREE.PlanetMesh({});
     expect(planet).not.toBe(undefined);
+
+    planet = new THREE.PlanetMesh(null);
+    expect(planet).not.toBe(undefined);
+
+    planet = new THREE.PlanetMesh('Planet', 'PlanetType', 2000);
+    expect(planet.name).toBe('Planet');
+    expect(planet.type).toBe('PlanetType');
+    expect(planet.radius).toBe(2000);
+
+    planetProperties = {
+      name: 'Planet',
+      type: 'PlanetType',
+      radius: 2000
+    };
+    planet = new THREE.PlanetMesh(planetProperties);
+    expect(planet.name).toBe('Planet');
+    expect(planet.type).toBe('PlanetType');
+    expect(planet.radius).toBe(2000);
+
   });
 
   describe('Testing PlanetMesh methods', function() {

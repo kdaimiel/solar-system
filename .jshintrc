@@ -10,7 +10,7 @@
   "jasmine": true,
   "eqeqeq": true,
   "immed": true,
-  "newcap": true,
+  "newcap": false,
   "noarg": true,
   "quotmark": "single",
   "undef": true,
@@ -28,6 +28,8 @@
     "xit": true,
     "expect": true,
     "beforeEach": true,
-    "spyOn": true
+    "spyOn": true,
+    "Polymer": true,
+    "_": true
   }
 }

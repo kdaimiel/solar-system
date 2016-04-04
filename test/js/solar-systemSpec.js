@@ -7,42 +7,37 @@
  */
 define(['solar-system'], function(SolarSystem) {
 
-  describe('Testing solar system', function() {
+  describe('Testing SolarSystem', function() {
+
+    // Mocked Dom Element to test scene builder.
+    var element = document.createElement('div');
 
     it('Check required modules', function() {
       expect(SolarSystem).not.toBe(null);
     });
 
-    it('Testing addMoon method with wrong parameters', function() {
-      expect(SolarSystem.addMoon, null).toThrowError(TypeError);
-    });
+    describe('Testing SolarSystem methods', function() {
 
-    it('Testing addMoon method', function() {
-      SolarSystem.addMoon({});
-    });
+      it('Testing addMoon method', function() {
+        SolarSystem.addMoon({});
+      });
 
-    it('Testing addPlanet method with wrong parameters', function() {
-      expect(SolarSystem.addPlanet, null).toThrowError(TypeError);
-    });
+      it('Testing addPlanet method', function() {
+        SolarSystem.addPlanet({});
+      });
 
-    it('Testing addPlanet method', function() {
-      SolarSystem.addPlanet({});
-    });
+      it('Testing addStar method', function() {
+        SolarSystem.addStar({});
+      });
 
-    it('Testing addStar method with wrong parameters', function() {
-      expect(SolarSystem.addStar, null).toThrowError(TypeError);
-    });
+      it('Testing init method', function() {
+        SolarSystem.init(element);
+      });
 
-    it('Testing addStar method', function() {
-      SolarSystem.addStar({});
-    });
+      it('Testing loadObjectFronJSONFiles method', function() {
+        SolarSystem.loadObjectFronJSONFiles();
+      });
 
-    it('Testing init method', function() {
-      SolarSystem.init();
-    });
-
-    it('Testing loadObjectFronJSONFiles method', function() {
-      SolarSystem.loadObjectFronJSONFiles();
     });
 
   });

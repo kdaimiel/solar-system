@@ -9,34 +9,45 @@ THREE.SolarBody = function(bodyProperties) {
 
   THREE.Object3D.call( this );
 
-  this.name = bodyProperties.name;
-  this.type = bodyProperties.type;
+  this.properties = _.extend({
+    name: arguments[0] || null,
+    type: arguments[1] || null,
+    map: arguments[2] || null,
+    bumpMap: arguments[3] || null,
+    specularMap: arguments[4] || null,
+    orbitProperties: arguments[5] || null,
+    cloudsProperties: arguments[6] || null,
+    ringsProperties: arguments[7] || null
+  }, bodyProperties);
+
+  this.name = this.properties.name;
+  this.type = this.properties.type;
 
   this.geometry = new THREE.Geometry();
   this.material = new THREE.MeshBasicMaterial();
 
-  if(bodyProperties.map){
-    this.texloader.load(bodyProperties.map, this.loadTexture.bind(this));
+  if(this.properties.map){
+    this.texloader.load(this.properties.map, this.loadTexture.bind(this));
   }
 
-  if(bodyProperties.bumpMap) {
-    this.texloader.load(bodyProperties.bumpMap, this.loadbumpMap.bind(this));
+  if(this.properties.bumpMap) {
+    this.texloader.load(this.properties.bumpMap, this.loadbumpMap.bind(this));
   }
 
-  if(bodyProperties.specularMap) {
-    this.texloader.load(bodyProperties.specularMap, this.loadspecularMap.bind(this));
+  if(this.properties.specularMap) {
+    this.texloader.load(this.properties.specularMap, this.loadspecularMap.bind(this));
   }
 
-  if(bodyProperties.orbitProperties){
-    this.orbitProperties = bodyProperties.orbitProperties;
+  if(this.properties.orbitProperties){
+    this.orbitProperties = this.properties.orbitProperties;
   }
 
-  if(bodyProperties.cloudsProperties) {
-    this.addClouds(bodyProperties.cloudsProperties);
+  if(this.properties.cloudsProperties) {
+    this.addClouds(this.properties.cloudsProperties);
   }
 
-  if(bodyProperties.ringsProperties) {
-    this.addRings(bodyProperties.ringsProperties);
+  if(this.properties.ringsProperties) {
+    this.addRings(this.properties.ringsProperties);
   }
 
   this.updateMorphTargets();

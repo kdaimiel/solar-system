@@ -156,36 +156,6 @@ define(['scene-factory'], function(SceneFactory) {
       });
     });
 
-    it('Testing createMoon method', function() {
-      var moonProperties = {
-        type: 'Moon'
-      };
-      var moon = SceneFactory.createMoon(moonProperties);
-      var moon2 = new THREE.MoonMesh(moonProperties);
-
-      compareObjects(moon, moon2);
-    });
-
-    it('Testing createPlanet method', function() {
-      var planetProperties = {
-        type: 'Planet'
-      };
-      var planet = SceneFactory.createPlanet(planetProperties);
-      var planet2 = new THREE.PlanetMesh(planetProperties);
-
-      compareObjects(planet, planet2);
-    });
-
-    it('Testing createStar method', function() {
-      var starProperties = {
-        type: 'Star'
-      };
-      var star = SceneFactory.createStar(starProperties);
-      var star2 = new THREE.StarMesh(starProperties);
-
-      compareObjects(star, star2);
-    });
-
     function compareObjects(o1, o2){
       expect(o1).not.toBe(undefined);
       expect(o2).not.toBe(undefined);
@@ -195,4 +165,3 @@ define(['scene-factory'], function(SceneFactory) {
 
   });
 });
-

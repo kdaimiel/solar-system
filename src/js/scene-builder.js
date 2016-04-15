@@ -10,7 +10,7 @@ define('scene-builder', function() {
   'use strict';
 
   var scene, camera, renderer, controls, stats;
-  var display;
+  var width, height;
 
   var factory = {
     addObject: addObject,
@@ -29,12 +29,16 @@ define('scene-builder', function() {
 
   function addObject(object) {
     scene.add(object);
+    camera.aspect = (width || window.innerWidth) / (height || window.innerHeight);
+    camera.updateProjectionMatrix();
     //console.log('New object of type "' + object.type + '"" has been added to the scene');
   }
 
   function setControls(newControls){
     controls = newControls;
-    controls.addEventListener('change', render);
+    if(controls && controls.addEventListener) {
+      controls.addEventListener('change', render);
+    }
     //console.log('New controls have been added to the camera');
   }
 
@@ -44,10 +48,17 @@ define('scene-builder', function() {
 
   function init(element) {
     scene = new THREE.Scene();
-    display = element || null;
+    if(element){
+      width = element.width || null;
+      height = element.height || null;
+    }
+
+    if(controls) {
+      controls.addEventListener('change', render);
+    }
 
     renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(display.width || window.innerWidth , display.height || window.innerHeight);
+    renderer.setSize(width || window.innerWidth , height || window.innerHeight);
 
     document.body.appendChild( renderer.domElement );
 
@@ -86,11 +97,16 @@ define('scene-builder', function() {
   }
 
   function onWindowResize() {
-    camera.aspect = (display.width || window.innerWidth) / (display.height || window.innerHeight);
-    camera.updateProjectionMatrix();
+    if(camera) {
+      camera.aspect = (width || window.innerWidth) / (height || window.innerHeight);
+      camera.updateProjectionMatrix();
+    }
 
-    renderer.setSize( display.width || window.innerWidth , display.height || window.innerHeight );
+    renderer.setSize(width || window.innerWidth , height || window.innerHeight);
 
-    controls.handleResize();
+    if(controls) {
+      controls.handleResize();
+    }
   }
+
 });

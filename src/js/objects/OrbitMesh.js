@@ -15,14 +15,16 @@ THREE.OrbitMesh = function(orbitProperties) {
     tilt: arguments[4] || 0
   }, orbitProperties);
 
-  THREE.SolarBody.call(this, this.properties);
+  THREE.Object3D.call( this );
 
+  this.name = this.properties.name;
+  this.type = this.properties.type;
   this.distance = this.properties.distance;
   this.speed = this.properties.speed;
   this.tilt = this.properties.tilt;
 };
 
-THREE.OrbitMesh.prototype = Object.create( THREE.SolarBody.prototype );
+THREE.OrbitMesh.prototype = Object.create( THREE.Object3D.prototype );
 THREE.OrbitMesh.prototype.constructor = THREE.OrbitMesh;
 
 THREE.OrbitMesh.prototype.update = function() {

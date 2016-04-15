@@ -8,9 +8,10 @@
 define('solar-system', [
   'scene-builder',
   'scene-factory',
+  'solar-factory',
   'solar-service',
   'solar-properties'
-], function(SceneBuilder, SceneFactory, SolarService, SolarProperties) {
+], function(SceneBuilder, SceneFactory, SolarFactory, SolarService, SolarProperties) {
 
   'use strict';
 
@@ -20,14 +21,15 @@ define('solar-system', [
     addMoon: addMoon,
     addPlanet: addPlanet,
     addStar: addStar,
-    init: init,
-    loadObjectFronJSONFiles: loadObjectFronJSONFiles
+    init: init
   };
 
   return solarSystem;
 
-  function init(element) {
-    SceneBuilder.init(element);
+  function init(sytemProperties) {
+    SolarProperties.setProperties(sytemProperties);
+    SceneBuilder.init(SolarProperties);
+    loadObjectFronJSONFiles();
   }
 
   function addSolarBody(solarBody){
@@ -40,24 +42,24 @@ define('solar-system', [
   }
 
   function addMoon(moonProperties) {
-    var moon = SceneFactory.createMoon(moonProperties);
+    var moon = SolarFactory.createMoon(moonProperties);
     addSolarBody(moon);
   }
 
   function addPlanet(planetProperties){
-    var planet = SceneFactory.createPlanet(planetProperties);
+    var planet = SolarFactory.createPlanet(planetProperties);
     addSolarBody(planet);
   }
 
   function addStar(starProperties){
-    var star = SceneFactory.createStar(starProperties);
+    var star = SolarFactory.createStar(starProperties);
     addSolarBody(star);
   }
 
   function loadObjectFronJSONFiles(){
-    SolarService.getCamera(SolarProperties.cameraJSONProperties, loadCamera);
-    SolarService.getBodies(SolarProperties.bodiesJSONProperties, loadBodies);
-    SolarService.getLights(SolarProperties.lightsJSONProperties, loadLights);
+    SolarService.getCamera(SolarProperties.cameraSrc, loadCamera);
+    SolarService.getBodies(SolarProperties.bodiesSrc, loadBodies);
+    SolarService.getLights(SolarProperties.lightsSrc, loadLights);
   }
 
   function loadCamera(cameraProperties) {

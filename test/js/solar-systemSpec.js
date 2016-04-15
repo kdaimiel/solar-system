@@ -34,10 +34,6 @@ define(['solar-system'], function(SolarSystem) {
         SolarSystem.init(element);
       });
 
-      it('Testing loadObjectFronJSONFiles method', function() {
-        SolarSystem.loadObjectFronJSONFiles();
-      });
-
     });
 
   });

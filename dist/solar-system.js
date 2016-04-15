@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.1.39 - 2016-04-04
+ * @version v0.1.40 - 2016-04-15
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -24,7 +24,8 @@ THREE.SolarBody = function(bodyProperties) {
   this.name = this.properties.name;
   this.type = this.properties.type;
 
-  this.geometry = new THREE.Geometry();
+  this.geometry = new THREE.SphereGeometry( 5, 32, 32 );
+  //this.geometry = new THREE.Geometry();
   this.material = new THREE.MeshBasicMaterial();
 
   if(this.properties.map){
@@ -51,6 +52,8 @@ THREE.SolarBody = function(bodyProperties) {
     this.addRings(this.properties.ringsProperties);
   }
 
+  this.drawMode = THREE.TrianglesDrawMode;
+
   this.updateMorphTargets();
 };
 
@@ -73,7 +76,10 @@ THREE.SolarBody.prototype.addSatellite = function(satellite, orbitProperties) {
     this.orbit.add(orbit);
     orbit.position.z = this.position.z || 0;
   } else {
-    this.parent.add(orbit);
+    // To ensure that the orbit is inside the scene SolarObject has to be added to the scene
+    if(this.parent) {
+      this.parent.add(orbit);
+    }
   }
   orbit.add(satellite);
   satellite.position.z = this.radius + orbit.distance + satellite.radius || 0;
@@ -110,7 +116,8 @@ THREE.PlanetMesh = function(planetProperties) {
     type: arguments[1] || 'PlanetMesh',
     radius: arguments[2] || 50,
     tilt: arguments[3] || 0,
-    vRotation: arguments[4] || 0
+    vRotation: arguments[4] || 0,
+
   }, planetProperties);
 
   THREE.SolarBody.call(this, this.properties);
@@ -182,11 +189,6 @@ THREE.RingsGeometry = function (innerRadius, outerRadius, thetaStart, thetaLengt
 THREE.RingsGeometry.prototype = Object.create( THREE.RingGeometry.prototype );
 THREE.RingsGeometry.prototype.constructor = THREE.RingsGeometry;
 
-/*require(['solar-system'], function three(SolarSystem) {
-  SolarSystem.init();
-  SolarSystem.loadObjectFronJSONFiles();
-});*/
-
 THREE.CloudsMesh = function(cloudProperties) {
 
   this.properties = _.extend({
@@ -200,9 +202,6 @@ THREE.CloudsMesh = function(cloudProperties) {
     map: arguments[7] || null,
     bumpMap: arguments[8] || null,
     specularMap: arguments[9] || null,
-    orbitProperties: arguments[10] || null,
-    cloudsProperties: arguments[11] || null,
-    ringsProperties: arguments[12] || null
   }, cloudProperties);
 
   THREE.SolarBody.call(this, this.properties);
@@ -267,14 +266,16 @@ THREE.OrbitMesh = function(orbitProperties) {
     tilt: arguments[4] || 0
   }, orbitProperties);
 
-  THREE.SolarBody.call(this, this.properties);
+  THREE.Object3D.call( this );
 
+  this.name = this.properties.name;
+  this.type = this.properties.type;
   this.distance = this.properties.distance;
   this.speed = this.properties.speed;
   this.tilt = this.properties.tilt;
 };
 
-THREE.OrbitMesh.prototype = Object.create( THREE.SolarBody.prototype );
+THREE.OrbitMesh.prototype = Object.create( THREE.Object3D.prototype );
 THREE.OrbitMesh.prototype.constructor = THREE.OrbitMesh;
 
 THREE.OrbitMesh.prototype.update = function() {
@@ -423,7 +424,7 @@ define('scene-builder', function() {
   'use strict';
 
   var scene, camera, renderer, controls, stats;
-  var display;
+  var width, height;
 
   var factory = {
     addObject: addObject,
@@ -442,12 +443,16 @@ define('scene-builder', function() {
 
   function addObject(object) {
     scene.add(object);
+    camera.aspect = (width || window.innerWidth) / (height || window.innerHeight);
+    camera.updateProjectionMatrix();
     //console.log('New object of type "' + object.type + '"" has been added to the scene');
   }
 
   function setControls(newControls){
     controls = newControls;
-    controls.addEventListener('change', render);
+    if(controls && controls.addEventListener) {
+      controls.addEventListener('change', render);
+    }
     //console.log('New controls have been added to the camera');
   }
 
@@ -457,10 +462,17 @@ define('scene-builder', function() {
 
   function init(element) {
     scene = new THREE.Scene();
-    display = element || null;
+    if(element){
+      width = element.width || null;
+      height = element.height || null;
+    }
+
+    if(controls) {
+      controls.addEventListener('change', render);
+    }
 
     renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(display.width || window.innerWidth , display.height || window.innerHeight);
+    renderer.setSize(width || window.innerWidth , height || window.innerHeight);
 
     document.body.appendChild( renderer.domElement );
 
@@ -499,13 +511,18 @@ define('scene-builder', function() {
   }
 
   function onWindowResize() {
-    camera.aspect = (display.width || window.innerWidth) / (display.height || window.innerHeight);
-    camera.updateProjectionMatrix();
+    if(camera) {
+      camera.aspect = (width || window.innerWidth) / (height || window.innerHeight);
+      camera.updateProjectionMatrix();
+    }
 
-    renderer.setSize( display.width || window.innerWidth , display.height || window.innerHeight );
+    renderer.setSize(width || window.innerWidth , height || window.innerHeight);
 
-    controls.handleResize();
+    if(controls) {
+      controls.handleResize();
+    }
   }
+
 });
 
 define('scene-factory', function() {
@@ -515,10 +532,7 @@ define('scene-factory', function() {
   var factory = {
     createCamera: createCamera,
     createControls: createControls,
-    createLight: createLight,
-    createMoon: createMoon,
-    createPlanet: createPlanet,
-    createStar: createStar
+    createLight: createLight
   };
 
   return factory;
@@ -598,19 +612,19 @@ define('scene-factory', function() {
       break;
     case 'SpotLight':
       light = new THREE.SpotLight(color, lightProperties.intensity || 1.0, lightProperties.distance || 0.0, lightProperties.angle || Math.PI/3, lightProperties.exponent || 10.0, lightProperties.decay || 1);
-      light.onlyShadow = lightProperties.onlyShadow || false;
       light.castShadow = lightProperties.castShadow || false;
-      light.shadowCameraNear = lightProperties.shadowCameraNear || 50;
-      light.shadowCameraFar = lightProperties.shadowCameraFar || 5000;
-      light.shadowCameraLeft = lightProperties.shadowCameraLeft || -500;
-      light.shadowCameraRight = lightProperties.shadowCameraRight || 500;
-      light.shadowCameraTop = lightProperties.shadowCameraTop || 500;
-      light.shadowCameraBottom = lightProperties.shadowCameraBottom || -500;
-      light.shadowCameraVisible = lightProperties.shadowCameraVisible || false;
-      light.shadowBias = lightProperties.shadowBias || 0;
-      light.shadowDarkness = lightProperties.shadowDarkness || 0.5;
-      light.shadowMapWidth = lightProperties.shadowMapWidth || 512;
-      light.shadowMapHeight = lightProperties.shadowMapHeight || 512;
+      light.shadow.camera.near = lightProperties.shadowCameraNear || 50;
+      light.shadow.camera.far = lightProperties.shadowCameraFar || 5000;
+      light.shadow.camera.left = lightProperties.shadowCameraLeft || -500;
+      light.shadow.camera.right = lightProperties.shadowCameraRight || 500;
+      light.shadow.camera.top = lightProperties.shadowCameraTop || 500;
+      light.shadow.camera.bottom = lightProperties.shadowCameraBottom || -500;
+      if(lightProperties.shadowCameraVisible) {
+        THREE.CameraHelper(light.shadow.camera);
+      }
+      light.shadow.bias = lightProperties.shadowBias || 0;
+      light.shadow.mapSize.width = lightProperties.shadowMapWidth || 512;
+      light.shadow.mapSize.height = lightProperties.shadowMapHeight || 512;
       light.shadowMapSize = lightProperties.shadowMapSize;
       light.shadowCamera = lightProperties.shadowCamera;
       light.shadowMatrix = lightProperties.shadowMatrix;
@@ -627,6 +641,19 @@ define('scene-factory', function() {
     return light;
   }
 
+});
+
+define('solar-factory', function() {
+
+  'use strict';
+
+  var factory = {
+    createMoon: createMoon,
+    createPlanet: createPlanet,
+    createStar: createStar
+  };
+
+  return factory;
   function createMoon(moonProperties) {
     var moon = new THREE.MoonMesh(moonProperties);
     return moon;
@@ -648,13 +675,34 @@ define('solar-properties', function() {
 
   'use strict';
 
+  // Default properties values
+  var width = null;
+  var height = null;
+  var bodiesSrc = 'data/bodies.properties.json';
+  var cameraSrc = 'data/camera.properties.json';
+  var lightsSrc = 'data/lights.properties.json';
+
   var properties = {
-    bodiesJSONProperties: '../src/data/bodies.properties.json',
-    cameraJSONProperties: '../src/data/camera.properties.json',
-    lightsJSONProperties: '../src/data/lights.properties.json'
+    width: width,
+    height: height,
+    bodiesSrc: bodiesSrc,
+    cameraSrc: cameraSrc,
+    lightsSrc: lightsSrc,
+    setProperties: setProperties
   };
 
   return properties;
+
+  function setProperties(newProperties) {
+    if(newProperties) {
+      properties.width = newProperties.width || width;
+      properties.height = newProperties.height || height;
+      properties.bodiesSrc = newProperties.bodiesSrc || bodiesSrc;
+      properties.cameraSrc = newProperties.cameraSrc || cameraSrc;
+      properties.lightsSrc = newProperties.lightsSrc || lightsSrc;
+    }
+  }
+
 });
 
 define('solar-service', function() {
@@ -669,16 +717,16 @@ define('solar-service', function() {
 
   return service;
 
-  function getCamera(cameraJSONProperties, callback){
-    getJSON(cameraJSONProperties, callback);
+  function getCamera(cameraSrc, callback){
+    getJSON(cameraSrc, callback);
   }
 
-  function getBodies(bodiesJSONProperties, callback){
-    getJSON(bodiesJSONProperties, callback);
+  function getBodies(bodiesSrc, callback){
+    getJSON(bodiesSrc, callback);
   }
 
-  function getLights(lightsJSONProperties, callback){
-    getJSON(lightsJSONProperties, callback);
+  function getLights(lightsSrc, callback){
+    getJSON(lightsSrc, callback);
   }
 
   function getJSON(src, callback) {
@@ -696,9 +744,10 @@ define('solar-service', function() {
 define('solar-system', [
   'scene-builder',
   'scene-factory',
+  'solar-factory',
   'solar-service',
   'solar-properties'
-], function(SceneBuilder, SceneFactory, SolarService, SolarProperties) {
+], function(SceneBuilder, SceneFactory, SolarFactory, SolarService, SolarProperties) {
 
   'use strict';
 
@@ -708,14 +757,15 @@ define('solar-system', [
     addMoon: addMoon,
     addPlanet: addPlanet,
     addStar: addStar,
-    init: init,
-    loadObjectFronJSONFiles: loadObjectFronJSONFiles
+    init: init
   };
 
   return solarSystem;
 
-  function init(element) {
-    SceneBuilder.init(element);
+  function init(sytemProperties) {
+    SolarProperties.setProperties(sytemProperties);
+    SceneBuilder.init(SolarProperties);
+    loadObjectFronJSONFiles();
   }
 
   function addSolarBody(solarBody){
@@ -728,24 +778,24 @@ define('solar-system', [
   }
 
   function addMoon(moonProperties) {
-    var moon = SceneFactory.createMoon(moonProperties);
+    var moon = SolarFactory.createMoon(moonProperties);
     addSolarBody(moon);
   }
 
   function addPlanet(planetProperties){
-    var planet = SceneFactory.createPlanet(planetProperties);
+    var planet = SolarFactory.createPlanet(planetProperties);
     addSolarBody(planet);
   }
 
   function addStar(starProperties){
-    var star = SceneFactory.createStar(starProperties);
+    var star = SolarFactory.createStar(starProperties);
     addSolarBody(star);
   }
 
   function loadObjectFronJSONFiles(){
-    SolarService.getCamera(SolarProperties.cameraJSONProperties, loadCamera);
-    SolarService.getBodies(SolarProperties.bodiesJSONProperties, loadBodies);
-    SolarService.getLights(SolarProperties.lightsJSONProperties, loadLights);
+    SolarService.getCamera(SolarProperties.cameraSrc, loadCamera);
+    SolarService.getBodies(SolarProperties.bodiesSrc, loadBodies);
+    SolarService.getLights(SolarProperties.lightsSrc, loadLights);
   }
 
   function loadCamera(cameraProperties) {
@@ -786,43 +836,4 @@ define('solar-system', [
     });
   }
 
-});
-
-/*define('solar-utils', function() {
-
-  'use strict';
-
-  var utils = {
-    extend: extend
-  };
-
-  return utils;
-
-  function extend(properties) {
-
-  }
-
-});
-*/
-
-require(['solar-system'], function three(SolarSystem) {
-
-  // element registration
-  Polymer({
-    is: 'solar-system',
-    properties: {
-      width: {
-        type: Number,
-        value: window.innerWidth
-      },
-      height: {
-        type: Number,
-        value: window.innerHeight
-      }
-    },
-    ready: function() {
-      SolarSystem.init(this);
-      SolarSystem.loadObjectFronJSONFiles();
-    }
-  });
 });

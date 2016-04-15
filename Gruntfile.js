@@ -69,7 +69,10 @@ module.exports = function(grunt) {
     jsonlint: {
       pkg: [ 'package.json' ],
       bower: [ 'bower.json' ],
-      files: [ src + '/**/*.json']
+      files: [
+        src + '/**/*.json',
+        '*.json'
+      ]
     },
     karma: {
       unit: {
@@ -87,7 +90,8 @@ module.exports = function(grunt) {
           '<%= jshint.options.jshintrc %>',
           '**/*.jsx',
           '**/*.css',
-          '**/*.html'
+          '**/*.html',
+          src + '/polymer/*'
         ],
         tasks: ['build']
       }
@@ -183,6 +187,21 @@ module.exports = function(grunt) {
         requires: ['build'],
         abortIfDirty: false
       }
+    },
+    /* Polymer Tasks*/
+    'wct-test': {
+      local: {
+        options: {remote: false},
+      }
+    },
+    copy: {
+      'polymer': {
+        expand: true,
+        cwd: src + '/polymer',
+        src: '**',
+        dest: dist,
+        flatten: true
+      }
     }
   });
 
@@ -199,6 +218,7 @@ module.exports = function(grunt) {
     'test',
     'concat',
     'uglify',
+    'build-polymer'
   ]);
 
   grunt.registerTask('test', [
@@ -221,6 +241,11 @@ module.exports = function(grunt) {
     'npm-publish'
   ]);
 
+  grunt.registerTask('build-polymer', [
+    'wct-test',
+    'copy:polymer'
+  ]);
+
   // Register default task
   grunt.registerTask('default', ['build', 'serve']);
 
@@ -232,5 +257,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('web-component-tester');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
 };

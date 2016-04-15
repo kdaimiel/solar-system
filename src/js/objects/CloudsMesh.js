@@ -18,9 +18,6 @@ THREE.CloudsMesh = function(cloudProperties) {
     map: arguments[7] || null,
     bumpMap: arguments[8] || null,
     specularMap: arguments[9] || null,
-    orbitProperties: arguments[10] || null,
-    cloudsProperties: arguments[11] || null,
-    ringsProperties: arguments[12] || null
   }, cloudProperties);
 
   THREE.SolarBody.call(this, this.properties);

@@ -23,7 +23,8 @@ THREE.SolarBody = function(bodyProperties) {
   this.name = this.properties.name;
   this.type = this.properties.type;
 
-  this.geometry = new THREE.Geometry();
+  this.geometry = new THREE.SphereGeometry( 5, 32, 32 );
+  //this.geometry = new THREE.Geometry();
   this.material = new THREE.MeshBasicMaterial();
 
   if(this.properties.map){
@@ -50,6 +51,8 @@ THREE.SolarBody = function(bodyProperties) {
     this.addRings(this.properties.ringsProperties);
   }
 
+  this.drawMode = THREE.TrianglesDrawMode;
+
   this.updateMorphTargets();
 };
 
@@ -72,7 +75,10 @@ THREE.SolarBody.prototype.addSatellite = function(satellite, orbitProperties) {
     this.orbit.add(orbit);
     orbit.position.z = this.position.z || 0;
   } else {
-    this.parent.add(orbit);
+    // To ensure that the orbit is inside the scene SolarObject has to be added to the scene
+    if(this.parent) {
+      this.parent.add(orbit);
+    }
   }
   orbit.add(satellite);
   satellite.position.z = this.radius + orbit.distance + satellite.radius || 0;

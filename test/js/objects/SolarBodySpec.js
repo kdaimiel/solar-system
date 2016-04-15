@@ -36,6 +36,7 @@ describe('Testing SolarBody', function() {
   });
 
   describe('Testing SolarBody methods', function() {
+
     solarBody = new THREE.SolarBody({});
 
     it('Testing addClouds method in SolarBody', function() {
@@ -48,9 +49,11 @@ describe('Testing SolarBody', function() {
       solarBody.addRings({});
     });
 
-    xit('Testing addSatellite method in SolarBody with simple parameters', function() {
+    it('Testing addSatellite method in SolarBody with wrong parameters', function() {
       expect(solarBody.addSatellite, null, {}).toThrowError(TypeError);
-      spyOn(solarBody, 'parent');
+    });
+
+    it('Testing addSatellite method in SolarBody with simple parameters', function() {
       var satelite = new THREE.SolarBody({});
       solarBody.addSatellite(satelite, {});
     });

@@ -12,7 +12,8 @@ THREE.PlanetMesh = function(planetProperties) {
     type: arguments[1] || 'PlanetMesh',
     radius: arguments[2] || 50,
     tilt: arguments[3] || 0,
-    vRotation: arguments[4] || 0
+    vRotation: arguments[4] || 0,
+
   }, planetProperties);
 
   THREE.SolarBody.call(this, this.properties);

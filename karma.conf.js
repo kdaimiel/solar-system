@@ -24,7 +24,6 @@ module.exports = function(config) {
       'src/js/objects/PlanetMesh.js',
       {pattern: 'src/js/**/*js', included: true},
       {pattern: 'test/**/*Spec.js', included: false},
-
       'test/test-main.js'
     ],
 

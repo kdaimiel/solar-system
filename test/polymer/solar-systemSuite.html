@@ -1,0 +1,83 @@
+<!--
+ SolarSystemComponentSuite.html
+ @Description Unit tests for solar-service polymer element.
+ @link https://github.com/kdaimiel/solar-system#readme
+ @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+ @license MIT License, http://www.opensource.org/licenses/MIT
+-->
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="../../node_modules/web-component-tester/browser.js"></script>
+
+  <script type="text/javascript" src="../../bower_components/underscore/underscore.js"></script>
+  <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
+
+  <script type="text/javascript" src="../../bower_components/three.js/build/three.js"></script>
+  <script type="text/javascript" src="../../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
+  <script type="text/javascript" src="../../bower_components/three.js/examples/js/libs/stats.min.js"></script>
+  <script type="text/javascript" src="../../bower_components/three.js/examples/js/libs/require.js"></script>
+
+  <script type="text/javascript" src="../../src/js/geometries/RingsGeometry.js"></script>
+
+  <script type="text/javascript" src="../../src/js/objects/SolarBody.js"></script>
+  <script type="text/javascript" src="../../src/js/objects/CloudsMesh.js"></script>
+  <script type="text/javascript" src="../../src/js/objects/PlanetMesh.js"></script>
+  <script type="text/javascript" src="../../src/js/objects/MoonMesh.js"></script>
+  <script type="text/javascript" src="../../src/js/objects/OrbitMesh.js"></script>
+  <script type="text/javascript" src="../../src/js/objects/RingsMesh.js"></script>
+  <script type="text/javascript" src="../../src/js/objects/StarMesh.js"></script>
+
+  <script type="text/javascript" src="../../src/js/scene-builder.js"></script>
+  <script type="text/javascript" src="../../src/js/scene-factory.js"></script>
+  <script type="text/javascript" src="../../src/js/solar-factory.js"></script>
+  <script type="text/javascript" src="../../src/js/solar-properties.js"></script>
+  <script type="text/javascript" src="../../src/js/solar-service.js"></script>
+  <script type="text/javascript" src="../../src/js/solar-system.js"></script>
+
+  <link rel="import" href="../../bower_components/polymer/polymer.html">
+
+  <!-- Import solar-system polymer component-->
+  <link rel="import" href="../../src/polymer/solar-system.htm">
+
+</head>
+<body>
+
+  <solar-system id="fixture"
+    width="800"
+    height="600"
+    bodies-src="data/bodies.properties.json"
+    camera-src="data/camera.properties.json"
+    lights-src="data/lights.properties.json"
+    />
+
+  <script>
+
+    suite('<solar-system>', function() {
+
+      // We use a fixture to avoid shared state between possible suites.
+      var element;
+      var canvas;
+      setup(function() {
+        element = document.getElementById('fixture');
+        canvasElement = document.getElementsByTagName("canvas")[0];
+      });
+
+      test('Testing solar-system properties', function() {
+        assert.equal(element.width, 800);
+        assert.equal(element.height, 600);
+        assert.equal(element.bodiesSrc, 'data/bodies.properties.json');
+        assert.equal(element.cameraSrc, 'data/camera.properties.json');
+        assert.equal(element.lightsSrc, 'data/lights.properties.json');
+      });
+
+      test('Testing canvas element created by solar-system', function() {
+        assert.equal(canvasElement.width, 800);
+        assert.equal(canvasElement.height, 600);
+      });
+
+    });
+  </script>
+</body>
+</html>

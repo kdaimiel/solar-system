@@ -1,0 +1,12 @@
+{
+  "verbose": false,
+  "suites": ["test/polymer/*.html"],
+  "plugins": {
+    "sauce": {
+      "disabled": true
+    },
+    "local": {
+      "browsers": ["chrome"]
+    }
+  }
+}

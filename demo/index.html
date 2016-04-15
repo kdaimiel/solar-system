@@ -8,8 +8,6 @@
 
   </head>
   <body>
-    <link rel="import" href="../bower_components/polymer/polymer.html">
-    <solar-system width="800" height="600"/>
 
     <script type="text/javascript" src="../bower_components/underscore/underscore.js"></script>
     <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -21,6 +19,12 @@
 
     <script type="text/javascript" src="../dist/solar-system.js"></script>
     <!--<script type="text/javascript" src="../dist/solar-system.min.js"></script> -->
+
+    <script>
+      require(['solar-system'], function three(SolarSystem) {
+        SolarSystem.init();
+      });
+    </script>
 
   </body>
 </html>

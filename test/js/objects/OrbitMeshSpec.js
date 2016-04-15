@@ -41,11 +41,6 @@ describe('Testing OrbitMesh', function() {
   describe('Testing OrbitMesh methods', function() {
     orbit = new THREE.OrbitMesh({});
 
-    it('Testing loadTexture method in OrbitMesh', function() {
-      orbit.loadTexture(null);
-      orbit.loadTexture('doesnotexit');
-    });
-
     it('Testing update method in OrbitMesh', function() {
       orbit.update();
     });

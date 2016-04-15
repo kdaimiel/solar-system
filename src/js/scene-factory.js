@@ -1,6 +1,6 @@
 /*
- * solar-factory.js
- * @Description Solar Factory creates scene objects
+ * scene-factory.js
+ * @Description Scene Factory creates scene objects
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -12,10 +12,7 @@ define('scene-factory', function() {
   var factory = {
     createCamera: createCamera,
     createControls: createControls,
-    createLight: createLight,
-    createMoon: createMoon,
-    createPlanet: createPlanet,
-    createStar: createStar
+    createLight: createLight
   };
 
   return factory;
@@ -95,19 +92,19 @@ define('scene-factory', function() {
       break;
     case 'SpotLight':
       light = new THREE.SpotLight(color, lightProperties.intensity || 1.0, lightProperties.distance || 0.0, lightProperties.angle || Math.PI/3, lightProperties.exponent || 10.0, lightProperties.decay || 1);
-      light.onlyShadow = lightProperties.onlyShadow || false;
       light.castShadow = lightProperties.castShadow || false;
-      light.shadowCameraNear = lightProperties.shadowCameraNear || 50;
-      light.shadowCameraFar = lightProperties.shadowCameraFar || 5000;
-      light.shadowCameraLeft = lightProperties.shadowCameraLeft || -500;
-      light.shadowCameraRight = lightProperties.shadowCameraRight || 500;
-      light.shadowCameraTop = lightProperties.shadowCameraTop || 500;
-      light.shadowCameraBottom = lightProperties.shadowCameraBottom || -500;
-      light.shadowCameraVisible = lightProperties.shadowCameraVisible || false;
-      light.shadowBias = lightProperties.shadowBias || 0;
-      light.shadowDarkness = lightProperties.shadowDarkness || 0.5;
-      light.shadowMapWidth = lightProperties.shadowMapWidth || 512;
-      light.shadowMapHeight = lightProperties.shadowMapHeight || 512;
+      light.shadow.camera.near = lightProperties.shadowCameraNear || 50;
+      light.shadow.camera.far = lightProperties.shadowCameraFar || 5000;
+      light.shadow.camera.left = lightProperties.shadowCameraLeft || -500;
+      light.shadow.camera.right = lightProperties.shadowCameraRight || 500;
+      light.shadow.camera.top = lightProperties.shadowCameraTop || 500;
+      light.shadow.camera.bottom = lightProperties.shadowCameraBottom || -500;
+      if(lightProperties.shadowCameraVisible) {
+        THREE.CameraHelper(light.shadow.camera);
+      }
+      light.shadow.bias = lightProperties.shadowBias || 0;
+      light.shadow.mapSize.width = lightProperties.shadowMapWidth || 512;
+      light.shadow.mapSize.height = lightProperties.shadowMapHeight || 512;
       light.shadowMapSize = lightProperties.shadowMapSize;
       light.shadowCamera = lightProperties.shadowCamera;
       light.shadowMatrix = lightProperties.shadowMatrix;
@@ -122,21 +119,6 @@ define('scene-factory', function() {
     }
 
     return light;
-  }
-
-  function createMoon(moonProperties) {
-    var moon = new THREE.MoonMesh(moonProperties);
-    return moon;
-  }
-
-  function createPlanet(planetProperties){
-    var planet = new THREE.PlanetMesh(planetProperties);
-    return planet;
-  }
-
-  function createStar(starProperties){
-    var star = new THREE.StarMesh(starProperties);
-    return star;
   }
 
 });

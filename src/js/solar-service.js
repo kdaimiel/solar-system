@@ -17,16 +17,16 @@ define('solar-service', function() {
 
   return service;
 
-  function getCamera(cameraJSONProperties, callback){
-    getJSON(cameraJSONProperties, callback);
+  function getCamera(cameraSrc, callback){
+    getJSON(cameraSrc, callback);
   }
 
-  function getBodies(bodiesJSONProperties, callback){
-    getJSON(bodiesJSONProperties, callback);
+  function getBodies(bodiesSrc, callback){
+    getJSON(bodiesSrc, callback);
   }
 
-  function getLights(lightsJSONProperties, callback){
-    getJSON(lightsJSONProperties, callback);
+  function getLights(lightsSrc, callback){
+    getJSON(lightsSrc, callback);
   }
 
   function getJSON(src, callback) {

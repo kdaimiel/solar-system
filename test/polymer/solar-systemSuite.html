@@ -47,9 +47,9 @@
   <solar-system id="fixture"
     width="800"
     height="600"
-    bodies-src="data/bodies.properties.json"
-    camera-src="data/camera.properties.json"
-    lights-src="data/lights.properties.json"
+    bodies-src="../../../../demo/data/bodies.properties.json"
+    camera-src="../../../../demo/data/camera.properties.json"
+    lights-src="../../../../demo/data/lights.properties.json"
     />
 
   <script>
@@ -67,9 +67,9 @@
       test('Testing solar-system properties', function() {
         assert.equal(element.width, 800);
         assert.equal(element.height, 600);
-        assert.equal(element.bodiesSrc, 'data/bodies.properties.json');
-        assert.equal(element.cameraSrc, 'data/camera.properties.json');
-        assert.equal(element.lightsSrc, 'data/lights.properties.json');
+        assert.equal(element.bodiesSrc, '../../../../demo/data/bodies.properties.json');
+        assert.equal(element.cameraSrc, '../../../../demo/data/camera.properties.json');
+        assert.equal(element.lightsSrc, '../../../../demo/data/lights.properties.json');
       });
 
       test('Testing canvas element created by solar-system', function() {

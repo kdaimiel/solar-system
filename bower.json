@@ -1,6 +1,6 @@
 {
   "name": "solar-system",
-  "version": "0.1.40",
+  "version": "0.1.41",
   "dependencies": {
     "jquery": "~2.1.4",
     "polymer": "^1.3.1",

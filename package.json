@@ -1,6 +1,6 @@
 {
   "name": "solar-system",
-  "version": "0.1.43",
+  "version": "0.1.44",
   "dependencies": {},
   "devDependencies": {
     "babel-plugin-transform-react-jsx": "^6.7.5",

@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.1.43 - 2016-04-20
+ * @version v0.1.44 - 2016-04-20
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT

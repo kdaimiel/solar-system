@@ -1,0 +1,24 @@
+'use strict';
+
+/*
+ * SolarSystemComponent.jsx
+ * @Description solar-system react component.
+ * @link https://github.com/kdaimiel/solar-system#readme
+ * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
+
+var solarSystemComponent = React.createClass({
+  displayName: 'solarSystemComponent',
+
+  render: function render() {
+    return React.createElement(
+      'h1',
+      null,
+      'Hello, world!'
+    );
+  }
+});
+
+document.registerReact('solar-system', SolarSystemComponent);
+ReactDOM.render(React.createElement(SolarSystemComponent, null), document.getElementsByTagName('solar-system'));

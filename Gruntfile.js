@@ -14,15 +14,9 @@ module.exports = function(grunt) {
   require('time-grunt')(grunt);
 
   // Configure properties
-  /*var src = [
-    'src/js/objects/SolarBody.js',
-    'src/js/objects/PlanetMesh.js',
-    'src'
-  ];*/
   var src = 'src';
   var test = 'test';
   var dist = 'dist';
-  var demo = 'demo';
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -62,7 +56,6 @@ module.exports = function(grunt) {
       all: [
         src + '/**/*.js',
         test + '/**/*.js',
-        demo + '/**/*.js',
         '*.js'
       ]
     },
@@ -202,6 +195,22 @@ module.exports = function(grunt) {
         dest: dist,
         flatten: true
       }
+    },
+    /* React Task*/
+    babel: {
+      options: {
+        plugins: ['transform-react-jsx'],
+        presets: ['es2015', 'react']
+      },
+      jsx: {
+        files: [{
+          expand: true,
+          src: src + '/jsx/*.jsx',
+          dest: dist,
+          flatten: true,
+          ext: '.js'
+        }]
+      }
     }
   });
 
@@ -218,7 +227,8 @@ module.exports = function(grunt) {
     'test',
     'concat',
     'uglify',
-    'build-polymer'
+    'build-polymer',
+    'build-react'
   ]);
 
   grunt.registerTask('test', [
@@ -242,8 +252,12 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build-polymer', [
-    'wct-test',
+    //'wct-test',
     'copy:polymer'
+  ]);
+
+  grunt.registerTask('build-react', [
+    'babel:jsx'
   ]);
 
   // Register default task

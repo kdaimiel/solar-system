@@ -6,24 +6,30 @@
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="css/main.css">
 
-  </head>
-  <body>
+    <script type="text/javascript" src="../bower_components/react/react.js"></script>
+    <script type="text/javascript" src="../bower_components/react/react-dom.js"></script>
 
     <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
     <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
-
     <script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
     <script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
     <script type="text/javascript" src="../bower_components/three.js/examples/js/libs/stats.min.js"></script>
+
     <script type="text/javascript" src="../bower_components/three.js/examples/js/libs/require.js"></script>
 
     <script type="text/javascript" src="../dist/solar-system.min.js"></script>
 
-    <script>
-      require(['solar-system'], function three(SolarSystem) {
-        SolarSystem.init();
-      });
-    </script>
+  </head>
+  <body>
+    <div id="solar-system"
+      width="500"
+      height="500"
+      bodies-src="data/bodies.properties.json"
+      camera-src="data/camera.properties.json"
+      lights-src="data/lights.properties.json">
+    </div>
+
+    <script async src="../dist/solar-system-react.js"></script>
 
   </body>
 </html>

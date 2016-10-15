@@ -33,7 +33,7 @@
     "phantomjs": "^1.9.19",
     "requirejs": "^2.1.22",
     "time-grunt": "^1.0.0",
-    "web-component-tester": "polymer/web-component-tester"
+    "web-component-tester": "^4.3.5"
   },
   "description": "Solar System with Threejs",
   "main": "Gruntfile.js",

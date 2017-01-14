@@ -174,7 +174,7 @@ module.exports = function(grunt) {
           ]
         }
       }
-    }
+    },
     /* Polymer Tasks*/
     'wct-test': {
       local: {

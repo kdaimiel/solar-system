@@ -7,6 +7,7 @@
  */
 
 module.exports = function(grunt) {
+
   // Load dev dependencies
   require('load-grunt-tasks')(grunt);
 
@@ -28,7 +29,7 @@ module.exports = function(grunt) {
         ' * @link <%= pkg.homepage %>\n' +
         ' * @author <%= pkg.author %>\n' +
         ' * @license MIT License, http://www.opensource.org/licenses/MIT\n' +
-        ' */',
+        ' */'
     },
     // The actual grunt server settings
     clean: {
@@ -43,8 +44,7 @@ module.exports = function(grunt) {
       livereload: {
         options: {
           open : {
-            target: 'http://localhost:9000/',
-            callback: function() {}
+            target: 'http://localhost:9000/'
           }
         }
       }
@@ -69,7 +69,7 @@ module.exports = function(grunt) {
     },
     karma: {
       unit: {
-        configFile: 'karma.conf.js',
+        configFile: 'karma.conf.js'
       }
     },
     watch: {
@@ -178,7 +178,7 @@ module.exports = function(grunt) {
     /* Polymer Tasks*/
     'wct-test': {
       local: {
-        options: {remote: false},
+        options: {remote: false}
       }
     },
     copy: {
@@ -226,8 +226,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('test', [
-    'newer:jsonlint',
-    'newer:jshint',
+    'jsonlint',
+    'jshint',
     'karma:unit'
   ]);
 
@@ -241,7 +241,7 @@ module.exports = function(grunt) {
   grunt.registerTask('release', [
     'commit',
     'gittag',
-    'gitpush',
+    'gitpush'
   ]);
 
   grunt.registerTask('build-polymer', [

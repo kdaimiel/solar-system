@@ -174,13 +174,7 @@ module.exports = function(grunt) {
           ]
         }
       }
-    },
-    'npm-publish': {
-      options: {
-        requires: ['build'],
-        abortIfDirty: false
-      }
-    },
+    }
     /* Polymer Tasks*/
     'wct-test': {
       local: {
@@ -248,7 +242,6 @@ module.exports = function(grunt) {
     'commit',
     'gittag',
     'gitpush',
-    'npm-publish'
   ]);
 
   grunt.registerTask('build-polymer', [
@@ -264,7 +257,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['build', 'serve']);
 
   // Load external grunt tasks
-  grunt.loadNpmTasks('grunt-npm');
   grunt.loadNpmTasks('grunt-git');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');

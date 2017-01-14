@@ -21,7 +21,6 @@
     "grunt-jsonlint": "^1.0.4",
     "grunt-karma": "^0.12.1",
     "grunt-newer": "^1.1.0",
-    "grunt-npm": "0.0.2",
     "grunt-template-jasmine-requirejs": "^0.2.3",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",

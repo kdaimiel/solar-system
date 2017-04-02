@@ -69,7 +69,20 @@ module.exports = function(grunt) {
     },
     karma: {
       unit: {
-        configFile: 'karma.conf.js'
+        configFile: 'karma.conf.js',
+        preprocessors: {
+          'src/**/*.js': ['coverage']
+        },
+        reporters: ['progress', 'coverage'],
+        coverageReporter: {
+          type : 'html',
+          dir : 'coverage'
+        }
+      },
+      watch: {
+        configFile: 'karma.conf.js',
+        singleRun: false,
+        autoWatch: true
       }
     },
     watch: {
@@ -235,6 +248,10 @@ module.exports = function(grunt) {
     'jsonlint',
     'jshint',
     'karma:unit'
+  ]);
+
+  grunt.registerTask('test:watch', [
+    'karma:watch'
   ]);
 
   grunt.registerTask('commit', [

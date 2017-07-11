@@ -1,6 +1,12 @@
 {
   "name": "solar-system",
   "version": "0.1.45",
+  "scripts": {
+    "build": "./node_modules/grunt-cli/bin/grunt build",
+    "serve": "./node_modules/grunt-cli/bin/grunt serve",
+    "test": "./node_modules/grunt-cli/bin/grunt test",
+    "test:watch": "./node_modules/grunt-cli/bin/grunt test:watch"
+  },
   "dependencies": {},
   "devDependencies": {
     "babel-plugin-transform-react-jsx": "^6.7.5",

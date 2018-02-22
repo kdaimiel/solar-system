@@ -5,52 +5,35 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-define(['solar-properties'], function(SolarProperties) {
 
-  var properties;
+describe('SolarProperties', function() {
 
-  describe('Testing SolarProperties', function() {
-
-    it('Check required modules', function() {
-      expect(SolarProperties).not.toBe(null);
-    });
-
-    it('Testing SolarProperties default values', function() {
-      expect(SolarProperties.width).toBe(null);
-      expect(SolarProperties.height).toBe(null);
-      expect(SolarProperties.bodiesSrc).toBe('data/bodies.properties.json');
-      expect(SolarProperties.cameraSrc).toBe('data/camera.properties.json');
-      expect(SolarProperties.lightsSrc).toBe('data/lights.properties.json');
-    });
-
-
-    describe('Testing SolarProperties methods', function() {
-
-      it('Testing setProperties method', function() {
-
-        SolarProperties.setProperties();
-        expect(SolarProperties.width).toBe(null);
-        expect(SolarProperties.height).toBe(null);
-        expect(SolarProperties.bodiesSrc).toBe('data/bodies.properties.json');
-        expect(SolarProperties.cameraSrc).toBe('data/camera.properties.json');
-        expect(SolarProperties.lightsSrc).toBe('data/lights.properties.json');
-
-        properties = {
-          width: 400,
-          height: 400,
-          bodiesSrc: 'bodiesSrc',
-          cameraSrc: 'cameraSrc',
-          lightsSrc: 'lightsSrc'
-        };
-
-        SolarProperties.setProperties(properties);
-        expect(SolarProperties.width).toBe(400);
-        expect(SolarProperties.height).toBe(400);
-        expect(SolarProperties.bodiesSrc).toBe('bodiesSrc');
-        expect(SolarProperties.cameraSrc).toBe('cameraSrc');
-        expect(SolarProperties.lightsSrc).toBe('lightsSrc');
-
-      });
-    });
+  it('should have default values', function() {
+    var solarProperties = new SolarProperties();
+    expect(solarProperties.width).toBe(undefined);
+    expect(solarProperties.height).toBe(undefined);
+    expect(solarProperties.bodiesSrc).toBe('data/bodies.properties.json');
+    expect(solarProperties.cameraSrc).toBe('data/camera.properties.json');
+    expect(solarProperties.lightsSrc).toBe('data/lights.properties.json');
   });
+
+  it('should allow set properties', function() {
+
+    var properties = {
+      width: 400,
+      height: 400,
+      bodiesSrc: 'bodiesSrc',
+      cameraSrc: 'cameraSrc',
+      lightsSrc: 'lightsSrc'
+    };
+
+    var solarProperties = new SolarProperties(properties);
+    expect(solarProperties.width).toBe(400);
+    expect(solarProperties.height).toBe(400);
+    expect(solarProperties.bodiesSrc).toBe('bodiesSrc');
+    expect(solarProperties.cameraSrc).toBe('cameraSrc');
+    expect(solarProperties.lightsSrc).toBe('lightsSrc');
+
+  });
+
 });

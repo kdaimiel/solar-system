@@ -5,13 +5,7 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-define('solar-system', [
-  'scene-builder',
-  'scene-factory',
-  'solar-factory',
-  'solar-service',
-  'solar-properties'
-], function(SceneBuilder, SceneFactory, SolarFactory, SolarService, SolarProperties) {
+function SolarSystem() {
 
   'use strict';
 
@@ -24,11 +18,15 @@ define('solar-system', [
     init: init
   };
 
+  var solarProperties;
+
+  var sceneBuilder = new SceneBuilder();
+
   return solarSystem;
 
   function init(sytemProperties) {
-    SolarProperties.setProperties(sytemProperties);
-    SceneBuilder.init(SolarProperties);
+    solarProperties = new SolarProperties(sytemProperties);
+    sceneBuilder.init(solarProperties);
     loadObjectFronJSONFiles();
   }
 
@@ -37,7 +35,7 @@ define('solar-system', [
     if(solarBody.orbitProperties) {
       bodies[solarBody.orbitProperties.round].addSatellite(solarBody, solarBody.orbitProperties);
     } else {
-      SceneBuilder.addObject(solarBody);
+      sceneBuilder.addObject(solarBody);
     }
   }
 
@@ -57,18 +55,18 @@ define('solar-system', [
   }
 
   function loadObjectFronJSONFiles(){
-    SolarService.getCamera(SolarProperties.cameraSrc, loadCamera);
-    SolarService.getBodies(SolarProperties.bodiesSrc, loadBodies);
-    SolarService.getLights(SolarProperties.lightsSrc, loadLights);
+    SolarService.getCamera(solarProperties.cameraSrc, loadCamera);
+    SolarService.getBodies(solarProperties.bodiesSrc, loadBodies);
+    SolarService.getLights(solarProperties.lightsSrc, loadLights);
   }
 
   function loadCamera(cameraProperties) {
     var camera = SceneFactory.createCamera(cameraProperties);
-    SceneBuilder.setCamera(camera);
+    sceneBuilder.setCamera(camera);
 
     var controls = SceneFactory.createControls(camera, cameraProperties.controls);
-    SceneBuilder.setControls(controls);
-    SceneBuilder.animate();
+    sceneBuilder.setControls(controls);
+    sceneBuilder.animate();
   }
 
   function loadBodies(bodiesProperties) {
@@ -96,8 +94,8 @@ define('solar-system', [
   function loadLights(lightsProperties) {
     lightsProperties.forEach(function(lightProperties) {
       var light = SceneFactory.createLight(lightProperties);
-      SceneBuilder.addObject(light);
+      sceneBuilder.addObject(light);
     });
   }
 
-});
+}

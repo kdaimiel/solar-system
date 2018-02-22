@@ -8,25 +8,21 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-require(['solar-system'], function three(SolarSystem) {
+var SolarSystemComponent = React.createClass({
+  displayName: 'SolarSystemComponent',
 
-  'use strict';
-
-  var SolarSystemComponent = React.createClass({
-    displayName: 'SolarSystemComponent',
-
-    render: function render() {
-      SolarSystem.init(this.props);
-      return null;
-    }
-  });
-
-  var solarSystemElement = document.getElementById('solar-system');
-
-  ReactDOM.render(React.createElement(SolarSystemComponent, {
-    width: solarSystemElement.getAttribute('width'),
-    height: solarSystemElement.getAttribute('height'),
-    bodiesSrc: solarSystemElement.getAttribute('bodies-src'),
-    cameraSrc: solarSystemElement.getAttribute('camera-src'),
-    lightsSrc: solarSystemElement.getAttribute('lights-src') }), solarSystemElement);
+  render: function render() {
+    var solarSystem = new SolarSystem();
+    solarSystem.init(this.props);
+    return null;
+  }
 });
+
+var solarSystemElement = document.getElementById('solar-system');
+
+ReactDOM.render(React.createElement(SolarSystemComponent, {
+  width: solarSystemElement.getAttribute('width'),
+  height: solarSystemElement.getAttribute('height'),
+  bodiesSrc: solarSystemElement.getAttribute('bodies-src'),
+  cameraSrc: solarSystemElement.getAttribute('camera-src'),
+  lightsSrc: solarSystemElement.getAttribute('lights-src') }), solarSystemElement);

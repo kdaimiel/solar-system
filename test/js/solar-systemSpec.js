@@ -5,37 +5,31 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-define(['solar-system'], function(SolarSystem) {
 
-  describe('Testing SolarSystem', function() {
+describe('SolarSystem', function() {
 
-    // Mocked Dom Element to test scene builder.
-    var element = document.createElement('div');
+  var solarSystem = new SolarSystem();
 
-    it('Check required modules', function() {
-      expect(SolarSystem).not.toBe(null);
-    });
+  // Mocked Dom Element to test scene builder.
+  var element = document.createElement('div');
 
-    describe('Testing SolarSystem methods', function() {
-
-      it('Testing addMoon method', function() {
-        SolarSystem.addMoon({});
-      });
-
-      it('Testing addPlanet method', function() {
-        SolarSystem.addPlanet({});
-      });
-
-      it('Testing addStar method', function() {
-        SolarSystem.addStar({});
-      });
-
-      it('Testing init method', function() {
-        SolarSystem.init(element);
-      });
-
-    });
-
+  it('should add moon properly', function() {
+    solarSystem.init(element);
+    solarSystem.addMoon({});
   });
-});
 
+  it('should add planet properly', function() {
+    solarSystem.init(element);
+    solarSystem.addPlanet({});
+  });
+
+  it('should add star properly', function() {
+    solarSystem.init(element);
+    solarSystem.addStar({});
+  });
+
+  it('should init properly', function() {
+    solarSystem.init(element);
+  });
+
+});

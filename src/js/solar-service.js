@@ -5,29 +5,9 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-define('solar-service', function() {
+var SolarService = (function() {
 
   'use strict';
-
-  var service = {
-    getCamera: getCamera,
-    getBodies: getBodies,
-    getLights: getLights,
-  };
-
-  return service;
-
-  function getCamera(cameraSrc, callback){
-    getJSON(cameraSrc, callback);
-  }
-
-  function getBodies(bodiesSrc, callback){
-    getJSON(bodiesSrc, callback);
-  }
-
-  function getLights(lightsSrc, callback){
-    getJSON(lightsSrc, callback);
-  }
 
   function getJSON(src, callback) {
     $.ajax(src, {
@@ -35,8 +15,25 @@ define('solar-service', function() {
         return callback(data);
       },
       error: function(err) {
-        console.error('Load ' + src + ' error :' + err);
+        console.error('Load ' + src + ' error :' + JSON.stringify(err, null, '  '));
       }
     });
   }
-});
+
+  return {
+
+    getCamera: function(cameraSrc, callback) {
+      getJSON(cameraSrc, callback);
+    },
+
+    getBodies: function(bodiesSrc, callback){
+      getJSON(bodiesSrc, callback);
+    },
+
+    getLights: function(lightsSrc, callback){
+      getJSON(lightsSrc, callback);
+    }
+
+  };
+
+})();

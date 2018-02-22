@@ -12,24 +12,22 @@
   <style>
   </style>
   <script>
-    require(['solar-system'], function three(SolarSystem) {
-      'use strict';
 
-      // element registration
-      Polymer({
-        is: 'solar-system',
-        properties: {
-          width: Number,
-          height: Number,
-          bodiesSrc: String,
-          cameraSrc: String,
-          lightsSrc: String
-        },
-        ready: function() {
-          SolarSystem.init(this);
-        }
-      });
+    Polymer({
+      is: 'solar-system',
+      properties: {
+        width: Number,
+        height: Number,
+        bodiesSrc: String,
+        cameraSrc: String,
+        lightsSrc: String
+      },
+      ready: function() {
+        var solarSystem = new SolarSystem();
+        solarSystem.init(this);
+      }
     });
+
   </script>
 
 </dom-module>

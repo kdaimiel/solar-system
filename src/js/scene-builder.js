@@ -5,7 +5,7 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-define('scene-builder', function() {
+function SceneBuilder() {
 
   'use strict';
 
@@ -29,9 +29,11 @@ define('scene-builder', function() {
 
   function addObject(object) {
     scene.add(object);
-    camera.aspect = (width || window.innerWidth) / (height || window.innerHeight);
-    camera.updateProjectionMatrix();
-    //console.log('New object of type "' + object.type + '"" has been added to the scene');
+    if (camera) {
+      camera.aspect = (width || window.innerWidth) / (height || window.innerHeight);
+      camera.updateProjectionMatrix();
+    }
+    // console.log('New object of type "' + object.type + '"" has been added to the scene');
   }
 
   function setControls(newControls){
@@ -109,4 +111,4 @@ define('scene-builder', function() {
     }
   }
 
-});
+}

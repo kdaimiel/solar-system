@@ -5,98 +5,92 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-define(['scene-builder'], function(SceneBuilder) {
+describe('SceneBuilder', function() {
 
-  describe('Testing scene-builder', function() {
+  var sceneBuild = new SceneBuilder();
 
-    // Mocked Dom Element to test scene builder.
-    var element = document.createElement('div');
+  // Mocked Dom Element to test scene builder.
+  var element = document.createElement('div');
 
-    it('Check required modules', function() {
-      expect(SceneBuilder).not.toBe(null);
+  describe('before being initiated', function() {
+
+    it('Testing addObject method before being initiated', function() {
+      expect(sceneBuild.addObject, null).toThrowError(TypeError);
+      expect(sceneBuild.addObject, {}).toThrowError(TypeError);
+      var body = new THREE.SolarBody();
+      expect(sceneBuild.addObject, body).toThrowError(TypeError);
     });
 
-    describe('Testing SceneBuilder before being initiated', function() {
-
-      it('Testing addObject method before being initiated', function() {
-        expect(SceneBuilder.addObject, null).toThrowError(TypeError);
-        expect(SceneBuilder.addObject, {}).toThrowError(TypeError);
-        var body = new THREE.SolarBody();
-        expect(SceneBuilder.addObject, body).toThrowError(TypeError);
-      });
-
-      it('Testing animate method before being initiated', function() {
-        expect(SceneBuilder.animate).toThrowError(TypeError);
-      });
-
-      it('Testing setCamera method before being initiated', function() {
-        // Camera is independent form scene so it should work fine.
-        SceneBuilder.setCamera();
-        SceneBuilder.setCamera(null);
-        SceneBuilder.setCamera({});
-        var camera = new THREE.PerspectiveCamera();
-        SceneBuilder.setCamera(camera);
-      });
-
-      it('Testing setControls method before being initiated', function() {
-        // Camera is independent form scene so it should work fine.
-        SceneBuilder.setControls();
-        SceneBuilder.setControls(null);
-        SceneBuilder.setControls({});
-        var camera = new THREE.PerspectiveCamera();
-        var controls = new THREE.TrackballControls(camera);
-        SceneBuilder.setControls(controls);
-      });
-
+    it('Testing animate method before being initiated', function() {
+      expect(sceneBuild.animate).toThrowError(TypeError);
     });
 
-    it('Testing init method adding a different objects', function() {
-      SceneBuilder.init();
-      SceneBuilder.init(null);
-      SceneBuilder.init({});
-      SceneBuilder.init({width: 'error', height: 'error'});
-      SceneBuilder.init(element);
+    it('Testing setCamera method before being initiated', function() {
+      // Camera is independent form scene so it should work fine.
+      sceneBuild.setCamera();
+      sceneBuild.setCamera(null);
+      sceneBuild.setCamera({});
+      var camera = new THREE.PerspectiveCamera();
+      sceneBuild.setCamera(camera);
     });
 
-    describe('Testing SceneBuilder after being initiated', function() {
-
-      it('Testing addObject method adding a different objects', function() {
-        var light = new THREE.AmbientLight(0x404040);
-        var moon = new THREE.MoonMesh();
-        var planet = new THREE.PlanetMesh();
-        var star = new THREE.StarMesh();
-
-        SceneBuilder.addObject();
-        SceneBuilder.addObject(null);
-        SceneBuilder.addObject({});
-        SceneBuilder.addObject(light);
-        SceneBuilder.addObject(moon);
-        SceneBuilder.addObject(planet);
-        SceneBuilder.addObject(star);
-      });
-
-      it('Testing animate method after being initiated before ', function() {
-        SceneBuilder.animate();
-      });
-
-      it('Testing setCamera method', function() {
-        SceneBuilder.setCamera();
-        SceneBuilder.setCamera(null);
-        SceneBuilder.setCamera({});
-        var camera = new THREE.PerspectiveCamera();
-        SceneBuilder.setCamera(camera);
-      });
-
-      it('Testing setControls method', function() {
-        SceneBuilder.setControls();
-        SceneBuilder.setControls(null);
-        SceneBuilder.setControls({});
-        var camera = new THREE.PerspectiveCamera();
-        var controls = new THREE.TrackballControls(camera);
-        SceneBuilder.setControls(controls);
-      });
-
+    it('Testing setControls method before being initiated', function() {
+      // Camera is independent form scene so it should work fine.
+      sceneBuild.setControls();
+      sceneBuild.setControls(null);
+      sceneBuild.setControls({});
+      var camera = new THREE.PerspectiveCamera();
+      var controls = new THREE.TrackballControls(camera);
+      sceneBuild.setControls(controls);
     });
+
+  });
+
+  it('Testing init method adding a different objects', function() {
+    sceneBuild.init();
+    sceneBuild.init(null);
+    sceneBuild.init({});
+    sceneBuild.init({width: 'error', height: 'error'});
+    sceneBuild.init(element);
+  });
+
+  describe('Testing SceneBuilder after being initiated', function() {
+
+    it('Testing addObject method adding a different objects', function() {
+      var light = new THREE.AmbientLight(0x404040);
+      var moon = new THREE.MoonMesh();
+      var planet = new THREE.PlanetMesh();
+      var star = new THREE.StarMesh();
+
+      sceneBuild.addObject();
+      sceneBuild.addObject(null);
+      sceneBuild.addObject({});
+      sceneBuild.addObject(light);
+      sceneBuild.addObject(moon);
+      sceneBuild.addObject(planet);
+      sceneBuild.addObject(star);
+    });
+
+    it('Testing animate method after being initiated before ', function() {
+      sceneBuild.animate();
+    });
+
+    it('Testing setCamera method', function() {
+      sceneBuild.setCamera();
+      sceneBuild.setCamera(null);
+      sceneBuild.setCamera({});
+      var camera = new THREE.PerspectiveCamera();
+      sceneBuild.setCamera(camera);
+    });
+
+    it('Testing setControls method', function() {
+      sceneBuild.setControls();
+      sceneBuild.setControls(null);
+      sceneBuild.setControls({});
+      var camera = new THREE.PerspectiveCamera();
+      var controls = new THREE.TrackballControls(camera);
+      sceneBuild.setControls(controls);
+    });
+
   });
 });
-

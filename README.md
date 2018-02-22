@@ -5,7 +5,7 @@ This is a 3D Solar System JavaScript model created with [Threejs](https://threej
 ![alt text](media/solar-system.gif)
 
 ## Usage
-The easy way to use the 3D Solar System is importing dependencies and using plain JavaScript with RequireJS to use modules.
+The easy way to use the 3D Solar System is importing dependencies and using plain JavaScript.
 
 ```html
 <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
@@ -14,14 +14,12 @@ The easy way to use the 3D Solar System is importing dependencies and using plai
 <script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/libs/stats.min.js"></script>
-<script type="text/javascript" src="../bower_components/three.js/examples/js/libs/require.js"></script>
 
 <script type="text/javascript" src="../dist/solar-system.min.js"></script>
 
 <script>
-  require(['solar-system'], function three(SolarSystem) {
-    SolarSystem.init();
-  });
+  var solarSystem = new SolarSystem();
+  solarSystem.init();
 </script>
 ```
 
@@ -29,14 +27,13 @@ We may also change default properties as follow.
 
 ```html
 <script>
-  require(['solar-system'], function three(SolarSystem) {
-    SolarSystem.init( {
-      width: '500',
-      height: '500',
-      'bodies-src': 'data/bodies.properties.json',
-      'camera-src': 'data/camera.properties.json',
-      'lights-src': 'data/lights.properties.json'
-    });
+  var solarSystem = new SolarSystem();
+  solarSystem.init( {}
+    width: '500',
+    height: '500',
+    'bodies-src': 'data/bodies.properties.json',
+    'camera-src': 'data/camera.properties.json',
+    'lights-src': 'data/lights.properties.json'
   });
 </script>
 ```
@@ -81,11 +78,10 @@ We can also import the 3D Solar System as a [Reactjs](https://facebook.github.io
 
 <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+
 <script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/libs/stats.min.js"></script>
-
-<script type="text/javascript" src="../bower_components/three.js/examples/js/libs/require.js"></script>
 
 <script type="text/javascript" src="../dist/solar-system.min.js"></script>
 
@@ -108,10 +104,10 @@ We can also import the 3D Solar System as a [Polymer](https://www.polymer-projec
 ```html
 <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+
 <script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/libs/stats.min.js"></script>
-<script type="text/javascript" src="../bower_components/three.js/examples/js/libs/require.js"></script>
 
 <script type="text/javascript" src="../dist/solar-system.min.js"></script>
 

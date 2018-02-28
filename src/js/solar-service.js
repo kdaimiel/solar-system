@@ -9,15 +9,24 @@ var SolarService = (function() {
 
   'use strict';
 
-  function getJSON(src, callback) {
-    $.ajax(src, {
-      success: function(data) {
-        return callback(data);
-      },
-      error: function(err) {
-        console.error('Load ' + src + ' error :' + JSON.stringify(err, null, '  '));
+  function getJSON(url, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+      if (xmlHttp.readyState === 4) {
+        if (xmlHttp.status === 200) {
+          callback(JSON.parse(xmlHttp.responseText));
+        } else if (xmlHttp.status >= 400) {
+          console.error('Load ' + url + ' error, status: ' + xmlHttp.status);
+        }
       }
-    });
+    };
+    xmlHttp.onerror = function(err) {
+      console.error('Load ' + url + ' error :' + JSON.stringify(err, null, '  '));
+    };
+
+    xmlHttp.open('GET', url, true);  // true for asynchronous
+
+    xmlHttp.send(null);
   }
 
   return {

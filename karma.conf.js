@@ -16,7 +16,6 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'bower_components/underscore/underscore.js',
-      'bower_components/jquery/dist/jquery.js',
       'bower_components/three.js/build/three.js',
       {pattern: 'bower_components/three.js/examples/js/controls/**.js', included: true},
       'bower_components/three.js/examples/js/libs/stats.min.js',

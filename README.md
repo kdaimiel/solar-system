@@ -9,7 +9,6 @@ The easy way to use the 3D Solar System is importing dependencies and using plai
 
 ```html
 <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
-<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
 
 <script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
@@ -28,7 +27,7 @@ We may also change default properties as follow.
 ```html
 <script>
   var solarSystem = new SolarSystem();
-  solarSystem.init( {}
+  solarSystem.init( {
     width: '500',
     height: '500',
     'bodies-src': 'data/bodies.properties.json',
@@ -77,7 +76,6 @@ We can also import the 3D Solar System as a [Reactjs](https://facebook.github.io
 <script type="text/javascript" src="../bower_components/react/react-dom.js"></script>
 
 <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
-<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
 
 <script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
@@ -103,7 +101,6 @@ We can also import the 3D Solar System as a [Polymer](https://www.polymer-projec
 
 ```html
 <script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
-<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
 
 <script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>

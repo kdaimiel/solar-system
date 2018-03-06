@@ -8,8 +8,6 @@ This is a 3D Solar System JavaScript model created with [Threejs](https://threej
 The easy way to use the 3D Solar System is importing dependencies and using plain JavaScript.
 
 ```html
-<script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
-
 <script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/libs/stats.min.js"></script>
@@ -75,8 +73,6 @@ We can also import the 3D Solar System as a [Reactjs](https://facebook.github.io
 <script type="text/javascript" src="../bower_components/react/react.js"></script>
 <script type="text/javascript" src="../bower_components/react/react-dom.js"></script>
 
-<script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
-
 <script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/libs/stats.min.js"></script>
@@ -100,8 +96,6 @@ We can also import the 3D Solar System as a [Polymer](https://www.polymer-projec
 
 
 ```html
-<script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
-
 <script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
 <script type="text/javascript" src="../bower_components/three.js/examples/js/libs/stats.min.js"></script>

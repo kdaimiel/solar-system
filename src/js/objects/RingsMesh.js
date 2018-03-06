@@ -7,31 +7,19 @@
  */
 THREE.RingsMesh = function(ringsProperties) {
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || 'RingsMesh',
-    tilt: arguments[2] || 0,
-    vRotation: arguments[3] || 0,
-    map: arguments[4] || null,
-    bumpMap: arguments[5] || null,
-    specularMap: arguments[6] || null,
-    orbitProperties: arguments[7] || null,
-    cloudsProperties: arguments[8] || null,
-    ringsProperties: arguments[9] || null
-  }, ringsProperties);
+  THREE.SolarBody.call(this, ringsProperties);
 
-  THREE.SolarBody.call(this, this.properties);
-
-  this.tilt = this.properties.tilt;
-  this.rotation.x = (90 - (this.properties.tilt)) * Math.PI / 180;
-  this.vRotation = this.properties.vRotation;
+  this.type = ringsProperties && ringsProperties.type || 'RingsMesh';
+  this.tilt = ringsProperties && ringsProperties.tilt || 0;
+  this.rotation.x = (90 - (this.tilt)) * Math.PI / 180;
+  this.vRotation = ringsProperties && ringsProperties.vRotation || 0;
   this.geometry = new THREE.RingsGeometry(
-    this.properties.innerRadius,
-    this.properties.outerRadius,
-    this.properties.thetaStart,
-    this.properties.thetaLength,
-    this.properties.thetaSegments,
-    this.properties.phiSegments
+    ringsProperties && ringsProperties.innerRadius,
+    ringsProperties && ringsProperties.outerRadius,
+    ringsProperties && ringsProperties.thetaStart,
+    ringsProperties && ringsProperties.thetaLength,
+    ringsProperties && ringsProperties.thetaSegments,
+    ringsProperties && ringsProperties.phiSegments
   );
 
 };

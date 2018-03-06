@@ -6,25 +6,20 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-describe('Testing CloudsMesh', function() {
+describe('CloudsMesh', function() {
 
   var clouds;
   var cloudsProperties;
 
-  it('Testing CloudsMesh constructor', function() {
+  it('should allow indroduce properties in the constructor', function() {
     clouds = new THREE.CloudsMesh();
     expect(clouds).not.toBe(undefined);
 
     clouds = new THREE.CloudsMesh({});
     expect(clouds).not.toBe(undefined);
 
-    clouds = new THREE.CloudsMesh(null);
+    clouds = new THREE.CloudsMesh(undefined);
     expect(clouds).not.toBe(undefined);
-
-    clouds = new THREE.CloudsMesh('Clouds', 'CloudsType', 2000);
-    expect(clouds.name).toBe('Clouds');
-    expect(clouds.type).toBe('CloudsType');
-    expect(clouds.radius).toBe(2000);
 
     cloudsProperties = {
       name: 'Clouds',

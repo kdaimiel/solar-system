@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.1.45 - 2018-03-01
+ * @version v0.1.45 - 2018-03-06
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -10,46 +10,35 @@ THREE.SolarBody = function(bodyProperties) {
 
   THREE.Object3D.call( this );
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || null,
-    map: arguments[2] || null,
-    bumpMap: arguments[3] || null,
-    specularMap: arguments[4] || null,
-    orbitProperties: arguments[5] || null,
-    cloudsProperties: arguments[6] || null,
-    ringsProperties: arguments[7] || null
-  }, bodyProperties);
-
-  this.name = this.properties.name;
-  this.type = this.properties.type;
-
   this.geometry = new THREE.SphereGeometry( 5, 32, 32 );
-  //this.geometry = new THREE.Geometry();
   this.material = new THREE.MeshBasicMaterial();
 
-  if(this.properties.map){
-    this.texloader.load(this.properties.map, this.loadTexture.bind(this));
-  }
+  if(bodyProperties) {
 
-  if(this.properties.bumpMap) {
-    this.texloader.load(this.properties.bumpMap, this.loadbumpMap.bind(this));
-  }
+    this.name = bodyProperties.name;
+    this.type = bodyProperties.type;
 
-  if(this.properties.specularMap) {
-    this.texloader.load(this.properties.specularMap, this.loadspecularMap.bind(this));
-  }
+    if(bodyProperties.map){
+      this.texloader.load(bodyProperties.map, this.loadTexture.bind(this));
+    }
 
-  if(this.properties.orbitProperties){
-    this.orbitProperties = this.properties.orbitProperties;
-  }
+    if(bodyProperties.bumpMap) {
+      this.texloader.load(bodyProperties.bumpMap, this.loadbumpMap.bind(this));
+    }
 
-  if(this.properties.cloudsProperties) {
-    this.addClouds(this.properties.cloudsProperties);
-  }
+    if(bodyProperties.specularMap) {
+      this.texloader.load(bodyProperties.specularMap, this.loadspecularMap.bind(this));
+    }
 
-  if(this.properties.ringsProperties) {
-    this.addRings(this.properties.ringsProperties);
+    this.orbitProperties = bodyProperties.orbitProperties;
+
+    if(bodyProperties.cloudsProperties) {
+      this.addClouds(bodyProperties.cloudsProperties);
+    }
+
+    if(bodyProperties.ringsProperties) {
+      this.addRings(bodyProperties.ringsProperties);
+    }
   }
 
   this.drawMode = THREE.TrianglesDrawMode;
@@ -68,8 +57,8 @@ THREE.SolarBody.prototype.addRings = function(ringsProperties) {
   this.add(new THREE.RingsMesh(ringsProperties));
 };
 
-THREE.SolarBody.prototype.addSatellite = function(satellite, orbitProperties) {
-  var orbit = new THREE.OrbitMesh(orbitProperties);
+THREE.SolarBody.prototype.addSatellite = function(satellite) {
+  var orbit = new THREE.OrbitMesh(satellite.orbitProperties);
   satellite.orbit = orbit;
 
   if(this.orbit){
@@ -111,20 +100,12 @@ THREE.SolarBody.prototype.texloader = new THREE.TextureLoader();
 
 THREE.PlanetMesh = function(planetProperties) {
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || 'PlanetMesh',
-    radius: arguments[2] || 50,
-    tilt: arguments[3] || 0,
-    vRotation: arguments[4] || 0,
+  THREE.SolarBody.call(this, planetProperties);
 
-  }, planetProperties);
-
-  THREE.SolarBody.call(this, this.properties);
-
-  this.radius = this.properties.radius;
-  this.rotation.x = this.properties.tilt;
-  this.vRotation = this.properties.vRotation;
+  this.type = planetProperties && planetProperties.type || 'PlanetMesh';
+  this.radius = planetProperties && planetProperties.radius || 50;
+  this.rotation.x = planetProperties && planetProperties.tilt || 0;
+  this.vRotation = planetProperties && planetProperties.vRotation || 0;
 
   this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
 };
@@ -191,26 +172,14 @@ THREE.RingsGeometry.prototype.constructor = THREE.RingsGeometry;
 
 THREE.CloudsMesh = function(cloudProperties) {
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || 'CloudsMesh',
-    radius: arguments[2] || 20,
-    opacity: arguments[3] || 0.5,
-    transparent: arguments[4] || true,
-    depthWrite: arguments[5] || false,
-    speed: arguments[6] || 0.20, // The max speed of the clouds rotation
-    map: arguments[7] || null,
-    bumpMap: arguments[8] || null,
-    specularMap: arguments[9] || null,
-  }, cloudProperties);
+  THREE.SolarBody.call(this, cloudProperties);
 
-  THREE.SolarBody.call(this, this.properties);
-
-  this.radius = this.properties.radius;
-  this.opacity = this.properties.opacity;
-  this.transparent = this.properties.transparent;
-  this.depthWrite = this.properties.depthWrite;
-  this.speed = this.properties.speed;
+  this.type = cloudProperties && cloudProperties.type || 'CloudsMesh';
+  this.radius = cloudProperties && cloudProperties.radius || 20;
+  this.opacity = cloudProperties && cloudProperties.opacity || 0.5;
+  this.transparent = cloudProperties && cloudProperties.transparent || true;
+  this.depthWrite = cloudProperties && cloudProperties.depthWrite || false;
+  this.speed = cloudProperties && cloudProperties.speed || 0.20;
 
   this.geometry   = new THREE.SphereGeometry(this.radius, 100, 100);
 };
@@ -235,22 +204,9 @@ THREE.CloudsMesh.prototype.update = function() {
 };
 
 THREE.MoonMesh = function(moonProperties) {
+  this.type = moonProperties &&  moonProperties.type || 'MoonMesh';
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || 'MoonMesh',
-    radius: arguments[2] || 50,
-    tilt: arguments[3] || 0,
-    vRotation: arguments[4] || 0,
-    map: arguments[5] || null,
-    bumpMap: arguments[6] || null,
-    specularMap: arguments[7] || null,
-    orbitProperties: arguments[8] || null,
-    cloudsProperties: arguments[9] || null,
-    ringsProperties: arguments[10] || null
-  }, moonProperties);
-
-  THREE.PlanetMesh.call(this, this.properties);
+  THREE.PlanetMesh.call(this, moonProperties);
 };
 
 THREE.MoonMesh.prototype = Object.create( THREE.PlanetMesh.prototype );
@@ -258,21 +214,13 @@ THREE.MoonMesh.prototype.constructor = THREE.MoonMesh;
 
 THREE.OrbitMesh = function(orbitProperties) {
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || 'OrbitMesh',
-    distance: arguments[2] || 50,
-    speed: arguments[3] || 0,
-    tilt: arguments[4] || 0
-  }, orbitProperties);
-
   THREE.Object3D.call( this );
 
-  this.name = this.properties.name;
-  this.type = this.properties.type;
-  this.distance = this.properties.distance;
-  this.speed = this.properties.speed;
-  this.tilt = this.properties.tilt;
+  this.name = orbitProperties && orbitProperties.name;
+  this.type = orbitProperties && orbitProperties.type || 'OrbitMesh';
+  this.distance = orbitProperties && orbitProperties.distance || 50;
+  this.speed = orbitProperties && orbitProperties.speed || 0;
+  this.tilt = orbitProperties && orbitProperties.tilt || 0;
 };
 
 THREE.OrbitMesh.prototype = Object.create( THREE.Object3D.prototype );
@@ -287,31 +235,19 @@ THREE.OrbitMesh.prototype.update = function() {
 
 THREE.RingsMesh = function(ringsProperties) {
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || 'RingsMesh',
-    tilt: arguments[2] || 0,
-    vRotation: arguments[3] || 0,
-    map: arguments[4] || null,
-    bumpMap: arguments[5] || null,
-    specularMap: arguments[6] || null,
-    orbitProperties: arguments[7] || null,
-    cloudsProperties: arguments[8] || null,
-    ringsProperties: arguments[9] || null
-  }, ringsProperties);
+  THREE.SolarBody.call(this, ringsProperties);
 
-  THREE.SolarBody.call(this, this.properties);
-
-  this.tilt = this.properties.tilt;
-  this.rotation.x = (90 - (this.properties.tilt)) * Math.PI / 180;
-  this.vRotation = this.properties.vRotation;
+  this.type = ringsProperties && ringsProperties.type || 'RingsMesh';
+  this.tilt = ringsProperties && ringsProperties.tilt || 0;
+  this.rotation.x = (90 - (this.tilt)) * Math.PI / 180;
+  this.vRotation = ringsProperties && ringsProperties.vRotation || 0;
   this.geometry = new THREE.RingsGeometry(
-    this.properties.innerRadius,
-    this.properties.outerRadius,
-    this.properties.thetaStart,
-    this.properties.thetaLength,
-    this.properties.thetaSegments,
-    this.properties.phiSegments
+    ringsProperties && ringsProperties.innerRadius,
+    ringsProperties && ringsProperties.outerRadius,
+    ringsProperties && ringsProperties.thetaStart,
+    ringsProperties && ringsProperties.thetaLength,
+    ringsProperties && ringsProperties.thetaSegments,
+    ringsProperties && ringsProperties.phiSegments
   );
 
 };
@@ -332,27 +268,13 @@ THREE.RingsMesh.prototype.loadTexture = function(map) {
 
 THREE.StarMesh = function(starProperties) {
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || 'StarMesh',
-    radius: arguments[2] || 50,
-    tilt: arguments[3] || 0,
-    vRotation: arguments[4] || 0,
-    intesity: arguments[5] || 0.8,
-    map: arguments[6] || null,
-    bumpMap: arguments[7] || null,
-    specularMap: arguments[8] || null,
-    orbitProperties: arguments[9] || null,
-    cloudsProperties: arguments[10] || null,
-    ringsProperties: arguments[11] || null
-  }, starProperties);
+  THREE.SolarBody.call( this, starProperties );
 
-  THREE.SolarBody.call( this, this.properties );
-
-  this.radius = this.properties.radius;
-  this.rotation.x = this.properties.tilt;
-  this.vRotation = this.properties.vRotation;
-  this.intesity = this.properties.intensity;
+  this.type = starProperties && starProperties.type || 'StarMesh';
+  this.radius = starProperties && starProperties.radius || 50;
+  this.rotation.x = starProperties && starProperties.tilt || 0;
+  this.vRotation = starProperties && starProperties.vRotation || 0;
+  this.intesity = starProperties && starProperties.intensity || 0.8;
 
   this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
 
@@ -747,7 +669,7 @@ function SolarSystem() {
   function addSolarBody(solarBody){
     bodies[solarBody.name] = solarBody;
     if(solarBody.orbitProperties) {
-      bodies[solarBody.orbitProperties.round].addSatellite(solarBody, solarBody.orbitProperties);
+      bodies[solarBody.orbitProperties.round].addSatellite(solarBody);
     } else {
       sceneBuilder.addObject(solarBody);
     }

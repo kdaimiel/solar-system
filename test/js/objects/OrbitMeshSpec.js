@@ -6,25 +6,20 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-describe('Testing OrbitMesh', function() {
+describe('OrbitMesh', function() {
 
   var orbit;
   var orbitProperties;
 
-  it('Testing OrbitMesh constructor', function() {
+  it('should allow indroduce properties in the constructor', function() {
     orbit = new THREE.OrbitMesh();
     expect(orbit).not.toBe(undefined);
 
     orbit = new THREE.OrbitMesh({});
     expect(orbit).not.toBe(undefined);
 
-    orbit = new THREE.OrbitMesh(null);
+    orbit = new THREE.OrbitMesh(undefined);
     expect(orbit).not.toBe(undefined);
-
-    orbit = new THREE.OrbitMesh('Orbit', 'OrbitType', 2000);
-    expect(orbit.name).toBe('Orbit');
-    expect(orbit.type).toBe('OrbitType');
-    expect(orbit.distance).toBe(2000);
 
     orbitProperties = {
       name: 'Orbit',
@@ -35,7 +30,6 @@ describe('Testing OrbitMesh', function() {
     expect(orbit.name).toBe('Orbit');
     expect(orbit.type).toBe('OrbitType');
     expect(orbit.distance).toBe(2000);
-
   });
 
   describe('Testing OrbitMesh methods', function() {

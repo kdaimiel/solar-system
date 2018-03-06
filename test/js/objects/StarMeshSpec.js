@@ -6,25 +6,20 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-describe('Testing StarMesh', function() {
+describe('StarMesh', function() {
 
   var star;
   var starProperties;
 
-  it('Testing StarMesh constructor', function() {
+  it('should allow indroduce properties in the constructor', function() {
     star = new THREE.StarMesh();
     expect(star).not.toBe(undefined);
 
     star = new THREE.StarMesh({});
     expect(star).not.toBe(undefined);
 
-    star = new THREE.StarMesh(null);
+    star = new THREE.StarMesh(undefined);
     expect(star).not.toBe(undefined);
-
-    star = new THREE.StarMesh('Star', 'StarType', 2000);
-    expect(star.name).toBe('Star');
-    expect(star.type).toBe('StarType');
-    expect(star.radius).toBe(2000);
 
     starProperties = {
       name: 'Star',
@@ -35,7 +30,6 @@ describe('Testing StarMesh', function() {
     expect(star.name).toBe('Star');
     expect(star.type).toBe('StarType');
     expect(star.radius).toBe(2000);
-
   });
 
   describe('Testing StarMesh', function() {

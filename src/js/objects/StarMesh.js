@@ -7,27 +7,13 @@
  */
 THREE.StarMesh = function(starProperties) {
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || 'StarMesh',
-    radius: arguments[2] || 50,
-    tilt: arguments[3] || 0,
-    vRotation: arguments[4] || 0,
-    intesity: arguments[5] || 0.8,
-    map: arguments[6] || null,
-    bumpMap: arguments[7] || null,
-    specularMap: arguments[8] || null,
-    orbitProperties: arguments[9] || null,
-    cloudsProperties: arguments[10] || null,
-    ringsProperties: arguments[11] || null
-  }, starProperties);
+  THREE.SolarBody.call( this, starProperties );
 
-  THREE.SolarBody.call( this, this.properties );
-
-  this.radius = this.properties.radius;
-  this.rotation.x = this.properties.tilt;
-  this.vRotation = this.properties.vRotation;
-  this.intesity = this.properties.intensity;
+  this.type = starProperties && starProperties.type || 'StarMesh';
+  this.radius = starProperties && starProperties.radius || 50;
+  this.rotation.x = starProperties && starProperties.tilt || 0;
+  this.vRotation = starProperties && starProperties.vRotation || 0;
+  this.intesity = starProperties && starProperties.intensity || 0.8;
 
   this.geometry = new THREE.SphereGeometry(this.radius || 50, 100, 100);
 

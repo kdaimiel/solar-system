@@ -6,24 +6,20 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-describe('Testing SolarBody', function() {
+describe('SolarBody', function() {
 
   var solarBody;
   var bodyProperties;
 
-  it('Testing SolarBody constructor', function() {
+  it('should allow indroduce properties in the constructor', function() {
     solarBody = new THREE.SolarBody();
     expect(solarBody).not.toBe(undefined);
 
     solarBody = new THREE.SolarBody({});
     expect(solarBody).not.toBe(undefined);
 
-    solarBody = new THREE.SolarBody(null);
+    solarBody = new THREE.SolarBody(undefined);
     expect(solarBody).not.toBe(undefined);
-
-    solarBody = new THREE.SolarBody('SolarBody', 'SolarBodyType');
-    expect(solarBody.name).toBe('SolarBody');
-    expect(solarBody.type).toBe('SolarBodyType');
 
     bodyProperties = {
       name: 'SolarBody',
@@ -32,7 +28,6 @@ describe('Testing SolarBody', function() {
     solarBody = new THREE.SolarBody(bodyProperties);
     expect(solarBody.name).toBe('SolarBody');
     expect(solarBody.type).toBe('SolarBodyType');
-
   });
 
   describe('Testing SolarBody methods', function() {

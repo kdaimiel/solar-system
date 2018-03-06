@@ -33,7 +33,7 @@ function SolarSystem() {
   function addSolarBody(solarBody){
     bodies[solarBody.name] = solarBody;
     if(solarBody.orbitProperties) {
-      bodies[solarBody.orbitProperties.round].addSatellite(solarBody, solarBody.orbitProperties);
+      bodies[solarBody.orbitProperties.round].addSatellite(solarBody);
     } else {
       sceneBuilder.addObject(solarBody);
     }

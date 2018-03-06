@@ -6,25 +6,20 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-describe('Testing PlanetMesh', function() {
+describe('PlanetMesh', function() {
 
   var planet;
   var planetProperties;
 
-  it('Testing PlanetMesh constructor', function() {
+  it('should allow indroduce properties in the constructor', function() {
     planet = new THREE.PlanetMesh();
     expect(planet).not.toBe(undefined);
 
     planet = new THREE.PlanetMesh({});
     expect(planet).not.toBe(undefined);
 
-    planet = new THREE.PlanetMesh(null);
+    planet = new THREE.PlanetMesh(undefined);
     expect(planet).not.toBe(undefined);
-
-    planet = new THREE.PlanetMesh('Planet', 'PlanetType', 2000);
-    expect(planet.name).toBe('Planet');
-    expect(planet.type).toBe('PlanetType');
-    expect(planet.radius).toBe(2000);
 
     planetProperties = {
       name: 'Planet',
@@ -35,7 +30,6 @@ describe('Testing PlanetMesh', function() {
     expect(planet.name).toBe('Planet');
     expect(planet.type).toBe('PlanetType');
     expect(planet.radius).toBe(2000);
-
   });
 
   describe('Testing PlanetMesh methods', function() {

@@ -25,7 +25,6 @@
     "SolarProperties": true,
     "SolarService": true,
     "SolarSystem": true,
-    "Stats": true,
     "requirejs": true,
     "it": true,
     "xit": true,

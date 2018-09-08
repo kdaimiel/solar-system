@@ -17,7 +17,6 @@ module.exports = function(config) {
     files: [
       'bower_components/three.js/build/three.js',
       {pattern: 'bower_components/three.js/examples/js/controls/**.js', included: true},
-      'bower_components/three.js/examples/js/libs/stats.min.js',
       'src/js/objects/SolarBody.js',
       'src/js/objects/PlanetMesh.js',
       {pattern: 'src/js/**/*js', included: true},

@@ -18,6 +18,13 @@
     <script>
       var solarSystem = new SolarSystem();
       solarSystem.init();
+
+      // Set stats
+      stats = new Stats();
+      stats.domElement.style.position = 'absolute';
+      stats.domElement.style.top = '0px';
+      document.body.appendChild( stats.domElement );
+
     </script>
 
   </body>

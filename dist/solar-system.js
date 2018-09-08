@@ -1,7 +1,7 @@
 /*
  * solar-system
  * @Description Solar System with Threejs
- * @version v0.1.45 - 2018-03-06
+ * @version v0.1.45 - 2018-09-08
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -345,7 +345,7 @@ function SceneBuilder() {
 
   'use strict';
 
-  var scene, camera, renderer, controls, stats;
+  var scene, camera, renderer, controls;
   var width, height;
 
   var factory = {
@@ -400,12 +400,6 @@ function SceneBuilder() {
 
     document.body.appendChild( renderer.domElement );
 
-    // Set stats
-    stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
-    document.body.appendChild( stats.domElement );
-
     // Catch
     window.addEventListener( 'resize', onWindowResize, false );
 
@@ -431,7 +425,6 @@ function SceneBuilder() {
     }
 
     render();
-    stats.update();
   }
 
   function onWindowResize() {

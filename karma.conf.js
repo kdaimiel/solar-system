@@ -25,16 +25,20 @@ module.exports = function(config) {
     ],
 
 
-    // list of files to exclude
-    exclude: [
-      'src/js/index.js',
-    ],
-
+    preprocessors: {
+      'src/**/*.js': ['coverage']
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
+
+
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage'
+    },
 
 
     // web server port

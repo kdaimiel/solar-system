@@ -31,7 +31,6 @@
     "load-grunt-tasks": "^3.1.0",
     "phantomjs": "^1.9.19",
     "requirejs": "^2.3.5",
-    "time-grunt": "^1.0.0",
     "web-component-tester": "^4.3.5"
   },
   "description": "Solar System with Threejs",

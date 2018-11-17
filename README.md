@@ -125,22 +125,22 @@ bower install
 
 ### Build
 
-We use `grunt` as a task runner to build the project. So we suggest to install `grunt-cli` as a global dependency.
+We use `gulp` as a task runner to build the project. So we suggest to install `gulp-cli` as a global dependency.
 
 ```sh
-npm install -g grunt-cli
+npm install -g gulp gulp-cli
 ```
 
-Then build the project with `grunt` as a global dependency inside project folder.
+Then build the project with `gulp` as a global dependency inside project folder.
 
 ```sh
-grunt build
+gulp build
 ```
 
-However, we can also build project with `grunt` as a local dependecy inside project folder.
+However, we can also build project with `gulp` as a local dependecy inside project folder.
 
 ```sh
-./node_modules/grunt-cli/bin/grunt build
+./node_modules/.bin/gulp build
 ```
 
 Or, using a `npm` script.
@@ -153,13 +153,13 @@ npm run build
 We can build project on `serve` mode to check change immediately.
 
 ```sh
-grunt serve
+gulp serve
 ```
 
 or
 
 ```sh
-./node_modules/grunt-cli/bin/grunt serve
+./node_modules/.bin/gulp serve
 ```
 
 or
@@ -171,16 +171,16 @@ npm run serve
 This throws a Web Server in `http://localhost:9000/` watching source files to check changes.
 
 ### Tests
-We also use `grunt` to run tests. So, using `grunt` as global dependency.
+We also use `gulp` to run tests. So, using `gulp` as global dependency.
 
 ```sh
-grunt test
+gulp test
 ```
 
-However, using `grunt` as a local dependency.
+However, using `gulp` as a local dependency.
 
 ```sh
-./node_modules/grunt-cli/bin/grunt test
+./node_modules/.bin/gulp test
 ```
 
 Or, just using `npm` script.
@@ -192,13 +192,13 @@ npm test
 It is also possible to run test on `watch` mode.
 
 ```sh
-grunt test:watch
+gulp test:watch
 ```
 
 or
 
 ```sh
-./node_modules/grunt-cli/bin/grunt test:watch
+./node_modules/.bin/gulp test:watch
 ```
 
 or

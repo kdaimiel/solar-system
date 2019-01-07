@@ -31,7 +31,6 @@
     ".gitignore",
     ".jshintrc",
     ".npmignore",
-    "Gruntfile.js",
     "index.html",
     "karma.conf.js",
     "npm-debug.log"

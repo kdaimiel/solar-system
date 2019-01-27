@@ -10,18 +10,18 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'requirejs'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/three.js/build/three.js',
-      {pattern: 'bower_components/three.js/examples/js/controls/**.js', included: true},
+      {pattern: 'node_modules/three/build/three.min.js', watched: false},
+      {pattern: 'node_modules/three/examples/js/controls/**.js', included: true, watched: false},
+      {pattern: 'node_modules/three/examples/js/objects/Lensflare.js', included: true, watched: false},
       'src/js/objects/SolarBody.js',
       'src/js/objects/PlanetMesh.js',
-      {pattern: 'src/js/**/*js', included: true},
-      {pattern: 'test/**/*Spec.js', included: false},
-      'test/test-main.js'
+      'src/js/**/*js',
+      'test/**/*Spec.js'
     ],
 
 
@@ -70,10 +70,6 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity,
-
-    // No activity browser Timeout
-    browserNoActivityTimeout: 50000
-
+    concurrency: Infinity
   });
 };

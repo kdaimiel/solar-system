@@ -8,8 +8,9 @@ This is a 3D Solar System JavaScript model created with [Threejs](https://threej
 The easy way to use the 3D Solar System is importing dependencies and using plain JavaScript.
 
 ```html
-<script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
-<script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
+<script type="text/javascript" src="../dist/libs/three/build/three.min.js"></script>
+<script type="text/javascript" src="../dist/libs/three/examples/js/controls/TrackballControls.js"></script>
+<script type="text/javascript" src="../dist/libs/three/examples/js/objects/Lensflare.js"></script>
 
 <script type="text/javascript" src="../dist/solar-system.min.js"></script>
 
@@ -69,11 +70,12 @@ Check [demo](demo) folder to see some examples.
 We can also import the 3D Solar System as a [Reactjs](https://facebook.github.io/react/) component.
 
 ```html
-<script type="text/javascript" src="../bower_components/react/react.js"></script>
-<script type="text/javascript" src="../bower_components/react/react-dom.js"></script>
+<script type="text/javascript" src="../dist/libs/react/react.js"></script>
+<script type="text/javascript" src="../dist/libs/react/react-dom.js"></script>
 
-<script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
-<script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
+<script type="text/javascript" src="../dist/libs/three/build/three.min.js"></script>
+<script type="text/javascript" src="../dist/libs/three/examples/js/controls/TrackballControls.js"></script>
+<script type="text/javascript" src="../dist/libs/three/examples/js/objects/Lensflare.js"></script>
 
 <script type="text/javascript" src="../dist/solar-system.min.js"></script>
 
@@ -94,12 +96,13 @@ We can also import the 3D Solar System as a [Polymer](https://www.polymer-projec
 
 
 ```html
-<script type="text/javascript" src="../bower_components/three.js/build/three.min.js"></script>
-<script type="text/javascript" src="../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
+<script type="text/javascript" src="../dist/libs/three/build/three.min.js"></script>
+<script type="text/javascript" src="../dist/libs/three/examples/js/controls/TrackballControls.js"></script>
+<script type="text/javascript" src="../dist/libs/three/examples/js/objects/Lensflare.js"></script>
 
 <script type="text/javascript" src="../dist/solar-system.min.js"></script>
 
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../dist/libs/polymer/polymer.html">
 
 <link rel="import" href="../dist/solar-system.htm">
 
@@ -116,11 +119,10 @@ We can also import the 3D Solar System as a [Polymer](https://www.polymer-projec
 
 ### Install
 
-Install dependencies with `npm` and `bower` within project folder.
+Install dependencies with `npm` within project folder.
 
 ```sh
 npm install
-bower install
 ```
 
 ### Build

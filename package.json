@@ -5,12 +5,20 @@
     "clean": "gulp clean",
     "build": "gulp build",
     "serve": "gulp serve",
+    "serve:watch": "gulp serve:watch",
+    "start": "gulp",
     "test": "gulp test",
     "test:watch": "gulp test:watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "Polymer": "^1.6.1--",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "three": "^0.100.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
@@ -22,14 +30,12 @@
     "gulp-uglify": "^3.0.1",
     "jasmine-core": "^3.3.0",
     "jshint": "^2.9.7",
-    "karma": "^3.1.4",
+    "karma": "^4.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^2.0.1",
     "karma-phantomjs-launcher": "^1.0.4",
-    "karma-requirejs": "^1.1.0",
     "phantomjs": "^2.1.7",
-    "requirejs": "^2.3.5",
     "web-component-tester": "^6.9.2"
   },
   "description": "Solar System with Threejs",

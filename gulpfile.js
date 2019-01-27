@@ -19,7 +19,8 @@ const babel = require('gulp-babel');
 const paths = {
   src: 'src',
   dist: 'dist',
-  test: 'test'
+  test: 'test',
+  libs: 'dist/libs'
 };
 
 gulp.task('clean', function () {
@@ -85,10 +86,18 @@ gulp.task('uglify', function () {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('copy:libs', function () {
+  return gulp.src('node_modules/three*/**/*.js')
+    .pipe(gulp.dest(paths.libs));
+});
+
 gulp.task('build', gulp.series(
+  'clean',
+  'lint',
   'test',
   'concat',
-  'uglify'
+  'uglify',
+  'copy:libs'
 ));
 
 /* Polymer Tasks*/
@@ -97,28 +106,49 @@ gulp.task('copy:polymer', function () {
     .pipe(gulp.dest(paths.dist));
 });
 
+gulp.task('copy:libs:polymer', function () {
+  return gulp.src('node_modules/Polymer*/polymer*.html')
+    .pipe(gulp.dest(paths.libs));
+});
+
 gulp.task('wct:local', function () {
   return wct();
 });
 
 gulp.task('build:polymer', gulp.series(
   'wct:local',
-  'copy:polymer'
+  'copy:polymer',
+  'copy:libs:polymer'
 ));
 
 /* React Task*/
-gulp.task('build:react', function(){
-  return gulp.src(paths.src + '/jsx/*.jsx')
+gulp.task('copy:libs:react', function () {
+  return gulp.src([
+    'node_modules/react/umd/react.production.min.js',
+    'node_modules/react-dom/umd/react-dom.production.min.js'
+  ])
+    .pipe(gulp.dest(paths.libs + '/react'));
+});
+
+gulp.task('react', function(){
+  return gulp.src([
+    paths.src + '/jsx/*.jsx'
+  ])
     .pipe(babel({
-      presets: ['@babel/preset-react']
+      presets: ['@babel/preset-react', '@babel/preset-env']
     }))
     .pipe(concat('solar-system-react.js'))
     .pipe(uglify())
     .pipe(gulp.dest(paths.dist));
 });
 
+gulp.task('build:react', gulp.series(
+  'copy:libs:react',
+  'react'
+));
+
 /* General Tasks */
-gulp.task('build:all', gulp.parallel(
+gulp.task('build:all', gulp.series(
   'build',
   'build:polymer',
   'build:react'
@@ -139,13 +169,16 @@ gulp.task('connect', function() {
   });
 });
 
-gulp.task('serve', gulp.parallel(
+gulp.task('serve', gulp.series(
+  'connect'
+));
+
+gulp.task('serve:watch', gulp.parallel(
+  'build:all',
   'connect',
   'watch'
 ));
 
 gulp.task('default', gulp.series(
-  'clean',
-  'build:all',
-  'serve'
+  'serve:watch'
 ));

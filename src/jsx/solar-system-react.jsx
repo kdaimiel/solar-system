@@ -6,13 +6,13 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-var SolarSystemComponent = React.createClass({
-  render: function(){
+class SolarSystemComponent extends React.Component {
+  render(){
     var solarSystem = new SolarSystem();
     solarSystem.init(this.props);
     return null;
   }
-});
+}
 
 var solarSystemElement = document.getElementById('solar-system');
 
@@ -24,5 +24,4 @@ ReactDOM.render(
     cameraSrc={solarSystemElement.getAttribute('camera-src')}
     lightsSrc={solarSystemElement.getAttribute('lights-src')} />,
   solarSystemElement
-
 );

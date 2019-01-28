@@ -8,5 +8,6 @@
     "local": {
       "browsers": ["chrome"]
     }
-  }
+  },
+  "npm": true
 }

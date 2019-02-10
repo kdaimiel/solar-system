@@ -69,7 +69,7 @@ gulp.task('concat', function() {
   return gulp.src([
     'src/js/objects/SolarBody.js',
     'src/js/objects/PlanetMesh.js',
-    paths.src + '/**/*.js'
+    paths.src + '/js/**/*.js'
   ])
     .pipe(concat('solar-system.js'))
     .pipe(gulp.dest('dist'));
@@ -79,7 +79,7 @@ gulp.task('uglify', function () {
   return gulp.src([
     'src/js/objects/SolarBody.js',
     'src/js/objects/PlanetMesh.js',
-    paths.src + '/**/*.js'
+    paths.src + '/js/**/*.js'
   ])
     .pipe(concat('solar-system.min.js'))
     .pipe(uglify())
@@ -107,7 +107,11 @@ gulp.task('copy:polymer', function () {
 });
 
 gulp.task('copy:libs:polymer', function () {
-  return gulp.src('node_modules/Polymer*/polymer*.html')
+  return gulp.src([
+    'node_modules/@polymer*/polymer/polymer-element.js',
+    'node_modules/@polymer*/polymer/lib/**/*.js',
+    'node_modules/@webcomponents/webcomponentsjs*/webcomponents-loader.js'
+  ])
     .pipe(gulp.dest(paths.libs));
 });
 

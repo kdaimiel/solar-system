@@ -96,15 +96,15 @@ We can also import the 3D Solar System as a [Polymer](https://www.polymer-projec
 
 
 ```html
+<script src="../dist/libs/webcomponentsjs/webcomponents-loader.js" async></script>
+
 <script type="text/javascript" src="../dist/libs/three/build/three.min.js"></script>
 <script type="text/javascript" src="../dist/libs/three/examples/js/controls/TrackballControls.js"></script>
 <script type="text/javascript" src="../dist/libs/three/examples/js/objects/Lensflare.js"></script>
 
 <script type="text/javascript" src="../dist/solar-system.min.js"></script>
 
-<link rel="import" href="../dist/libs/polymer/polymer.html">
-
-<link rel="import" href="../dist/solar-system.htm">
+<script src="../dist/solar-system-polymer.js" type="module" async></script>
 
 <solar-system
   width="500"

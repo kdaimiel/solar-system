@@ -1,9 +1,12 @@
 # Solar System in Threejs
 
-This is a 3D Solar System JavaScript model created with [Threejs](https://threejs.org/).
-
 [![Build Status](https://travis-ci.org/kdaimiel/solar-system.svg?branch=develop)](https://travis-ci.org/kdaimiel/solar-system)
-[![license](https://img.shields.io/github/license/kdaimiel/solar-system/solar-system.svg)](https://github.com/kdaimiel/solar-system/blob/master/LICENSE) [![GitHub issues](https://img.shields.io/github/issues/kdaimiel/solar-system/solar-system.svg)](https://github.com/kdaimiel/solar-system/issues) [![GitHub stars](https://img.shields.io/github/stars/kdaimiel/solar-system/solar-system.svg)](https://github.com/kdaimiel/solar-system/stargazers) [![GitHub forks](https://img.shields.io/github/forks/kdaimiel/solar-system/solar-system.svg)](https://github.com/kdaimiel/solar-system/network)
+[![license](https://img.shields.io/github/license/kdaimiel/solar-system.svg)](https://github.com/kdaimiel/solar-system/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/kdaimiel/solar-system.svg)](https://github.com/kdaimiel/solar-system/issues)
+[![GitHub stars](https://img.shields.io/github/stars/kdaimiel/solar-system.svg)](https://github.com/kdaimiel/solar-system/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/kdaimiel/solar-system.svg)](https://github.com/kdaimiel/solar-system/network)
+
+This is a 3D Solar System JavaScript model created with [Threejs](https://threejs.org/).
 
 ![alt text](media/solar-system.gif)
 

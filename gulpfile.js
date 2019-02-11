@@ -120,9 +120,9 @@ gulp.task('wct:local', function () {
 });
 
 gulp.task('build:polymer', gulp.series(
-  'wct:local',
   'copy:polymer',
-  'copy:libs:polymer'
+  'copy:libs:polymer',
+  'wct:local'
 ));
 
 /* React Task*/

@@ -52,6 +52,7 @@ gulp.task('lint', gulp.series('lint:js', 'lint:json'));
 
 gulp.task('test', function (done) {
   new Server({
+    browsers: ["ChromeHeadless"],
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
   }, done).start();

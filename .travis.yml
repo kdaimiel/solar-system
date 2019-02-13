@@ -1,9 +1,12 @@
 language: node_js
 node_js:
   - 8
+cache:
+  directories:
+    - node_modules
 addons:
   chrome: stable
 install:
   - npm install
 script:
-  - npm start
+  - npm build

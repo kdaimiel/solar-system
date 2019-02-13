@@ -120,7 +120,7 @@ gulp.task('react', function(){
     }))
     .pipe(concat('solar-system-react.js'))
     .pipe(uglify())
-    .pipe(gulp.dest(paths.dist));
+    .pipe(gulp.dest(paths.dist + "/react"));
 });
 
 gulp.task('build:react', gulp.series(

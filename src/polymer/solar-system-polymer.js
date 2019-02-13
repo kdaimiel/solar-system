@@ -5,7 +5,7 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-import { PolymerElement } from './libs/@polymer/polymer/polymer-element.js';
+import { PolymerElement } from '../../node_modules/@polymer/polymer/polymer-element.js';
 
 export class SolarSystemElement extends PolymerElement {
   constructor() {
@@ -34,4 +34,4 @@ export class SolarSystemElement extends PolymerElement {
 }
 
 // Register the element with the browser.
-customElements.define('solar-system', SolarSystemElement);
+window.customElements.define('solar-system', SolarSystemElement);

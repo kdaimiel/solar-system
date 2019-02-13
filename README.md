@@ -1,4 +1,4 @@
-# Solar System in Threejs
+# Solar System in ThreeJs
 
 [![Build Status](https://travis-ci.org/kdaimiel/solar-system.svg?branch=develop)](https://travis-ci.org/kdaimiel/solar-system)
 [![license](https://img.shields.io/github/license/kdaimiel/solar-system.svg)](https://github.com/kdaimiel/solar-system/blob/master/LICENSE)
@@ -11,14 +11,16 @@ This is a 3D Solar System JavaScript model created with [Threejs](https://threej
 ![alt text](media/solar-system.gif)
 
 ## Usage
-The easy way to use the 3D Solar System is importing dependencies and using plain JavaScript.
+
+The easy way to use the 3D Solar System is importing dependencies with `npm install` and using plain JavaScript.
 
 ```html
-<script type="text/javascript" src="../dist/libs/three/build/three.min.js"></script>
-<script type="text/javascript" src="../dist/libs/three/examples/js/controls/TrackballControls.js"></script>
-<script type="text/javascript" src="../dist/libs/three/examples/js/objects/Lensflare.js"></script>
+<script src="../node_modules/three/build/three.min.js"></script>
+<script src="../node_modules/three/examples/js/controls/TrackballControls.js"></script>
+<script src="../node_modules/three/examples/js/objects/Lensflare.js"></script>
+<script src="../node_modules/three/examples/js/libs/stats.min.js"></script>
 
-<script type="text/javascript" src="../dist/solar-system.min.js"></script>
+<script src="../dist/solar-system.min.js"></script>
 
 <script>
   var solarSystem = new SolarSystem();
@@ -71,19 +73,20 @@ Check [demo](demo) folder to see some examples.
 }
 ```
 
-**React**
+### React
 
 We can also import the 3D Solar System as a [Reactjs](https://facebook.github.io/react/) component.
 
 ```html
-<script type="text/javascript" src="../dist/libs/react/react.js"></script>
-<script type="text/javascript" src="../dist/libs/react/react-dom.js"></script>
+<script src="../node_modules/react/umd/react.production.min.js"></script>
+<script src="../node_modules/react-dom/umd/react-dom.production.min.js"></script>
 
-<script type="text/javascript" src="../dist/libs/three/build/three.min.js"></script>
-<script type="text/javascript" src="../dist/libs/three/examples/js/controls/TrackballControls.js"></script>
-<script type="text/javascript" src="../dist/libs/three/examples/js/objects/Lensflare.js"></script>
+<script src="../node_modules/three/build/three.min.js"></script>
+<script src="../node_modules/three/examples/js/controls/TrackballControls.js"></script>
+<script src="../node_modules/three/examples/js/objects/Lensflare.js"></script>
+<script src="../node_modules/three/examples/js/libs/stats.min.js"></script>
 
-<script type="text/javascript" src="../dist/solar-system.min.js"></script>
+<script src="../dist/solar-system.min.js"></script>
 
 <div id="solar-system"
   width="500"
@@ -96,21 +99,21 @@ We can also import the 3D Solar System as a [Reactjs](https://facebook.github.io
 <script async src="../dist/solar-system-react.js"></script>
 ```
 
-**Polymer**
+### Polymer
 
 We can also import the 3D Solar System as a [Polymer](https://www.polymer-project.org/) component.
 
-
 ```html
-<script src="../dist/libs/webcomponentsjs/webcomponents-loader.js" async></script>
+<script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js" async></script>
 
-<script type="text/javascript" src="../dist/libs/three/build/three.min.js"></script>
-<script type="text/javascript" src="../dist/libs/three/examples/js/controls/TrackballControls.js"></script>
-<script type="text/javascript" src="../dist/libs/three/examples/js/objects/Lensflare.js"></script>
+<script src="../node_modules/three/build/three.min.js"></script>
+<script src="../node_modules/three/examples/js/controls/TrackballControls.js"></script>
+<script src="../node_modules/three/examples/js/objects/Lensflare.js"></script>
+<script src="../node_modules/three/examples/js/libs/stats.min.js"></script>
 
-<script type="text/javascript" src="../dist/solar-system.min.js"></script>
+<script src="../dist/solar-system.min.js"></script>
 
-<script src="../dist/solar-system-polymer.js" type="module" async></script>
+<script src="../dist/polymer/solar-system-polymer.js" type="module" async></script>
 
 <solar-system
   width="500"
@@ -158,6 +161,7 @@ npm run build
 ```
 
 ### Serve
+
 We can build project on `serve` mode to check change immediately.
 
 ```sh
@@ -179,6 +183,7 @@ npm run serve
 This throws a Web Server in `http://localhost:9000/` watching source files to check changes.
 
 ### Tests
+
 We also use `gulp` to run tests. So, using `gulp` as global dependency.
 
 ```sh

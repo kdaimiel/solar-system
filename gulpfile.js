@@ -86,33 +86,18 @@ gulp.task('uglify', function () {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('copy:libs', function () {
-  return gulp.src('node_modules/three*/**/*.js')
-    .pipe(gulp.dest(paths.libs));
-});
-
 gulp.task('build', gulp.series(
   'clean',
   'lint',
   'test',
   'concat',
-  'uglify',
-  'copy:libs'
+  'uglify'
 ));
 
 /* Polymer Tasks*/
 gulp.task('copy:polymer', function () {
-  return gulp.src(paths.src + '/polymer/*')
+  return gulp.src(paths.src + '/polymer*/**/*')
     .pipe(gulp.dest(paths.dist));
-});
-
-gulp.task('copy:libs:polymer', function () {
-  return gulp.src([
-    'node_modules/@polymer*/polymer/polymer-element.js',
-    'node_modules/@polymer*/polymer/lib/**/*.js',
-    'node_modules/@webcomponents/webcomponentsjs*/webcomponents-loader.js'
-  ])
-    .pipe(gulp.dest(paths.libs));
 });
 
 gulp.task('wct:local', function () {
@@ -121,19 +106,10 @@ gulp.task('wct:local', function () {
 
 gulp.task('build:polymer', gulp.series(
   'copy:polymer',
-  'copy:libs:polymer',
   'wct:local'
 ));
 
 /* React Task*/
-gulp.task('copy:libs:react', function () {
-  return gulp.src([
-    'node_modules/react/umd/react.production.min.js',
-    'node_modules/react-dom/umd/react-dom.production.min.js'
-  ])
-    .pipe(gulp.dest(paths.libs + '/react'));
-});
-
 gulp.task('react', function(){
   return gulp.src([
     paths.src + '/jsx/*.jsx'
@@ -147,7 +123,6 @@ gulp.task('react', function(){
 });
 
 gulp.task('build:react', gulp.series(
-  'copy:libs:react',
   'react'
 ));
 

@@ -32,6 +32,6 @@
     "beforeEach": true,
     "spyOn": true,
     "Polymer": true,
-    "customElements": true
+    "windows": true
   }
 }

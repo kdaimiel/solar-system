@@ -4,6 +4,7 @@
   "scripts": {
     "clean": "gulp clean",
     "build": "gulp build",
+    "build:all": "gulp build:all",
     "serve": "gulp serve",
     "serve:watch": "gulp serve:watch",
     "start": "gulp",

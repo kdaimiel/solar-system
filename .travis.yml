@@ -9,4 +9,4 @@ addons:
 install:
   - npm install
 script:
-  - npm build
+  - npm run build:all

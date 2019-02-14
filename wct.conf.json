@@ -6,7 +6,10 @@
       "disabled": true
     },
     "local": {
-      "browsers": ["chrome"]
+      "browsers": ["chrome"],
+      "browserOptions": {
+        "chrome": ["headless"]
+      }
     }
   },
   "npm": true

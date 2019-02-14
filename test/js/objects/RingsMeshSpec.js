@@ -6,25 +6,20 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-describe('Testing RingsMesh', function() {
+describe('RingsMesh', function() {
 
   var rings;
   var ringsProperties;
 
-  it('Testing RingsMesh constructor', function() {
+  it('should allow indroduce properties in the constructor', function() {
     rings = new THREE.RingsMesh();
     expect(rings).not.toBe(undefined);
 
     rings = new THREE.RingsMesh({});
     expect(rings).not.toBe(undefined);
 
-    rings = new THREE.RingsMesh(null);
+    rings = new THREE.RingsMesh(undefined);
     expect(rings).not.toBe(undefined);
-
-    rings = new THREE.RingsMesh('Rings', 'RingsType', 30);
-    expect(rings.name).toBe('Rings');
-    expect(rings.type).toBe('RingsType');
-    expect(rings.tilt).toBe(30);
 
     ringsProperties = {
       name: 'Rings',
@@ -35,7 +30,6 @@ describe('Testing RingsMesh', function() {
     expect(rings.name).toBe('Rings');
     expect(rings.type).toBe('RingsType');
     expect(rings.tilt).toBe(30);
-
   });
 
   describe('Testing RingsMesh methods', function() {

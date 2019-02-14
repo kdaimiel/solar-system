@@ -7,26 +7,14 @@
  */
 THREE.CloudsMesh = function(cloudProperties) {
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || 'CloudsMesh',
-    radius: arguments[2] || 20,
-    opacity: arguments[3] || 0.5,
-    transparent: arguments[4] || true,
-    depthWrite: arguments[5] || false,
-    speed: arguments[6] || 0.20, // The max speed of the clouds rotation
-    map: arguments[7] || null,
-    bumpMap: arguments[8] || null,
-    specularMap: arguments[9] || null,
-  }, cloudProperties);
+  THREE.SolarBody.call(this, cloudProperties);
 
-  THREE.SolarBody.call(this, this.properties);
-
-  this.radius = this.properties.radius;
-  this.opacity = this.properties.opacity;
-  this.transparent = this.properties.transparent;
-  this.depthWrite = this.properties.depthWrite;
-  this.speed = this.properties.speed;
+  this.type = cloudProperties && cloudProperties.type || 'CloudsMesh';
+  this.radius = cloudProperties && cloudProperties.radius || 20;
+  this.opacity = cloudProperties && cloudProperties.opacity || 0.5;
+  this.transparent = cloudProperties && cloudProperties.transparent || true;
+  this.depthWrite = cloudProperties && cloudProperties.depthWrite || false;
+  this.speed = cloudProperties && cloudProperties.speed || 0.20;
 
   this.geometry   = new THREE.SphereGeometry(this.radius, 100, 100);
 };

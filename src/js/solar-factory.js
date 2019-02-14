@@ -5,30 +5,25 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-define('solar-factory', function() {
+var SolarFactory = (function() {
 
   'use strict';
 
-  var factory = {
-    createMoon: createMoon,
-    createPlanet: createPlanet,
-    createStar: createStar
+  return {
+    createMoon: function(moonProperties) {
+      var moon = new THREE.MoonMesh(moonProperties);
+      return moon;
+    },
+
+    createPlanet: function(planetProperties){
+      var planet = new THREE.PlanetMesh(planetProperties);
+      return planet;
+    },
+
+    createStar: function(starProperties){
+      var star = new THREE.StarMesh(starProperties);
+      return star;
+    }
   };
 
-  return factory;
-  function createMoon(moonProperties) {
-    var moon = new THREE.MoonMesh(moonProperties);
-    return moon;
-  }
-
-  function createPlanet(planetProperties){
-    var planet = new THREE.PlanetMesh(planetProperties);
-    return planet;
-  }
-
-  function createStar(starProperties){
-    var star = new THREE.StarMesh(starProperties);
-    return star;
-  }
-
-});
+})();

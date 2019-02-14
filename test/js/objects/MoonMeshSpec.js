@@ -6,25 +6,20 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-describe('Testing MoonMesh', function() {
+describe('MoonMesh', function() {
 
   var moon;
   var moonProperties;
 
-  it('Testing MoonMesh constructor', function() {
+  it('should allow indroduce properties in the constructor', function() {
     moon = new THREE.MoonMesh();
     expect(moon).not.toBe(undefined);
 
     moon = new THREE.MoonMesh({});
     expect(moon).not.toBe(undefined);
 
-    moon = new THREE.MoonMesh(null);
+    moon = new THREE.MoonMesh(undefined);
     expect(moon).not.toBe(undefined);
-
-    moon = new THREE.MoonMesh('Moon', 'MoonType', 2000);
-    expect(moon.name).toBe('Moon');
-    expect(moon.type).toBe('MoonType');
-    expect(moon.radius).toBe(2000);
 
     moonProperties = {
       name: 'Moon',

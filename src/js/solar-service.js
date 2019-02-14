@@ -5,38 +5,44 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-define('solar-service', function() {
+var SolarService = (function() {
 
   'use strict';
 
-  var service = {
-    getCamera: getCamera,
-    getBodies: getBodies,
-    getLights: getLights,
+  function getJSON(url, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+      if (xmlHttp.readyState === 4) {
+        if (xmlHttp.status === 200) {
+          callback(JSON.parse(xmlHttp.responseText));
+        } else if (xmlHttp.status >= 400) {
+          console.error('Load ' + url + ' error, status: ' + xmlHttp.status);
+        }
+      }
+    };
+    xmlHttp.onerror = function(err) {
+      console.error('Load ' + url + ' error :' + JSON.stringify(err, null, '  '));
+    };
+
+    xmlHttp.open('GET', url, true);  // true for asynchronous
+
+    xmlHttp.send(null);
+  }
+
+  return {
+
+    getCamera: function(cameraSrc, callback) {
+      getJSON(cameraSrc, callback);
+    },
+
+    getBodies: function(bodiesSrc, callback){
+      getJSON(bodiesSrc, callback);
+    },
+
+    getLights: function(lightsSrc, callback){
+      getJSON(lightsSrc, callback);
+    }
+
   };
 
-  return service;
-
-  function getCamera(cameraSrc, callback){
-    getJSON(cameraSrc, callback);
-  }
-
-  function getBodies(bodiesSrc, callback){
-    getJSON(bodiesSrc, callback);
-  }
-
-  function getLights(lightsSrc, callback){
-    getJSON(lightsSrc, callback);
-  }
-
-  function getJSON(src, callback) {
-    $.ajax(src, {
-      success: function(data) {
-        return callback(data);
-      },
-      error: function(err) {
-        console.error('Load ' + src + ' error :' + err);
-      }
-    });
-  }
-});
+})();

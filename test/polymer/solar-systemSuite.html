@@ -9,48 +9,47 @@
 <html>
 <head>
   <meta charset="UTF-8">
+
+  <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   <script src="../../node_modules/web-component-tester/browser.js"></script>
 
-  <script type="text/javascript" src="../../bower_components/underscore/underscore.js"></script>
-  <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="../../node_modules/three/build/three.js"></script>
+  <script src="../../node_modules/three/examples/js/controls/TrackballControls.js"></script>
+  <script src="../../node_modules/three/examples/js/objects/Lensflare.js"></script>
 
-  <script type="text/javascript" src="../../bower_components/three.js/build/three.js"></script>
-  <script type="text/javascript" src="../../bower_components/three.js/examples/js/controls/TrackballControls.js"></script>
-  <script type="text/javascript" src="../../bower_components/three.js/examples/js/libs/stats.min.js"></script>
-  <script type="text/javascript" src="../../bower_components/three.js/examples/js/libs/require.js"></script>
+  <script src="../../src/js/geometries/RingsGeometry.js"></script>
 
-  <script type="text/javascript" src="../../src/js/geometries/RingsGeometry.js"></script>
+  <script src="../../src/js/objects/SolarBody.js"></script>
+  <script src="../../src/js/objects/CloudsMesh.js"></script>
+  <script src="../../src/js/objects/PlanetMesh.js"></script>
+  <script src="../../src/js/objects/MoonMesh.js"></script>
+  <script src="../../src/js/objects/OrbitMesh.js"></script>
+  <script src="../../src/js/objects/RingsMesh.js"></script>
+  <script src="../../src/js/objects/StarMesh.js"></script>
 
-  <script type="text/javascript" src="../../src/js/objects/SolarBody.js"></script>
-  <script type="text/javascript" src="../../src/js/objects/CloudsMesh.js"></script>
-  <script type="text/javascript" src="../../src/js/objects/PlanetMesh.js"></script>
-  <script type="text/javascript" src="../../src/js/objects/MoonMesh.js"></script>
-  <script type="text/javascript" src="../../src/js/objects/OrbitMesh.js"></script>
-  <script type="text/javascript" src="../../src/js/objects/RingsMesh.js"></script>
-  <script type="text/javascript" src="../../src/js/objects/StarMesh.js"></script>
+  <script src="../../src/js/scene-builder.js"></script>
+  <script src="../../src/js/scene-factory.js"></script>
+  <script src="../../src/js/solar-factory.js"></script>
+  <script src="../../src/js/solar-properties.js"></script>
+  <script src="../../src/js/solar-service.js"></script>
+  <script src="../../src/js/solar-system.js"></script>
 
-  <script type="text/javascript" src="../../src/js/scene-builder.js"></script>
-  <script type="text/javascript" src="../../src/js/scene-factory.js"></script>
-  <script type="text/javascript" src="../../src/js/solar-factory.js"></script>
-  <script type="text/javascript" src="../../src/js/solar-properties.js"></script>
-  <script type="text/javascript" src="../../src/js/solar-service.js"></script>
-  <script type="text/javascript" src="../../src/js/solar-system.js"></script>
-
-  <link rel="import" href="../../bower_components/polymer/polymer.html">
-
-  <!-- Import solar-system polymer component-->
-  <link rel="import" href="../../src/polymer/solar-system.htm">
+  <script src="../../src/polymer/solar-system-polymer.js" type="module"></script>
 
 </head>
 <body>
 
-  <solar-system id="fixture"
-    width="800"
-    height="600"
-    bodies-src="../../../../demo/data/bodies.properties.json"
-    camera-src="../../../../demo/data/camera.properties.json"
-    lights-src="../../../../demo/data/lights.properties.json"
-    />
+  <test-fixture id="solar-system-fixture">
+    <template>
+      <solar-system
+        width="800"
+        height="600"
+        bodies-src="../../../../demo/data/bodies.properties.json"
+        camera-src="../../../../demo/data/camera.properties.json"
+        lights-src="../../../../demo/data/lights.properties.json"
+      />
+    </template>
+  </test-fixture>
 
   <script>
 
@@ -60,7 +59,7 @@
       var element;
       var canvas;
       setup(function() {
-        element = document.getElementById('fixture');
+        element = fixture('solar-system-fixture');
         canvasElement = document.getElementsByTagName("canvas")[0];
       });
 

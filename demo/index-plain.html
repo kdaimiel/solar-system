@@ -18,9 +18,15 @@
 
     <script>
       var solarSystem = new SolarSystem();
-      solarSystem.init();
+      solarSystem.init( {
+        width: '500',
+        height: '500',
+        'bodies-src': 'data/bodies.properties.json',
+        'camera-src': 'data/camera.properties.json',
+        'lights-src': 'data/lights.properties.json'
+      });
 
-      // Set stats
+      // Set Stats
       stats = new Stats();
       stats.domElement.style.position = 'absolute';
       stats.domElement.style.top = '0px';

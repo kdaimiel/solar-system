@@ -9,46 +9,35 @@ THREE.SolarBody = function(bodyProperties) {
 
   THREE.Object3D.call( this );
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || null,
-    map: arguments[2] || null,
-    bumpMap: arguments[3] || null,
-    specularMap: arguments[4] || null,
-    orbitProperties: arguments[5] || null,
-    cloudsProperties: arguments[6] || null,
-    ringsProperties: arguments[7] || null
-  }, bodyProperties);
-
-  this.name = this.properties.name;
-  this.type = this.properties.type;
-
   this.geometry = new THREE.SphereGeometry( 5, 32, 32 );
-  //this.geometry = new THREE.Geometry();
   this.material = new THREE.MeshBasicMaterial();
 
-  if(this.properties.map){
-    this.texloader.load(this.properties.map, this.loadTexture.bind(this));
-  }
+  if(bodyProperties) {
 
-  if(this.properties.bumpMap) {
-    this.texloader.load(this.properties.bumpMap, this.loadbumpMap.bind(this));
-  }
+    this.name = bodyProperties.name;
+    this.type = bodyProperties.type;
 
-  if(this.properties.specularMap) {
-    this.texloader.load(this.properties.specularMap, this.loadspecularMap.bind(this));
-  }
+    if(bodyProperties.map){
+      this.texloader.load(bodyProperties.map, this.loadTexture.bind(this));
+    }
 
-  if(this.properties.orbitProperties){
-    this.orbitProperties = this.properties.orbitProperties;
-  }
+    if(bodyProperties.bumpMap) {
+      this.texloader.load(bodyProperties.bumpMap, this.loadbumpMap.bind(this));
+    }
 
-  if(this.properties.cloudsProperties) {
-    this.addClouds(this.properties.cloudsProperties);
-  }
+    if(bodyProperties.specularMap) {
+      this.texloader.load(bodyProperties.specularMap, this.loadspecularMap.bind(this));
+    }
 
-  if(this.properties.ringsProperties) {
-    this.addRings(this.properties.ringsProperties);
+    this.orbitProperties = bodyProperties.orbitProperties;
+
+    if(bodyProperties.cloudsProperties) {
+      this.addClouds(bodyProperties.cloudsProperties);
+    }
+
+    if(bodyProperties.ringsProperties) {
+      this.addRings(bodyProperties.ringsProperties);
+    }
   }
 
   this.drawMode = THREE.TrianglesDrawMode;
@@ -67,8 +56,8 @@ THREE.SolarBody.prototype.addRings = function(ringsProperties) {
   this.add(new THREE.RingsMesh(ringsProperties));
 };
 
-THREE.SolarBody.prototype.addSatellite = function(satellite, orbitProperties) {
-  var orbit = new THREE.OrbitMesh(orbitProperties);
+THREE.SolarBody.prototype.addSatellite = function(satellite) {
+  var orbit = new THREE.OrbitMesh(satellite.orbitProperties);
   satellite.orbit = orbit;
 
   if(this.orbit){

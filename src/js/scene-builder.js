@@ -5,11 +5,11 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-define('scene-builder', function() {
+function SceneBuilder() {
 
   'use strict';
 
-  var scene, camera, renderer, controls, stats;
+  var scene, camera, renderer, controls;
   var width, height;
 
   var factory = {
@@ -29,9 +29,11 @@ define('scene-builder', function() {
 
   function addObject(object) {
     scene.add(object);
-    camera.aspect = (width || window.innerWidth) / (height || window.innerHeight);
-    camera.updateProjectionMatrix();
-    //console.log('New object of type "' + object.type + '"" has been added to the scene');
+    if (camera) {
+      camera.aspect = (width || window.innerWidth) / (height || window.innerHeight);
+      camera.updateProjectionMatrix();
+    }
+    // console.log('New object of type "' + object.type + '"" has been added to the scene');
   }
 
   function setControls(newControls){
@@ -62,12 +64,6 @@ define('scene-builder', function() {
 
     document.body.appendChild( renderer.domElement );
 
-    // Set stats
-    stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
-    document.body.appendChild( stats.domElement );
-
     // Catch
     window.addEventListener( 'resize', onWindowResize, false );
 
@@ -93,7 +89,6 @@ define('scene-builder', function() {
     }
 
     render();
-    stats.update();
   }
 
   function onWindowResize() {
@@ -109,4 +104,4 @@ define('scene-builder', function() {
     }
   }
 
-});
+}

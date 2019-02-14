@@ -10,50 +10,34 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'requirejs'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/underscore/underscore.js',
-      'bower_components/jquery/dist/jquery.js',
-      'bower_components/three.js/build/three.js',
-      {pattern: 'bower_components/three.js/examples/js/controls/**.js', included: true},
-      'bower_components/three.js/examples/js/libs/stats.min.js',
+      {pattern: 'node_modules/three/build/three.min.js', watched: false},
+      {pattern: 'node_modules/three/examples/js/controls/**.js', included: true, watched: false},
+      {pattern: 'node_modules/three/examples/js/objects/Lensflare.js', included: true, watched: false},
       'src/js/objects/SolarBody.js',
       'src/js/objects/PlanetMesh.js',
-      {pattern: 'src/js/**/*js', included: true},
-      {pattern: 'test/**/*Spec.js', included: false},
-      'test/test-main.js'
+      'src/js/**/*js',
+      'test/**/*Spec.js'
     ],
 
 
-    // list of files to exclude
-    exclude: [
-      'src/js/index.js',
-    ],
-
-
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      // source files, that you wanna generate coverage for
-      // do not include tests or libraries
-      // (these files will be instrumented by Istanbul)
       'src/**/*.js': ['coverage']
     },
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage'], // coverage reporter generates the coverage
+    reporters: ['progress', 'coverage'],
 
 
-    // optionally, configure the reporter
     coverageReporter: {
       type : 'html',
-      dir : 'coverage/'
+      dir : 'coverage'
     },
 
 
@@ -76,19 +60,16 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'], //An browser with WebGLRenderer is needed to pass test
+    browsers: ['Chrome', 'ChromeHeadless'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true,
 
+
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity,
-
-    // No activity browser Timeout
-    browserNoActivityTimeout: 50000
-
+    concurrency: Infinity
   });
 };

@@ -2,7 +2,6 @@
   "browser": true,
   "indent": 2,
   "esnext": true,
-  "jquery": true,
   "node": true,
   "bitwise": true,
   "camelcase": false,
@@ -14,22 +13,25 @@
   "noarg": true,
   "quotmark": "single",
   "undef": true,
-  "unused": true,
+  "unused": false,
   "smarttabs": true,
   "trailing": true,
   "globals": {
     "requestAnimationFrame": true,
     "THREE": true,
-    "define": true,
-    "Stats": true,
+    "SceneBuilder": true,
+    "SceneFactory": true,
+    "SolarFactory": true,
+    "SolarProperties": true,
+    "SolarService": true,
+    "SolarSystem": true,
     "requirejs": true,
-    "describe": true,
     "it": true,
     "xit": true,
     "expect": true,
     "beforeEach": true,
     "spyOn": true,
     "Polymer": true,
-    "_": true
+    "windows": true
   }
 }

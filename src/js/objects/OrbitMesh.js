@@ -7,21 +7,13 @@
  */
 THREE.OrbitMesh = function(orbitProperties) {
 
-  this.properties = _.extend({
-    name: arguments[0] || null,
-    type: arguments[1] || 'OrbitMesh',
-    distance: arguments[2] || 50,
-    speed: arguments[3] || 0,
-    tilt: arguments[4] || 0
-  }, orbitProperties);
-
   THREE.Object3D.call( this );
 
-  this.name = this.properties.name;
-  this.type = this.properties.type;
-  this.distance = this.properties.distance;
-  this.speed = this.properties.speed;
-  this.tilt = this.properties.tilt;
+  this.name = orbitProperties && orbitProperties.name;
+  this.type = orbitProperties && orbitProperties.type || 'OrbitMesh';
+  this.distance = orbitProperties && orbitProperties.distance || 50;
+  this.speed = orbitProperties && orbitProperties.speed || 0;
+  this.tilt = orbitProperties && orbitProperties.tilt || 0;
 };
 
 THREE.OrbitMesh.prototype = Object.create( THREE.Object3D.prototype );

@@ -39,26 +39,26 @@ var SceneFactory = (function() {
       return camera;
     },
 
-    createControls: function(camera, controlsType) {
+    createControls: function(camera, controlsType, renderer) {
       var controls;
       switch(controlsType) {
       case 'TrackballControls':
-        controls = new THREE.TrackballControls(camera);
+        controls = new THREE.TrackballControls(camera, renderer && renderer.domElement);
         break;
       case 'DeviceOrientationControls':
-        controls = new THREE.DeviceOrientationControls( camera );
+        controls = new THREE.DeviceOrientationControls(camera, renderer && renderer.domElement);
         break;
       case 'FlyControls':
-        controls = new THREE.FlyControls( camera );
+        controls = new THREE.FlyControls(camera, renderer && renderer.domElement);
         break;
       case 'OrbitControls':
-        controls = new THREE.OrbitControls( camera );
+        controls = new THREE.OrbitControls(camera, renderer && renderer.domElement);
         break;
       case 'PointerLockControls':
-        controls = new THREE.PointerLockControls( camera );
+        controls = new THREE.PointerLockControls(camera, renderer && renderer.domElement);
         break;
       case 'TransformControls':
-        controls = new THREE.TransformControls( camera );
+        controls = new THREE.TransformControls(camera, renderer && renderer.domElement);
         break;
       default:
         throw new TypeError(controlsType + ' is not a kind of valid camera controls');

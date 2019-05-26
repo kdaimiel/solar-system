@@ -15,12 +15,17 @@ function SceneBuilder() {
   var factory = {
     addObject: addObject,
     animate : animate,
+    getRenderer: getRenderer,
     setCamera: setCamera,
     setControls: setControls,
     init: init
   };
 
   return factory;
+
+  function getRenderer() {
+    return renderer;
+  }
 
   function setCamera(newCamera) {
     camera = newCamera;

@@ -64,7 +64,9 @@ function SolarSystem() {
     var camera = SceneFactory.createCamera(cameraProperties);
     sceneBuilder.setCamera(camera);
 
-    var controls = SceneFactory.createControls(camera, cameraProperties.controls);
+    var renderer = sceneBuilder.getRenderer();
+
+    var controls = SceneFactory.createControls(camera, cameraProperties.controls, renderer);
     sceneBuilder.setControls(controls);
     sceneBuilder.animate();
   }

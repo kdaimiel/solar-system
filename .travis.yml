@@ -8,5 +8,7 @@ addons:
   chrome: stable
 install:
   - npm install
+test:
+  - npm test
 script:
   - npm run build:all

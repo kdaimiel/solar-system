@@ -24,11 +24,11 @@ const paths = {
 };
 
 gulp.task('clean', function () {
-  return gulp.src(paths.dist,  { read: false, allowEmpty: true })
+  return gulp.src(paths.dist, { read: false, allowEmpty: true })
     .pipe(clean());
 });
 
-gulp.task('lint:js', function() {
+gulp.task('lint:js', function () {
   return gulp.src([
     paths.src + '/**/*.js',
     paths.test + '/**/*.js',
@@ -38,7 +38,7 @@ gulp.task('lint:js', function() {
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('lint:json', function() {
+gulp.task('lint:json', function () {
   return gulp.src([
     paths.src + '/**/*.json',
     paths.test + '/**/*.json',
@@ -66,7 +66,7 @@ gulp.task('test:watch', function (done) {
   }, done).start();
 });
 
-gulp.task('concat', function() {
+gulp.task('concat', function () {
   return gulp.src([
     'src/js/objects/SolarBody.js',
     'src/js/objects/PlanetMesh.js',
@@ -90,7 +90,6 @@ gulp.task('uglify', function () {
 gulp.task('build', gulp.series(
   'clean',
   'lint',
-  'test',
   'concat',
   'uglify'
 ));
@@ -110,7 +109,7 @@ gulp.task('build:polymer', gulp.series(
 ));
 
 /* React Task*/
-gulp.task('react', function(){
+gulp.task('react', function () {
   return gulp.src([
     paths.src + '/jsx/*.jsx'
   ])
@@ -142,7 +141,7 @@ gulp.task('watch', function () {
   ], gulp.series('build:all'));
 });
 
-gulp.task('connect', function() {
+gulp.task('connect', function () {
   return connect.server({
     livereload: true
   });

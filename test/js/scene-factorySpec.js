@@ -5,7 +5,7 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-describe('scene-factory', function () {
+describe('SceneFactory', function () {
 
   it('should be defined', function () {
     expect(SceneFactory).not.toBe(null);

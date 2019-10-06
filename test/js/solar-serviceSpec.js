@@ -6,36 +6,36 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-describe('Testing solar service', function() {
+describe('SolarService', function () {
 
   var solarProperties = new SolarProperties();
 
-  it('Check required modules', function() {
+  it('should be defined', function () {
     expect(SolarService).not.toBe(null);
     expect(solarProperties).not.toBe(null);
   });
 
-  it('The getBodies method getting the path from SolarProperties ', function() {
+  it('should get bodies from SolarProperties properly', function () {
     SolarService.getBodies(solarProperties.bodiesJSONProperties, loadJSON);
   });
 
-  it('The getBodies method with wrong parameters ', function() {
+  it('getBodies should get undefined if properties file does not exist', function () {
     SolarService.getBodies('doesnotexist.json', loadWrongJSON);
   });
 
-  it('The getCamera method getting the path from SolarProperties ', function() {
+  it('should get camera from SolarProperties properly', function () {
     SolarService.getCamera(solarProperties.cameraJSONProperties, loadJSON);
   });
 
-  it('The getCamera method with wrong parameters ', function() {
+  it('getCamera shoulo get undefined if properties file does not exist', function () {
     SolarService.getCamera('doesnotexist.json', loadWrongJSON);
   });
 
-  it('The getLights method getting the path from SolarProperties ', function() {
+  it('should get ligths from SolarProperties properly', function () {
     SolarService.getLights(solarProperties.lightsJSONProperties, loadJSON);
   });
 
-  it('The getLights method with wrong parameters ', function() {
+  it('getLights should get undefined if properties file does not exist', function () {
     SolarService.getLights('doesnotexist.json', loadWrongJSON);
   });
 

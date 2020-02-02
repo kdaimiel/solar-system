@@ -6,13 +6,13 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-describe('SolarFactory', function() {
+describe('SolarFactory', function () {
 
-  it('Check required modules', function() {
+  it('should be defined', function() {
     expect(SolarFactory).not.to.equals(null);
   });
 
-  it('Testing createMoon method', function() {
+  it('should be able to create a moon', function () {
     var moonProperties = {
       type: 'Moon'
     };
@@ -22,7 +22,7 @@ describe('SolarFactory', function() {
     compareObjects(moon, moon2);
   });
 
-  it('Testing createPlanet method', function() {
+  it('should be able to create a planet', function () {
     var planetProperties = {
       type: 'Planet'
     };
@@ -32,7 +32,7 @@ describe('SolarFactory', function() {
     compareObjects(planet, planet2);
   });
 
-  it('Testing createStar method', function() {
+  it('should be able to create a star', function () {
     var starProperties = {
       type: 'Star'
     };

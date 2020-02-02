@@ -5,7 +5,7 @@
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-describe('scene-factory', function () {
+describe('SceneFactory', function () {
 
   const renderer = new THREE.WebGLRenderer({ alpha: true });
 
@@ -48,7 +48,7 @@ describe('scene-factory', function () {
     compareObjects(camera, camera2);
   });
 
-  it('should trhow an error when a controll is created with wrong parameters ', function () {
+  it('should throw an error when a control is created with wrong parameters ', function () {
     expect(SceneFactory.createControls, null, null).to.throw(TypeError);
     expect(SceneFactory.createControls, {}, {}).to.throw(TypeError);
   });
@@ -95,7 +95,7 @@ describe('scene-factory', function () {
     compareObjects(controls, controls2);
   });
 
-  it('should trhow an error when a light is created with wrong parameters', function () {
+  it('should throw an error when a light is created with wrong parameters', function () {
     expect(SceneFactory.createLight, null).to.throw(TypeError);
     expect(SceneFactory.createLight, {}).to.throw(TypeError);
   });

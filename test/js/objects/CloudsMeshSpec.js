@@ -13,13 +13,13 @@ describe('CloudsMesh', function() {
 
   it('should allow indroduce properties in the constructor', function() {
     clouds = new THREE.CloudsMesh();
-    expect(clouds).not.toBe(undefined);
+    expect(clouds).not.to.equals(undefined);
 
     clouds = new THREE.CloudsMesh({});
-    expect(clouds).not.toBe(undefined);
+    expect(clouds).not.to.equals(undefined);
 
     clouds = new THREE.CloudsMesh(undefined);
-    expect(clouds).not.toBe(undefined);
+    expect(clouds).not.to.equals(undefined);
 
     cloudsProperties = {
       name: 'Clouds',
@@ -27,9 +27,9 @@ describe('CloudsMesh', function() {
       radius: 2000
     };
     clouds = new THREE.CloudsMesh(cloudsProperties);
-    expect(clouds.name).toBe('Clouds');
-    expect(clouds.type).toBe('CloudsType');
-    expect(clouds.radius).toBe(2000);
+    expect(clouds.name).to.equals('Clouds');
+    expect(clouds.type).to.equals('CloudsType');
+    expect(clouds.radius).to.equals(2000);
 
   });
 

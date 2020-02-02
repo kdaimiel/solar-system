@@ -11,8 +11,8 @@ describe('Testing solar service', function() {
   var solarProperties = new SolarProperties();
 
   it('Check required modules', function() {
-    expect(SolarService).not.toBe(null);
-    expect(solarProperties).not.toBe(null);
+    expect(SolarService).not.to.equals(null);
+    expect(solarProperties).not.to.equals(null);
   });
 
   it('The getBodies method getting the path from SolarProperties ', function() {
@@ -40,10 +40,10 @@ describe('Testing solar service', function() {
   });
 
   function loadJSON(response) {
-    expect(response).not.toBe(undefined);
+    expect(response).not.to.equals(undefined);
   }
 
   function loadWrongJSON(response) {
-    expect(response).toBe(undefined);
+    expect(response).to.equals(undefined);
   }
 });

@@ -99,13 +99,11 @@ We can also import the 3D Solar System as a [Reactjs](https://facebook.github.io
 <script async src="../dist/solar-system-react.js"></script>
 ```
 
-### Polymer
+### Web Component
 
-We can also import the 3D Solar System as a [Polymer](https://www.polymer-project.org/) component.
+We can also import the 3D Solar System as a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
 ```html
-<script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js" async></script>
-
 <script src="../node_modules/three/build/three.min.js"></script>
 <script src="../node_modules/three/examples/js/controls/TrackballControls.js"></script>
 <script src="../node_modules/three/examples/js/objects/Lensflare.js"></script>
@@ -113,7 +111,7 @@ We can also import the 3D Solar System as a [Polymer](https://www.polymer-projec
 
 <script src="../dist/solar-system.min.js"></script>
 
-<script src="../dist/polymer/solar-system-polymer.js" type="module" async></script>
+<script src="../dist/solar-system.min.js" type="module" async></script>
 
 <solar-system
   width="500"

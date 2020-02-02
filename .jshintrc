@@ -6,7 +6,6 @@
   "bitwise": true,
   "camelcase": false,
   "curly": true,
-  "jasmine": true,
   "eqeqeq": true,
   "immed": true,
   "newcap": false,
@@ -17,6 +16,8 @@
   "smarttabs": true,
   "trailing": true,
   "globals": {
+    "describe": true,
+    "await": true,
     "requestAnimationFrame": true,
     "THREE": true,
     "SceneBuilder": true,
@@ -31,7 +32,6 @@
     "expect": true,
     "beforeEach": true,
     "spyOn": true,
-    "Polymer": true,
     "windows": true
   }
 }

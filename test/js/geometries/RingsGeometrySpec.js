@@ -9,15 +9,15 @@
 describe('Testing RingsGeometry', function() {
 
   it('Testing RingsGeometry with wrong parameters', function() {
-    expect(THREE.RingsGeometry, null).toThrowError(TypeError);
+    expect(THREE.RingsGeometry, null).to.throw(TypeError);
   });
 
   it('Testing RingsGeometry', function() {
     var geometry;
     geometry = new THREE.RingsGeometry();
-    expect(geometry).not.toBe(undefined);
+    expect(geometry).not.to.equal(undefined);
     geometry = new THREE.RingsGeometry({});
-    expect(geometry).not.toBe(undefined);
+    expect(geometry).not.to.equal(undefined);
   });
 
 });

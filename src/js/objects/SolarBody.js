@@ -40,8 +40,6 @@ THREE.SolarBody = function(bodyProperties) {
     }
   }
 
-  this.drawMode = THREE.TrianglesDrawMode;
-
   this.updateMorphTargets();
 };
 

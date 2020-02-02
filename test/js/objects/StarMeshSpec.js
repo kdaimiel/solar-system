@@ -13,13 +13,13 @@ describe('StarMesh', function() {
 
   it('should allow indroduce properties in the constructor', function() {
     star = new THREE.StarMesh();
-    expect(star).not.toBe(undefined);
+    expect(star).not.to.equals(undefined);
 
     star = new THREE.StarMesh({});
-    expect(star).not.toBe(undefined);
+    expect(star).not.to.equals(undefined);
 
     star = new THREE.StarMesh(undefined);
-    expect(star).not.toBe(undefined);
+    expect(star).not.to.equals(undefined);
 
     starProperties = {
       name: 'Star',
@@ -27,9 +27,9 @@ describe('StarMesh', function() {
       radius: 2000
     };
     star = new THREE.StarMesh(starProperties);
-    expect(star.name).toBe('Star');
-    expect(star.type).toBe('StarType');
-    expect(star.radius).toBe(2000);
+    expect(star.name).to.equals('Star');
+    expect(star.type).to.equals('StarType');
+    expect(star.radius).to.equals(2000);
   });
 
   describe('Testing StarMesh', function() {

@@ -13,13 +13,13 @@ describe('OrbitMesh', function() {
 
   it('should allow indroduce properties in the constructor', function() {
     orbit = new THREE.OrbitMesh();
-    expect(orbit).not.toBe(undefined);
+    expect(orbit).not.to.equals(undefined);
 
     orbit = new THREE.OrbitMesh({});
-    expect(orbit).not.toBe(undefined);
+    expect(orbit).not.to.equals(undefined);
 
     orbit = new THREE.OrbitMesh(undefined);
-    expect(orbit).not.toBe(undefined);
+    expect(orbit).not.to.equals(undefined);
 
     orbitProperties = {
       name: 'Orbit',
@@ -27,9 +27,9 @@ describe('OrbitMesh', function() {
       distance: 2000
     };
     orbit = new THREE.OrbitMesh(orbitProperties);
-    expect(orbit.name).toBe('Orbit');
-    expect(orbit.type).toBe('OrbitType');
-    expect(orbit.distance).toBe(2000);
+    expect(orbit.name).to.equals('Orbit');
+    expect(orbit.type).to.equals('OrbitType');
+    expect(orbit.distance).to.equals(2000);
   });
 
   describe('Testing OrbitMesh methods', function() {

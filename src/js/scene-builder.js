@@ -53,11 +53,11 @@ function SceneBuilder() {
     renderer.render(scene, camera);
   }
 
-  function init(element) {
+  function init(properties, element) {
     scene = new THREE.Scene();
-    if(element){
-      width = element.width || null;
-      height = element.height || null;
+    if(properties){
+      width = properties.width || null;
+      height = properties.height || null;
     }
 
     if(controls) {
@@ -67,8 +67,11 @@ function SceneBuilder() {
     renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize(width || window.innerWidth , height || window.innerHeight);
 
-    document.body.appendChild( renderer.domElement );
-
+    if(element) {
+      element.appendChild( renderer.domElement );
+    } else {
+      document.body.appendChild( renderer.domElement );
+    }
     // Catch
     window.addEventListener( 'resize', onWindowResize, false );
 

@@ -13,7 +13,6 @@ const Server = require('karma').Server;
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const connect = require('gulp-connect');
-const wct = require('web-component-tester').test;
 const babel = require('gulp-babel');
 
 const paths = {
@@ -60,6 +59,7 @@ gulp.task('test', function (done) {
 
 gulp.task('test:watch', function (done) {
   new Server({
+    browsers: ['Chrome'],
     configFile: __dirname + '/karma.conf.js',
     singleRun: false,
     autoWatch: true
@@ -70,21 +70,27 @@ gulp.task('concat', function () {
   return gulp.src([
     'src/js/objects/SolarBody.js',
     'src/js/objects/PlanetMesh.js',
-    paths.src + '/js/**/*.js'
+    paths.src + '/**/*.js'
   ])
+    .pipe(babel({
+      presets: ['@babel/preset-env']
+    }))
     .pipe(concat('solar-system.js'))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('uglify', function () {
   return gulp.src([
     'src/js/objects/SolarBody.js',
     'src/js/objects/PlanetMesh.js',
-    paths.src + '/js/**/*.js'
+    paths.src + '/**/*.js'
   ])
+    .pipe(babel({
+      presets: ['@babel/preset-env']
+    }))
     .pipe(concat('solar-system.min.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('build', gulp.series(
@@ -92,20 +98,6 @@ gulp.task('build', gulp.series(
   'lint',
   'concat',
   'uglify'
-));
-
-/* Polymer Tasks*/
-gulp.task('copy:polymer', function () {
-  return gulp.src(paths.src + '/polymer*/**/*')
-    .pipe(gulp.dest(paths.dist));
-});
-
-gulp.task('wct:local', function () {
-  return wct();
-});
-
-gulp.task('build:polymer', gulp.series(
-  'copy:polymer'
 ));
 
 /* React Task*/
@@ -128,7 +120,6 @@ gulp.task('build:react', gulp.series(
 /* General Tasks */
 gulp.task('build:all', gulp.series(
   'build',
-  'build:polymer',
   'build:react'
 ));
 

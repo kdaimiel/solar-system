@@ -7,13 +7,15 @@
  */
 describe('scene-factory', function () {
 
+  const renderer = new THREE.WebGLRenderer({ alpha: true });
+
   it('should be defined', function () {
-    expect(SceneFactory).not.toBe(null);
+    expect(SceneFactory).not.to.equal(null);
   });
 
   it('should throw an error when a camera is created with wrong parameters ', function () {
-    expect(SceneFactory.createCamera, null).toThrowError(TypeError);
-    expect(SceneFactory.createCamera, {}).toThrowError(TypeError);
+    expect(SceneFactory.createCamera, null).to.throw(TypeError);
+    expect(SceneFactory.createCamera, {}).to.throw(TypeError);
   });
 
   it('should be able to create a PerspectiveCamera', function () {
@@ -47,55 +49,55 @@ describe('scene-factory', function () {
   });
 
   it('should trhow an error when a controll is created with wrong parameters ', function () {
-    expect(SceneFactory.createControls, null, null).toThrowError(TypeError);
-    expect(SceneFactory.createControls, {}, {}).toThrowError(TypeError);
+    expect(SceneFactory.createControls, null, null).to.throw(TypeError);
+    expect(SceneFactory.createControls, {}, {}).to.throw(TypeError);
   });
 
   it('should be able to create a TrackballControls for a given camera', function () {
     var camera = new THREE.PerspectiveCamera();
-    var controls = SceneFactory.createControls(camera, 'TrackballControls');
-    var controls2 = new THREE.TrackballControls(camera);
+    var controls = SceneFactory.createControls(camera, 'TrackballControls', renderer);
+    var controls2 = new THREE.TrackballControls(camera, renderer.domElement);
     compareObjects(controls, controls2);
   });
 
   it('should be able to create a DeviceOrientationControls for a given camera', function () {
     var camera = new THREE.PerspectiveCamera();
-    var controls = SceneFactory.createControls(camera, 'DeviceOrientationControls');
-    var controls2 = new THREE.DeviceOrientationControls(camera);
+    var controls = SceneFactory.createControls(camera, 'DeviceOrientationControls', renderer);
+    var controls2 = new THREE.DeviceOrientationControls(camera, renderer.domElement);
     compareObjects(controls, controls2);
   });
 
   it('should be able to create a FlyControls for a given camera', function () {
     var camera = new THREE.PerspectiveCamera();
-    var controls = SceneFactory.createControls(camera, 'FlyControls');
-    var controls2 = new THREE.FlyControls(camera);
+    var controls = SceneFactory.createControls(camera, 'FlyControls', renderer);
+    var controls2 = new THREE.FlyControls(camera, renderer.domElement);
     compareObjects(controls, controls2);
   });
 
   it('should be able to create a OrbitControls for a given camera', function () {
     var camera = new THREE.PerspectiveCamera();
-    var controls = SceneFactory.createControls(camera, 'OrbitControls');
-    var controls2 = new THREE.OrbitControls(camera);
+    var controls = SceneFactory.createControls(camera, 'OrbitControls', renderer);
+    var controls2 = new THREE.OrbitControls(camera, renderer.domElement);
     compareObjects(controls, controls2);
   });
 
   it('should be able to create a PointerLockControls for a given camera', function () {
     var camera = new THREE.PerspectiveCamera();
-    var controls = SceneFactory.createControls(camera, 'PointerLockControls');
-    var controls2 = new THREE.PointerLockControls(camera);
+    var controls = SceneFactory.createControls(camera, 'PointerLockControls', renderer);
+    var controls2 = new THREE.PointerLockControls(camera, renderer.domElement);
     compareObjects(controls, controls2);
   });
 
   it('should be able to create a TransformControls for a given camera', function () {
     var camera = new THREE.PerspectiveCamera();
-    var controls = SceneFactory.createControls(camera, 'TransformControls');
-    var controls2 = new THREE.TransformControls(camera);
+    var controls = SceneFactory.createControls(camera, 'TransformControls', renderer);
+    var controls2 = new THREE.TransformControls(camera, renderer.domElement);
     compareObjects(controls, controls2);
   });
 
   it('should trhow an error when a light is created with wrong parameters', function () {
-    expect(SceneFactory.createLight, null).toThrowError(TypeError);
-    expect(SceneFactory.createLight, {}).toThrowError(TypeError);
+    expect(SceneFactory.createLight, null).to.throw(TypeError);
+    expect(SceneFactory.createLight, {}).to.throw(TypeError);
   });
 
   it('should be able to create an AmbientLight', function () {
@@ -149,10 +151,10 @@ describe('scene-factory', function () {
   });
 
   function compareObjects(o1, o2) {
-    expect(o1).not.toBe(undefined);
-    expect(o2).not.toBe(undefined);
-    expect(o1.type).toEqual(o2.type);
-    expect(o1.prototype).toEqual(o2.prototype);
+    expect(o1).not.to.equal(undefined);
+    expect(o2).not.to.equal(undefined);
+    expect(o1.type).to.equal(o2.type);
+    expect(o1.prototype).to.equal(o2.prototype);
   }
 
 });

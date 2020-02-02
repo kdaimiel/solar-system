@@ -24,10 +24,10 @@ function SolarSystem() {
 
   return solarSystem;
 
-  function init(sytemProperties) {
-    solarProperties = new SolarProperties(sytemProperties);
-    sceneBuilder.init(solarProperties);
-    loadObjectFronJSONFiles();
+  function init(systemProperties, element) {
+    solarProperties = new SolarProperties(systemProperties);
+    sceneBuilder.init(solarProperties, element);
+    loadObjectFroJSONFiles();
   }
 
   function addSolarBody(solarBody){
@@ -54,7 +54,7 @@ function SolarSystem() {
     addSolarBody(star);
   }
 
-  function loadObjectFronJSONFiles(){
+  function loadObjectFroJSONFiles(){
     SolarService.getCamera(solarProperties.cameraSrc, loadCamera);
     SolarService.getBodies(solarProperties.bodiesSrc, loadBodies);
     SolarService.getLights(solarProperties.lightsSrc, loadLights);

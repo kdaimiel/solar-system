@@ -1,0 +1,64 @@
+<!--
+ solar-system-componentSpec.js
+ @Description Unit tests for SolarSystem Web Component.
+ @link https://github.com/kdaimiel/solar-system#readme
+ @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
+ @license MIT License, http://www.opensource.org/licenses/MIT
+-->
+<!doctype html>
+<html>
+  <head>
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="../../node_modules/karma-web-components/framework.js"></script>
+
+    <script src="../../node_modules/three/build/three.min.js"></script>
+    <script src="../../node_modules/three/examples/js/controls/TrackballControls.js"></script>
+    <script src="../../node_modules/three/examples/js/objects/Lensflare.js"></script>
+
+    <script src="../../src/js/geometries/RingsGeometry.js"></script>
+
+    <script src="../../src/js/objects/SolarBody.js"></script>
+    <script src="../../src/js/objects/CloudsMesh.js"></script>
+    <script src="../../src/js/objects/PlanetMesh.js"></script>
+    <script src="../../src/js/objects/MoonMesh.js"></script>
+    <script src="../../src/js/objects/OrbitMesh.js"></script>
+    <script src="../../src/js/objects/RingsMesh.js"></script>
+    <script src="../../src/js/objects/StarMesh.js"></script>
+
+    <script src="../../src/js/scene-builder.js"></script>
+    <script src="../../src/js/scene-factory.js"></script>
+    <script src="../../src/js/solar-factory.js"></script>
+    <script src="../../src/js/solar-properties.js"></script>
+    <script src="../../src/js/solar-service.js"></script>
+    <script src="../../src/js/solar-system.js"></script>
+
+    <script src="../../src/js/solar-system-component.js" type="module" async></script>
+
+  </head>
+  <body>
+
+    <solar-system
+        width="800"
+        height="600"
+        bodies-src="../../demo/data/bodies.properties.json"
+        camera-src="../../demo/data/camera.properties.json"
+        lights-src="../../demo/data/lights.properties.json">
+    </solar-system>
+
+    <script>
+      describe('<solar-system>', function() {
+
+        it('should create a Solar System Web Component', function() {
+          var canvasElement = document.getElementsByTagName('canvas')[0];
+
+          expect(canvasElement.width).to.equal(800);
+          expect(canvasElement.height).to.equal(600);
+        });
+
+      });
+    </script>
+
+  </body>
+</html>

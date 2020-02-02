@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/kdaimiel/solar-system.svg)](https://github.com/kdaimiel/solar-system/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/kdaimiel/solar-system.svg)](https://github.com/kdaimiel/solar-system/network)
 
-This is a 3D Solar System JavaScript model created with [Threejs](https://threejs.org/).
+This is a 3D Solar System JavaScript model created with [ThreeJS](https://threejs.org/).
 
 ![alt text](media/solar-system.gif)
 
@@ -75,7 +75,7 @@ Check [demo](demo) folder to see some examples.
 
 ### React
 
-We can also import the 3D Solar System as a [Reactjs](https://facebook.github.io/react/) component.
+We can also import the 3D Solar System as a [ReactJS](https://facebook.github.io/react/) component.
 
 ```html
 <script src="../node_modules/react/umd/react.production.min.js"></script>
@@ -129,33 +129,15 @@ We can also import the 3D Solar System as a [Web Component](https://developer.mo
 Install dependencies with `npm` within project folder.
 
 ```sh
-npm install
+  npm install
 ```
 
 ### Build
 
-We use `gulp` as a task runner to build the project. So we suggest to install `gulp-cli` as a global dependency.
+Build project using a `npm` script.
 
 ```sh
-npm install -g gulp gulp-cli
-```
-
-Then build the project with `gulp` as a global dependency inside project folder.
-
-```sh
-gulp build
-```
-
-However, we can also build project with `gulp` as a local dependecy inside project folder.
-
-```sh
-./node_modules/.bin/gulp build
-```
-
-Or, using a `npm` script.
-
-```sh
-npm run build
+  npm run build
 ```
 
 ### Serve
@@ -163,57 +145,21 @@ npm run build
 We can build project on `serve` mode to check change immediately.
 
 ```sh
-gulp serve
-```
-
-or
-
-```sh
-./node_modules/.bin/gulp serve
-```
-
-or
-
-```sh
-npm run serve
+  npm run serve
 ```
 
 This throws a Web Server in `http://localhost:9000/` watching source files to check changes.
 
 ### Tests
 
-We also use `gulp` to run tests. So, using `gulp` as global dependency.
+Run tests just using `npm` script.
 
 ```sh
-gulp test
-```
-
-However, using `gulp` as a local dependency.
-
-```sh
-./node_modules/.bin/gulp test
-```
-
-Or, just using `npm` script.
-
-```sh
-npm test
+  npm test
 ```
 
 It is also possible to run test on `watch` mode.
 
 ```sh
-gulp test:watch
-```
-
-or
-
-```sh
-./node_modules/.bin/gulp test:watch
-```
-
-or
-
-```sh
-npm run test:watch
+  npm run test:watch
 ```

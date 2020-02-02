@@ -13,13 +13,13 @@ describe('RingsMesh', function() {
 
   it('should allow indroduce properties in the constructor', function() {
     rings = new THREE.RingsMesh();
-    expect(rings).not.toBe(undefined);
+    expect(rings).not.to.equals(undefined);
 
     rings = new THREE.RingsMesh({});
-    expect(rings).not.toBe(undefined);
+    expect(rings).not.to.equals(undefined);
 
     rings = new THREE.RingsMesh(undefined);
-    expect(rings).not.toBe(undefined);
+    expect(rings).not.to.equals(undefined);
 
     ringsProperties = {
       name: 'Rings',
@@ -27,9 +27,9 @@ describe('RingsMesh', function() {
       tilt: 30
     };
     rings = new THREE.RingsMesh(ringsProperties);
-    expect(rings.name).toBe('Rings');
-    expect(rings.type).toBe('RingsType');
-    expect(rings.tilt).toBe(30);
+    expect(rings.name).to.equals('Rings');
+    expect(rings.type).to.equals('RingsType');
+    expect(rings.tilt).to.equals(30);
   });
 
   describe('Testing RingsMesh methods', function() {

@@ -7,9 +7,10 @@
  */
 describe('SceneBuilder', function() {
 
-  var scene = new SceneBuilder();
+  const renderer = new THREE.WebGLRenderer({ alpha: true });
+  const scene = new SceneBuilder();
   // Mocked Dom Element to test scene builder.
-  var element = document.createElement('div');
+  const element = document.createElement('div');
 
   describe('before being initiated', function() {
 
@@ -17,11 +18,11 @@ describe('SceneBuilder', function() {
 
     it('should not allow to add object', function() {
       var body = new THREE.SolarBody();
-      expect(sceneNotInitiated.addObject, body).toThrowError(TypeError);
+      expect(sceneNotInitiated.addObject, body).to.throw(TypeError);
     });
 
     it('should not allow animate', function() {
-      expect(sceneNotInitiated.animate).toThrowError(TypeError);
+      expect(sceneNotInitiated.animate).to.throw(TypeError);
     });
 
     it('should allow to set camera because camera is independent from scene', function() {
@@ -37,7 +38,7 @@ describe('SceneBuilder', function() {
       sceneNotInitiated.setControls(null);
       sceneNotInitiated.setControls({});
       var camera = new THREE.PerspectiveCamera();
-      var controls = new THREE.TrackballControls(camera);
+      var controls = new THREE.TrackballControls(camera, renderer.domElement);
       sceneNotInitiated.setControls(controls);
     });
 
@@ -86,7 +87,7 @@ describe('SceneBuilder', function() {
       sceneInitiated.setControls(null);
       sceneInitiated.setControls({});
       var camera = new THREE.PerspectiveCamera();
-      var controls = new THREE.TrackballControls(camera);
+      var controls = new THREE.TrackballControls(camera, renderer.domElement);
       sceneInitiated.setControls(controls);
     });
 

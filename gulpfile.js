@@ -13,7 +13,6 @@ const Server = require('karma').Server;
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const connect = require('gulp-connect');
-const wct = require('web-component-tester').test;
 const babel = require('gulp-babel');
 
 const paths = {
@@ -24,11 +23,11 @@ const paths = {
 };
 
 gulp.task('clean', function () {
-  return gulp.src(paths.dist,  { read: false, allowEmpty: true })
+  return gulp.src(paths.dist, { read: false, allowEmpty: true })
     .pipe(clean());
 });
 
-gulp.task('lint:js', function() {
+gulp.task('lint:js', function () {
   return gulp.src([
     paths.src + '/**/*.js',
     paths.test + '/**/*.js',
@@ -38,7 +37,7 @@ gulp.task('lint:js', function() {
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('lint:json', function() {
+gulp.task('lint:json', function () {
   return gulp.src([
     paths.src + '/**/*.json',
     paths.test + '/**/*.json',
@@ -60,58 +59,49 @@ gulp.task('test', function (done) {
 
 gulp.task('test:watch', function (done) {
   new Server({
+    browsers: ['Chrome'],
     configFile: __dirname + '/karma.conf.js',
     singleRun: false,
     autoWatch: true
   }, done).start();
 });
 
-gulp.task('concat', function() {
+gulp.task('concat', function () {
   return gulp.src([
     'src/js/objects/SolarBody.js',
     'src/js/objects/PlanetMesh.js',
-    paths.src + '/js/**/*.js'
+    paths.src + '/**/*.js'
   ])
+    .pipe(babel({
+      presets: ['@babel/preset-env']
+    }))
     .pipe(concat('solar-system.js'))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('uglify', function () {
   return gulp.src([
     'src/js/objects/SolarBody.js',
     'src/js/objects/PlanetMesh.js',
-    paths.src + '/js/**/*.js'
+    paths.src + '/**/*.js'
   ])
+    .pipe(babel({
+      presets: ['@babel/preset-env']
+    }))
     .pipe(concat('solar-system.min.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('build', gulp.series(
   'clean',
   'lint',
-  'test',
   'concat',
   'uglify'
 ));
 
-/* Polymer Tasks*/
-gulp.task('copy:polymer', function () {
-  return gulp.src(paths.src + '/polymer*/**/*')
-    .pipe(gulp.dest(paths.dist));
-});
-
-gulp.task('wct:local', function () {
-  return wct();
-});
-
-gulp.task('build:polymer', gulp.series(
-  'copy:polymer',
-  'wct:local'
-));
-
 /* React Task*/
-gulp.task('react', function(){
+gulp.task('react', function () {
   return gulp.src([
     paths.src + '/jsx/*.jsx'
   ])
@@ -130,7 +120,6 @@ gulp.task('build:react', gulp.series(
 /* General Tasks */
 gulp.task('build:all', gulp.series(
   'build',
-  'build:polymer',
   'build:react'
 ));
 
@@ -143,7 +132,7 @@ gulp.task('watch', function () {
   ], gulp.series('build:all'));
 });
 
-gulp.task('connect', function() {
+gulp.task('connect', function () {
   return connect.server({
     livereload: true
   });

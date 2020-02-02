@@ -6,18 +6,18 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 
-describe('Testing RingsGeometry', function() {
+describe('RingsGeometry', function() {
 
-  it('Testing RingsGeometry with wrong parameters', function() {
-    expect(THREE.RingsGeometry, null).toThrowError(TypeError);
+  it('should throw error if it is called with wrong parameters', function() {
+    expect(THREE.RingsGeometry, null).to.throw(TypeError);
   });
 
-  it('Testing RingsGeometry', function() {
+  it('should be created properly', function() {
     var geometry;
     geometry = new THREE.RingsGeometry();
-    expect(geometry).not.toBe(undefined);
+    expect(geometry).not.to.equal(undefined);
     geometry = new THREE.RingsGeometry({});
-    expect(geometry).not.toBe(undefined);
+    expect(geometry).not.to.equal(undefined);
   });
 
 });

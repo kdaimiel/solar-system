@@ -1,6 +1,6 @@
 /*
  * solar-system-react.jsx
- * @Description solar-system react component.
+ * @Description Solar-System React Component.
  * @link https://github.com/kdaimiel/solar-system#readme
  * @author Enrique Daimiel Ruiz <k.daimiel@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT

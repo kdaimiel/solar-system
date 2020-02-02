@@ -42,8 +42,6 @@ THREE.StarMesh.prototype.createLensFlare = function() {
   lensFlare.addElement( new THREE.LensflareElement( textureFlare3, size * 16, 0.0, flareColor, THREE.AdditiveBlending ));
   lensFlare.addElement( new THREE.LensflareElement( textureFlare4, size * 64, 0.0, flareColor, THREE.AdditiveBlending ));
 
-  lensFlare.position = this.position;
-
   //  This function will operate over each lensflare artifact, moving them around the screen
   lensFlare.update = function(camera, object) {
     if(camera) {

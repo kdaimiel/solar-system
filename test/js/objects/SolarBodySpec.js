@@ -13,21 +13,21 @@ describe('SolarBody', function() {
 
   it('should allow indroduce properties in the constructor', function() {
     solarBody = new THREE.SolarBody();
-    expect(solarBody).not.toBe(undefined);
+    expect(solarBody).not.to.equals(undefined);
 
     solarBody = new THREE.SolarBody({});
-    expect(solarBody).not.toBe(undefined);
+    expect(solarBody).not.to.equals(undefined);
 
     solarBody = new THREE.SolarBody(undefined);
-    expect(solarBody).not.toBe(undefined);
+    expect(solarBody).not.to.equals(undefined);
 
     bodyProperties = {
       name: 'SolarBody',
       type: 'SolarBodyType'
     };
     solarBody = new THREE.SolarBody(bodyProperties);
-    expect(solarBody.name).toBe('SolarBody');
-    expect(solarBody.type).toBe('SolarBodyType');
+    expect(solarBody.name).to.equals('SolarBody');
+    expect(solarBody.type).to.equals('SolarBodyType');
   });
 
   describe('Testing SolarBody methods', function() {
@@ -35,17 +35,17 @@ describe('SolarBody', function() {
     solarBody = new THREE.SolarBody({});
 
     it('Testing addClouds method in SolarBody', function() {
-      expect(solarBody.addClouds, null).toThrowError(TypeError);
+      expect(solarBody.addClouds, null).to.throw(TypeError);
       solarBody.addClouds({});
     });
 
     it('Testing addRings method in SolarBody', function() {
-      expect(solarBody.addRings, null).toThrowError(TypeError);
+      expect(solarBody.addRings, null).to.throw(TypeError);
       solarBody.addRings({});
     });
 
     it('Testing addSatellite method in SolarBody with wrong parameters', function() {
-      expect(solarBody.addSatellite, null, {}).toThrowError(TypeError);
+      expect(solarBody.addSatellite, null, {}).to.throw(TypeError);
     });
 
     it('Testing addSatellite method in SolarBody with simple parameters', function() {

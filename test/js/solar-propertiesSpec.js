@@ -10,11 +10,11 @@ describe('SolarProperties', function() {
 
   it('should have default values', function() {
     var solarProperties = new SolarProperties();
-    expect(solarProperties.width).toBe(undefined);
-    expect(solarProperties.height).toBe(undefined);
-    expect(solarProperties.bodiesSrc).toBe('data/bodies.properties.json');
-    expect(solarProperties.cameraSrc).toBe('data/camera.properties.json');
-    expect(solarProperties.lightsSrc).toBe('data/lights.properties.json');
+    expect(solarProperties.width).to.equal(undefined);
+    expect(solarProperties.height).to.equal(undefined);
+    expect(solarProperties.bodiesSrc).to.equal('data/bodies.properties.json');
+    expect(solarProperties.cameraSrc).to.equal('data/camera.properties.json');
+    expect(solarProperties.lightsSrc).to.equal('data/lights.properties.json');
   });
 
   it('should allow set properties', function() {
@@ -28,11 +28,11 @@ describe('SolarProperties', function() {
     };
 
     var solarProperties = new SolarProperties(properties);
-    expect(solarProperties.width).toBe(400);
-    expect(solarProperties.height).toBe(400);
-    expect(solarProperties.bodiesSrc).toBe('bodiesSrc');
-    expect(solarProperties.cameraSrc).toBe('cameraSrc');
-    expect(solarProperties.lightsSrc).toBe('lightsSrc');
+    expect(solarProperties.width).to.equal(400);
+    expect(solarProperties.height).to.equal(400);
+    expect(solarProperties.bodiesSrc).to.equal('bodiesSrc');
+    expect(solarProperties.cameraSrc).to.equal('cameraSrc');
+    expect(solarProperties.lightsSrc).to.equal('lightsSrc');
 
   });
 

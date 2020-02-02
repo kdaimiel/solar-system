@@ -13,13 +13,13 @@ describe('PlanetMesh', function() {
 
   it('should allow indroduce properties in the constructor', function() {
     planet = new THREE.PlanetMesh();
-    expect(planet).not.toBe(undefined);
+    expect(planet).not.to.equals(undefined);
 
     planet = new THREE.PlanetMesh({});
-    expect(planet).not.toBe(undefined);
+    expect(planet).not.to.equals(undefined);
 
     planet = new THREE.PlanetMesh(undefined);
-    expect(planet).not.toBe(undefined);
+    expect(planet).not.to.equals(undefined);
 
     planetProperties = {
       name: 'Planet',
@@ -27,9 +27,9 @@ describe('PlanetMesh', function() {
       radius: 2000
     };
     planet = new THREE.PlanetMesh(planetProperties);
-    expect(planet.name).toBe('Planet');
-    expect(planet.type).toBe('PlanetType');
-    expect(planet.radius).toBe(2000);
+    expect(planet.name).to.equals('Planet');
+    expect(planet.type).to.equals('PlanetType');
+    expect(planet.radius).to.equals(2000);
   });
 
   describe('Testing PlanetMesh methods', function() {

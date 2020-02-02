@@ -10,24 +10,39 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['mocha', 'chai', 'web-components'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      {pattern: 'node_modules/three/build/three.min.js', watched: false},
+      {pattern: 'node_modules/three/build/three.min.js', included: true, watched: false},
       {pattern: 'node_modules/three/examples/js/controls/**.js', included: true, watched: false},
       {pattern: 'node_modules/three/examples/js/objects/Lensflare.js', included: true, watched: false},
       'src/js/objects/SolarBody.js',
       'src/js/objects/PlanetMesh.js',
       'src/js/**/*js',
-      'test/**/*Spec.js'
+      {pattern: 'demo/data/**/*', watched: true, served: true, included: false},
+      {pattern: 'demo/img/**/*', watched: true, served: true, included: false},
+      {pattern: 'demo/css/**/*', watched: true, served: true, included: true},
+      {pattern: 'test/**/*componentSpec.*', watched: true, included: false},
+      'test/**/*Spec.*'
     ],
 
 
+    // a map of path-proxy pairs.
+    proxies: {
+      '/data/': '/base/demo/data',
+      '/img/': '/base/demo/img',
+      '/base/test/js/css/': '/base/demo/css',
+      '/base/test/js/img/': '/base/demo/img'
+    },
+
+
+    // a map of preprocessors to use.
     preprocessors: {
       'src/**/*.js': ['coverage']
     },
+
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -35,6 +50,7 @@ module.exports = function(config) {
     reporters: ['progress', 'coverage'],
 
 
+    // coverage reporter to use
     coverageReporter: {
       type : 'html',
       dir : 'coverage'

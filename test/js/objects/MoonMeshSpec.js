@@ -13,13 +13,13 @@ describe('MoonMesh', function() {
 
   it('should allow indroduce properties in the constructor', function() {
     moon = new THREE.MoonMesh();
-    expect(moon).not.toBe(undefined);
+    expect(moon).not.to.equals(undefined);
 
     moon = new THREE.MoonMesh({});
-    expect(moon).not.toBe(undefined);
+    expect(moon).not.to.equals(undefined);
 
     moon = new THREE.MoonMesh(undefined);
-    expect(moon).not.toBe(undefined);
+    expect(moon).not.to.equals(undefined);
 
     moonProperties = {
       name: 'Moon',
@@ -27,9 +27,9 @@ describe('MoonMesh', function() {
       radius: 2000
     };
     moon = new THREE.MoonMesh(moonProperties);
-    expect(moon.name).toBe('Moon');
-    expect(moon.type).toBe('MoonType');
-    expect(moon.radius).toBe(2000);
+    expect(moon.name).to.equals('Moon');
+    expect(moon.type).to.equals('MoonType');
+    expect(moon.radius).to.equals(2000);
 
   });
 

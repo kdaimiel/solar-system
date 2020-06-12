@@ -17,13 +17,13 @@
   },
   "homepage": "https://github.com/kdaimiel/solar-system#readme",
   "dependencies": {
-    "react": "16.13.0",
-    "react-dom": "16.13.0"
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
   },
   "devDependencies": {
-    "@babel/core": "7.8.7",
-    "@babel/preset-env": "7.8.7",
-    "@babel/preset-react": "7.8.3",
+    "@babel/core": "7.10.2",
+    "@babel/preset-env": "7.10.2",
+    "@babel/preset-react": "7.10.1",
     "chai": "4.2.0",
     "gulp": "4.0.2",
     "gulp-babel": "8.0.0",
@@ -31,18 +31,18 @@
     "gulp-concat": "2.6.1",
     "gulp-connect": "5.7.0",
     "gulp-jshint": "2.1.0",
-    "gulp-jsonlint": "1.3.1",
+    "gulp-jsonlint": "1.3.2",
     "gulp-uglify": "3.0.2",
-    "jshint": "2.11.0",
-    "karma": "4.4.1",
+    "jshint": "2.11.1",
+    "karma": "5.1.0",
     "karma-chai": "0.1.0",
     "karma-chrome-launcher": "3.1.0",
-    "karma-coverage": "2.0.1",
-    "karma-mocha": "1.3.0",
+    "karma-coverage": "2.0.2",
+    "karma-mocha": "2.0.1",
     "karma-phantomjs-launcher": "1.0.4",
     "karma-web-components": "1.0.4",
-    "mocha": "7.1.0",
-    "three": "0.114.0"
+    "mocha": "8.0.1",
+    "three": "0.117.1"
   },
   "scripts": {
     "clean": "gulp clean",

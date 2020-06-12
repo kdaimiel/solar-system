@@ -33,7 +33,11 @@ describe('SceneFactory', function () {
       type: 'CubeCamera',
     };
     var camera = SceneFactory.createCamera(cameraProperties);
-    var camera2 = new THREE.CubeCamera();
+    var cubeRenderTarget = new THREE.WebGLCubeRenderTarget(
+      cameraProperties.cubeResolution,
+      cameraProperties.options
+    );
+    var camera2 = new THREE.CubeCamera(cameraProperties.near, cameraProperties.far, cubeRenderTarget);
 
     compareObjects(camera, camera2);
   });

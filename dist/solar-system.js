@@ -465,7 +465,7 @@ var SolarService = function () {
  */
 'use strict';
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -491,9 +491,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-window.customElements.define('solar-system',
-/*#__PURE__*/
-function (_HTMLElement) {
+window.customElements.define('solar-system', /*#__PURE__*/function (_HTMLElement) {
   _inherits(_class, _HTMLElement);
 
   function _class() {
@@ -536,7 +534,7 @@ function (_HTMLElement) {
   }]);
 
   return _class;
-}(_wrapNativeSuper(HTMLElement)));
+}( /*#__PURE__*/_wrapNativeSuper(HTMLElement)));
 "use strict";
 
 /*
